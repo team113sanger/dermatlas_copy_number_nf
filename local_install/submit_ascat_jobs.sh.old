@@ -1,0 +1,44 @@
+#!/bin/bash
+
+##### Submit jobs for ASCAT analysis
+
+PROJDIR=$1
+
+if [[ -z "$PROJDIR" ]]; then
+    echo "Enter the full path to the project directory"
+    exit
+fi
+#export PROJDIR=/lustre/scratch125/casm/team113da/projects/dermatlas_pu2_project_dir/6511_2695_DERMATLAS_Leiomyosarcoma_WES
+export BAMDIR=$PROJDIR/bams;
+export ASCATDIR=$PROJDIR/resources/ASCAT;
+export SCRIPTDIR=$PROJDIR/scripts/ASCAT;
+export PAIRS_XY=$PROJDIR/metadata/t_n_pairs_analysis.male.submit.tsv;
+export PAIRS_XX=$PROJDIR/metadata/t_n_pairs_analysis.female.submit.tsv;
+
+# Submit jobs for male samples
+
+for tum in `grep -v PDv38is_wes_v2 $PAIRS_XY | cut -f 1`; do 
+    norm=`grep $tum $PAIRS_XY | cut -f 2`
+    mkdir -p $tum-vs-$norm
+    cd $tum-vs-$norm
+    mkdir -p logs
+    bsub -e logs/$tum-$norm.e -o logs/$tum-$norm.o -n 8 -q normal -M35000 -R"select[mem>35000 && hname != 'node-13-09'] rusage[mem=35000]" "module load alleleCount/4.3.0 R/4.1.3; Rscript $SCRIPTDIR/run_ascat_exome.R $BAMDIR/$tum/$tum.sample.dupmarked.bam $BAMDIR/$norm/$norm.sample.dupmarked.bam $tum $norm XY $ASCATDIR";
+	cd ..
+	echo $PWD
+done
+
+# Submit jobs for female samples
+
+for tum in `grep -v PDv38is_wes_v2 $PAIRS_XX | cut -f 1`; do 
+    norm=`grep $tum $PAIRS_XX | cut -f 2`
+    mkdir -p $tum-vs-$norm
+    cd $tum-vs-$norm
+    mkdir -p logs
+    bsub -e logs/$tum-$norm.e -o logs/$tum-$norm.o -n 8 -q normal -M35000 -R"select[mem>35000 && hname != 'node-13-09'] rusage[mem=35000]" "module load alleleCount/4.3.0 R/4.1.3; Rscript $SCRIPTDIR/run_ascat_exome.R $BAMDIR/$tum/$tum.sample.dupmarked.bam $BAMDIR/$norm/$norm.sample.dupmarked.bam $tum $norm XX $ASCATDIR";
+	cd ..
+	echo $PWD
+done
+
+
+
+
