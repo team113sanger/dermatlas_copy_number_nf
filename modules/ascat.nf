@@ -1,17 +1,26 @@
 process RUN_ASCAT_EXOMES {
+    publishDir "${params.OUTDIR}", mode: 'copy'
     input: 
-    tuple val(tumor_normal_pair), val(metadata) path(OUTDIR), path(PROJECTDIR)
+    tuple val(metadata), path(normbam), path(tumbam)
+    path(outdir)
+    path(project_dir)
+    
+    output:
+
 
     script:
-    def tum_bam = metadata.
-    """"
+    def tum = "${metadata.tumor}"
+    def norm = "${metadata.normal}"
+    def sexchr = "${metadata.sexchr}"
+    
+    """
     echo run_ascat_exome.R \
     --tum_bam $tumbam \
     --norm_bam $normbam \
     --tum_name $tum \
     --norm_name $norm \
     --sex $sexchr \
-    --outdir $OUTDIR/$tum-$norm \
-    --project_dir $PROJECTDIR
+    --outdir $tum-$norm \
+    --project_dir $project_dir
     """
 }
