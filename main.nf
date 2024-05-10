@@ -1,22 +1,7 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl = 2
+include { RUN_ASCAT_EXOMES } from './modules/ascat.nf'
 
-process RUN_ASCAT_EXOMES {
-    input: 
-    tuple val(sample_id), path(tumbam), path(normbam), val(norm), val(tum), val(sexchr), path(OUTDIR), path(PROJECTDIR)
-
-    script:
-    """"
-    run_ascat_exome.R \
-    --tum_bam $tumbam \
-    --norm_bam $normbam \
-    --tum_name $tum \
-    --norm_name $norm \
-    --sex $sexchr \
-    --outdir $OUTDIR/$tum-$norm \
-    --project_dir $PROJECTDIR
-    """
-}
 
 
 workflow  {
