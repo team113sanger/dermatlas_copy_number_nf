@@ -1,0 +1,30 @@
+nextflow_process {
+
+    name "Test Process RUN_ASCAT_EXOMES"
+    script "modules/ascat.nf"
+    process "RUN_ASCAT_EXOMES"
+
+    test("Should run without failures") {
+
+        when {
+            process {
+                // input[0] = tuple(
+                // [[pair_id:PD57536a_PD57536b], [normal:PD57536a, tumor:PD57536b, pair_id:PD57536a_PD57536b, Sex:M, Sanger DNA ID:PD57536b, OK_to_analyse_DNA?:NO, Phenotype:N, sexchr:XY, normal_file:/workspaces/ascat/tests/testdata/PD57536a.sample.dupmarked.bam, tumor_file:/workspaces/ascat/tests/testdata/PD57536b.sample.dupmarked.bam]], 
+                // file("/workspaces/ascat/tests/testdata/PD57536a.sample.dupmarked.bam"),
+                // file("/workspaces/ascat/tests/testdata/PD57536b.sample.dupmarked.bam"))
+                """
+                input[0] = "/workspaces/ascat"
+                input[1] = "/workspaces/ascat"
+                input[2] = "/workspaces/ascat/results"
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert snapshot(process.out).match()
+        }
+
+    }
+
+}

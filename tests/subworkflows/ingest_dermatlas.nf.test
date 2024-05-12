@@ -1,0 +1,30 @@
+nextflow_workflow {
+
+    name "Test Workflow DERMATLAS_METADATA"
+    script "subworkflows/ingest_dermatlas.nf"
+    workflow "DERMATLAS_METADATA"
+
+    test("Should run without failures") {
+
+        when {
+            params {
+                    "PROJECTDIR" = "/workspaces/ascat",
+                    "OUTDIR" = "/workspaces/ascat/results"
+            }
+            workflow {
+                """
+                input[0] = file("tests/testdata/PD57536a.sample.dupmarked.bam")
+                input[1] = file("tests/testdata/pair_ids.tsv")
+                input[2] = file("tests/testdata/metadata_tab")
+                """
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+}

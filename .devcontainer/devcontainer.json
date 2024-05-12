@@ -1,6 +1,7 @@
 {
     "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
     "features": {
-        "ghcr.io/robsyme/features/nextflow:1": {}
+        "ghcr.io/robsyme/features/nextflow:1": {},
+        "ghcr.io/robsyme/features/nf-test:1": {}
     }
 }

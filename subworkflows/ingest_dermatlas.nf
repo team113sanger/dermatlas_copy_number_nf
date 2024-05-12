@@ -1,4 +1,4 @@
-workflow INGEST_DERMATLAS {
+workflow DERMATLAS_METADATA {
     take: 
     bamfile_ch
     pair_identities
@@ -13,7 +13,7 @@ workflow INGEST_DERMATLAS {
 
     pids = pair_identities 
     .splitCsv(sep:"\t",header:['normal', 'tumor']) 
-    .map{meta -> 
+    .map{ meta -> 
         [meta + [pair_id: meta.normal+ "_" + meta.tumor]]
         }
     .flatMap { meta -> 
@@ -31,7 +31,7 @@ workflow INGEST_DERMATLAS {
             tuple(meta["Sanger DNA ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])
     }
 
-
+ 
     combined_metadata = bams
     .join(pids)
     .join(pmdata)
@@ -56,8 +56,8 @@ workflow INGEST_DERMATLAS {
         pair_id, meta -> 
         [pair_id, meta[0] + meta[1]]
     }
-    .map{ it -> tuple(it, it[1]["normal_file"], it[1]["tumor_file"])}
-    .view()
+    .map{ meta -> tuple(meta, meta[1]["normal_file"], meta[1]["tumor_file"])
+    }.view()
     
     emit:
         combined_metadata
