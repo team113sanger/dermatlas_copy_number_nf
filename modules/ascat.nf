@@ -65,19 +65,31 @@ process RUN_ASCAT_EXOMES {
 process SUMMARISE_ASCAT_ESTIMATES {
     publishDir "${params.OUTDIR}", mode: 'copy'
     input: 
-    path one_tumor_per_patient
+    tuple val(meta), path(collected_files)
+    path(sample_metadata)
+
+    output:
+    path("ascat_stats.tsv")
+    path("samples2sex.tsv") 
+    path("ascat_low_qual.list")
+    path("sample_purity_ploidy.tsv")
+    script:
+    """" 
+    summarise_ascat_estimates.pl collected_files > ascat_stats.tsv
+    awk '{print \$1"\t"\$5"\t"\$3}' ascat_stats.tsv  | sed 's/-/\t/' |cut -f 1,3,4 | grep PD | xargs -i basename {} > sample_purity_ploidy.tsv
+    awk '{print \$3"\t"\$2}' $metadata | grep PD > samples2sex.tsv
+    awk '\$2<90' ascat_stats.tsv | cut -f 1 -d "-" | cut -f 3 -d "/" >  ascat_low_qual.list
+    """
+}
+
+
+process CREATE_FREQUENCY_PLOTS {
+    input:
 
     output:
 
     script:
-    """"
-    source source_me_summarise.sh
-    ../../PD*/*est* | grep -wf $one_tumor_per_patient | sort > ascat_estimate_files.list
-    summarise_ascat_estimates.pl ascat_estimate_files.list > ascat_stats.tsv
-    awk '{print $1"\t"$5"\t"$3}' ascat_stats.tsv  | sed 's/-/\t/' |cut -f 1,3,4 | grep PD | xargs -i basename {} > sample_purity_ploidy.tsv
-    awk '{print $3"\t"$2}' ${PROJECTDIR}/metadata/allsamples2sex.tsv | grep PD > samples2sex.tsv
-    
-    # For all matched independent tumours, create a ${PROJECTDIR}/analysis/ASCAT/release_v1/independent directory
-    # and use the ${STUDY}_${PROJ}-independent_tumours_matched_tum.txt file
+    """
+    plot_ascat_cna_and_loh.R $segfiles_list $purity_ploidy $sample_sex $prefix
     """
 }
