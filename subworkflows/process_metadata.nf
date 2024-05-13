@@ -60,7 +60,7 @@ workflow DERMATLAS_METADATA {
         [pair_id, meta[0] + meta[1]]
     }
     .map{ meta -> tuple(meta, meta[1]["normal_file"], meta[1]["tumor_file"])
-    }.view()
+    }
     
     emit:
         combined_metadata

@@ -8,18 +8,18 @@ process RUN_ASCAT_EXOMES {
     path(project_dir)
     
     output:
-    tuple val(meta), path("QC_*.tsv"),                   emit: qc_metrics
-    tuple val(meta), path("ASCAT_estimates_*.tsv"),      emit: estimates
-    tuple val(meta), path("gistic2_segs_*.tsv"),         emit: gistic_inputs
-    tuple val(meta), path("*.png")                       emit: plots
-    tuple val(meta), path("ASCAT_objects.Rdata")         emit:rdata
-    tuple val(meta), path("*alleleFrequencies_chr*.txt"),      emit: allelefreqs
-    tuple val(meta), path("*BAF.txt"),                         emit: bafs
-    tuple val(meta), path("*cnvs.txt"),                        emit: cnvs
-    tuple val(meta), path("*LogR.txt"),                        emit: logrs
-    tuple val(meta), path("*metrics.txt"),                     emit: metrics
-    tuple val(meta), path("*purityploidy.txt"),                emit: purityploidy
-    tuple val(meta), path("*segments.txt"),                    emit: segments
+    // tuple val(meta), path("QC_*.tsv"),                   emit: qc_metrics
+    tuple val(metadata), path("ASCAT_estimates_*.tsv"),      emit: estimates
+    // tuple val(meta), path("gistic2_segs_*.tsv"),         emit: gistic_inputs
+    // tuple val(meta), path("*.png"),                       emit: plots
+    // tuple val(meta), path("ASCAT_objects.Rdata").         emit:rdata
+    // tuple val(meta), path("*alleleFrequencies_chr*.txt"),      emit: allelefreqs
+    // tuple val(meta), path("*BAF.txt"),                         emit: bafs
+    // tuple val(meta), path("*cnvs.txt"),                        emit: cnvs
+    // tuple val(meta), path("*LogR.txt"),                        emit: logrs
+    // tuple val(meta), path("*metrics.txt"),                     emit: metrics
+    // tuple val(meta), path("*purityploidy.txt"),                emit: purityploidy
+    tuple val(metadata), path("*segments.txt"),                    emit: segments
 
     script:
     def tum = "${metadata.tumor}"
@@ -40,6 +40,7 @@ process RUN_ASCAT_EXOMES {
     stub:
     def prefix = "${metadata.normal}"[1]
     """
+    echo stub > ASCAT_estimates_chr1.tsv
     echo stub > ${prefix}.after_correction.gc_rt.test.tumour.germline.png
     echo stub > ${prefix}.after_correction.gc_rt.test.tumour.tumour.png
     echo stub > ${prefix}.before_correction.test.tumour.germline.png
@@ -69,14 +70,22 @@ process SUMMARISE_ASCAT_ESTIMATES {
     // path(sample_metadata)
 
     output:
-    tuple val(meta), path("ascat_stats.tsv"), path("samples2sex.tsv"), path("ascat_low_qual.list"), path("sample_purity_ploidy.tsv"), emit: acat_sstats
+    tuple val(meta), path("ascat_stats.tsv"), path("samples2sex.tsv"), path("ascat_low_qual.list"), path("sample_purity_ploidy.tsv"), emit: ascat_sstats
 
     script:
-    """" 
-    summarise_ascat_estimates.pl $collected_files > ascat_stats.tsv
-    awk '{print \$1"\t"\$5"\t"\$3}' ascat_stats.tsv  | sed 's/-/\t/' |cut -f 1,3,4 | grep PD | xargs -i basename {} > sample_purity_ploidy.tsv
-    awk '\$2<90' ascat_stats.tsv | cut -f 1 -d "-" | cut -f 3 -d "/" >  ascat_low_qual.list
+    // awk '{print $1"\t"$5"\t"$3}' ascat_stats.tsv  | sed 's/-/\t/' |cut -f 1,3,4 | grep PD | xargs -i basename {} > sample_purity_ploidy.tsv
+    // awk '$2<90' ascat_stats.tsv | cut -f 1 -d "-" | cut -f 3 -d "/" >  ascat_low_qual.list
     """
+    echo summarise_ascat_estimates.pl $collected_files > ascat_stats.tsv
+    """
+    stub:
+    """
+    echo stub > samples2sex.tsv
+    echo stub > ascat_stats.tsv
+    echo stub > ascat_low_qual.list
+    echo stub > sample_purity_ploidy.tsv
+    """
+
 }
 
 
@@ -84,18 +93,23 @@ process CREATE_FREQUENCY_PLOTS {
     publishDir "${params.OUTDIR}", mode: 'copy'
     input:
     tuple val(meta), path(segfiles_list)
-    tuple val()
+    tuple val(meta), path(stats), path(sample_sex), path(unuser), path(purity_ploidy)
 
     output:
     tuple val(meta), path("*_cn-loh.pdf"), path("*_cn-loh.tsv")
-
     script:
-    def prefix = "TBC"
     """
-    plot_ascat_cna_and_loh.R 
+    echo plot_ascat_cna_and_loh.R \
     $segfiles_list \
     $purity_ploidy \
     $sample_sex \
     $prefix
     """
+    stub:
+    """
+    echo stub > x_cn-loh.pdf
+    echo stub > x_cn-loh.tsv
+    """
+
+
 }
