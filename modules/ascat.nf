@@ -1,5 +1,6 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.OUTDIR}", mode: 'copy'
+    // container: 
     
     input: 
     tuple val(metadata), path(normbam), path(tumbam)
@@ -7,12 +8,11 @@ process RUN_ASCAT_EXOMES {
     path(project_dir)
     
     output:
-    tuple val(meta), path("QC_*.tsv"),                   emit: qc_metrics
-    tuple val(meta), path("ASCAT_estimates_*.tsv"),      emit: estimates
-    tuple val(meta), path("gistic2_segs_*.tsv"),         emit: gistic_inputs
-    tuple val(meta), path("*.png")                       emit: plots
-    tuple val(meta), path("ASCAT_objects.Rdata")         emit:rdata
-
+    // tuple val(meta), path("QC_*.tsv"),                   emit: qc_metrics
+    // tuple val(meta), path("ASCAT_estimates_*.tsv"),      emit: estimates
+    // tuple val(meta), path("gistic2_segs_*.tsv"),         emit: gistic_inputs
+    // tuple val(meta), path("*.png")                       emit: plots
+    // tuple val(meta), path("ASCAT_objects.Rdata")         emit:rdata
     // tuple val(meta), path("*alleleFrequencies_chr*.txt"),      emit: allelefreqs
     // tuple val(meta), path("*BAF.txt"),                         emit: bafs
     // tuple val(meta), path("*cnvs.txt"),                        emit: cnvs
@@ -27,7 +27,7 @@ process RUN_ASCAT_EXOMES {
     def sexchr = "${metadata.sexchr}"
 
     """
-    echo run_ascat_exome.R \
+    run_ascat_exome.R \
     --tum_bam $tumbam \
     --norm_bam $normbam \
     --tum_name $tum \
@@ -38,7 +38,7 @@ process RUN_ASCAT_EXOMES {
     """
     
     stub:
-    def prefix = task.ext.prefix ?: "${meta.normal}"
+    def prefix = "${metadata.normal}"[1]
     """
     echo stub > ${prefix}.after_correction.gc_rt.test.tumour.germline.png
     echo stub > ${prefix}.after_correction.gc_rt.test.tumour.tumour.png
@@ -86,7 +86,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
 process CREATE_FREQUENCY_PLOTS {
     input:
 
-    output:
+//     output:
 
     script:
     """

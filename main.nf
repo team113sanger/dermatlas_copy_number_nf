@@ -6,9 +6,9 @@ include { DERMATLAS_METADATA } from './subworkflows/ingest_dermatlas.nf'
 
 
 workflow {
-bamfiles = Channel.fromPath("tests/testdata/*.bam")
-pair_ids   = Channel.fromPath("tests/testdata/pair_ids.tsv")
-patient_md = Channel.fromPath("tests/testdata/metadata_tab")
+bamfiles = Channel.fromPath(params.bamfiles)
+pair_ids   = Channel.fromPath(params.pair_ids)
+patient_md = Channel.fromPath(params.metadata)
 DERMATLAS_METADATA(bamfiles, pair_ids, patient_md)
 
 

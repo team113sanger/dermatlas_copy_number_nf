@@ -1,4 +1,8 @@
 {
     "PROJECTDIR": "/workspaces/ascat",
-    "OUTDIR": "/workspaces/ascat/results"
+    "OUTDIR": "/workspaces/ascat/results",
+    "bamfiles": "tests/testdata/*.bam",
+    "pair_ids": "tests/testdata/pair_ids.tsv",
+    "metadata": "tests/testdata/metadata_tab.tsv"
+
 }
