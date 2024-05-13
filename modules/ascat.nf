@@ -8,18 +8,18 @@ process RUN_ASCAT_EXOMES {
     path(project_dir)
     
     output:
-    // tuple val(meta), path("QC_*.tsv"),                   emit: qc_metrics
-    // tuple val(meta), path("ASCAT_estimates_*.tsv"),      emit: estimates
-    // tuple val(meta), path("gistic2_segs_*.tsv"),         emit: gistic_inputs
-    // tuple val(meta), path("*.png")                       emit: plots
-    // tuple val(meta), path("ASCAT_objects.Rdata")         emit:rdata
-    // tuple val(meta), path("*alleleFrequencies_chr*.txt"),      emit: allelefreqs
-    // tuple val(meta), path("*BAF.txt"),                         emit: bafs
-    // tuple val(meta), path("*cnvs.txt"),                        emit: cnvs
-    // tuple val(meta), path("*LogR.txt"),                        emit: logrs
-    // tuple val(meta), path("*metrics.txt"),                     emit: metrics
-    // tuple val(meta), path("*purityploidy.txt"),                emit: purityploidy
-    // tuple val(meta), path("*segments.txt"),                    emit: segments
+    tuple val(meta), path("QC_*.tsv"),                   emit: qc_metrics
+    tuple val(meta), path("ASCAT_estimates_*.tsv"),      emit: estimates
+    tuple val(meta), path("gistic2_segs_*.tsv"),         emit: gistic_inputs
+    tuple val(meta), path("*.png")                       emit: plots
+    tuple val(meta), path("ASCAT_objects.Rdata")         emit:rdata
+    tuple val(meta), path("*alleleFrequencies_chr*.txt"),      emit: allelefreqs
+    tuple val(meta), path("*BAF.txt"),                         emit: bafs
+    tuple val(meta), path("*cnvs.txt"),                        emit: cnvs
+    tuple val(meta), path("*LogR.txt"),                        emit: logrs
+    tuple val(meta), path("*metrics.txt"),                     emit: metrics
+    tuple val(meta), path("*purityploidy.txt"),                emit: purityploidy
+    tuple val(meta), path("*segments.txt"),                    emit: segments
 
     script:
     def tum = "${metadata.tumor}"
@@ -66,30 +66,36 @@ process SUMMARISE_ASCAT_ESTIMATES {
     publishDir "${params.OUTDIR}", mode: 'copy'
     input: 
     tuple val(meta), path(collected_files)
-    path(sample_metadata)
+    // path(sample_metadata)
 
     output:
-    path("ascat_stats.tsv")
-    path("samples2sex.tsv") 
-    path("ascat_low_qual.list")
-    path("sample_purity_ploidy.tsv")
+    tuple val(meta), path("ascat_stats.tsv"), path("samples2sex.tsv"), path("ascat_low_qual.list"), path("sample_purity_ploidy.tsv"), emit: acat_sstats
+
     script:
     """" 
-    summarise_ascat_estimates.pl collected_files > ascat_stats.tsv
+    summarise_ascat_estimates.pl $collected_files > ascat_stats.tsv
     awk '{print \$1"\t"\$5"\t"\$3}' ascat_stats.tsv  | sed 's/-/\t/' |cut -f 1,3,4 | grep PD | xargs -i basename {} > sample_purity_ploidy.tsv
-    awk '{print \$3"\t"\$2}' $metadata | grep PD > samples2sex.tsv
     awk '\$2<90' ascat_stats.tsv | cut -f 1 -d "-" | cut -f 3 -d "/" >  ascat_low_qual.list
     """
 }
 
 
 process CREATE_FREQUENCY_PLOTS {
+    publishDir "${params.OUTDIR}", mode: 'copy'
     input:
+    tuple val(meta), path(segfiles_list)
+    tuple val()
 
-//     output:
+    output:
+    tuple val(meta), path("*_cn-loh.pdf"), path("*_cn-loh.tsv")
 
     script:
+    def prefix = "TBC"
     """
-    plot_ascat_cna_and_loh.R $segfiles_list $purity_ploidy $sample_sex $prefix
+    plot_ascat_cna_and_loh.R 
+    $segfiles_list \
+    $purity_ploidy \
+    $sample_sex \
+    $prefix
     """
 }

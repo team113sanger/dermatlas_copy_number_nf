@@ -30,6 +30,9 @@ workflow DERMATLAS_METADATA {
     .map {meta -> 
             tuple(meta["Sanger DNA ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])
     }
+    // .filter{meta -> 
+    //         meta["OK_to_analyse_DNA?"] == Yes
+    // }
 
  
     combined_metadata = bams
