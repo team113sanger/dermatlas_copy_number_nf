@@ -12,10 +12,10 @@ nextflow_process {
                 """
                 input[0] = tuple(
                 [normal: 'PD57536a', tumor: 'PD57536b', pair_id: 'PD57536a_PD57536b', Sex: 'M', Sanger_DNA_ID: 'PD57536b', 'OK_to_analyse_DNA?': 'NO', Phenotype: 'N', sexchr: 'XY', normal_file: '/workspaces/ascat/tests/testdata/PD57536a.sample.dupmarked.bam', tumor_file: '/workspaces/ascat/tests/testdata/PD57536b.sample.dupmarked.bam'],
-                file("/workspaces/ascat/tests/testdata/PD57536a.sample.dupmarked.bam"),
-                file("/workspaces/ascat/tests/testdata/PD57536b.sample.dupmarked.bam"))
-                input[1] = "/workspaces/ascat"
-                input[2] = "/workspaces/ascat/results"
+                file("$baseDir/tests/testdata/PD57536a.sample.dupmarked.bam"),
+                file("$baseDir/tests/testdata/PD57536b.sample.dupmarked.bam"))
+                input[1] = "$baseDir"
+                input[2] = "$baseDir/results"
                 """
             }
         }
