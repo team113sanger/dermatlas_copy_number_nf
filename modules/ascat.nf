@@ -3,28 +3,28 @@ process RUN_ASCAT_EXOMES {
     // container: 
     
     input: 
-    tuple val(metadata), path(normbam), path(tumbam)
+    tuple val(meta), path(normbam), path(tumbam)
     path(outdir)
     path(project_dir)
     
     output:
-    // tuple val(meta), path("QC_*.tsv"),                   emit: qc_metrics
-    tuple val(metadata), path("ASCAT_estimates_*.tsv"),      emit: estimates
-    // tuple val(meta), path("gistic2_segs_*.tsv"),         emit: gistic_inputs
-    // tuple val(meta), path("*.png"),                       emit: plots
-    // tuple val(meta), path("ASCAT_objects.Rdata").         emit:rdata
-    // tuple val(meta), path("*alleleFrequencies_chr*.txt"),      emit: allelefreqs
-    // tuple val(meta), path("*BAF.txt"),                         emit: bafs
-    // tuple val(meta), path("*cnvs.txt"),                        emit: cnvs
-    // tuple val(meta), path("*LogR.txt"),                        emit: logrs
-    // tuple val(meta), path("*metrics.txt"),                     emit: metrics
-    // tuple val(meta), path("*purityploidy.txt"),                emit: purityploidy
-    tuple val(metadata), path("*segments.txt"),                    emit: segments
+    tuple val(meta), path("QC_*.tsv"),                   emit: qc_metrics
+    tuple val(meta), path("ASCAT_estimates_*.tsv"),      emit: estimates
+    tuple val(meta), path("gistic2_segs_*.tsv"),         emit: gistic_inputs
+    tuple val(meta), path("*.png"),                       emit: plots
+    tuple val(meta), path("ASCAT_objects.Rdata"),         emit:rdata
+    tuple val(meta), path("*alleleFrequencies_chr*.txt"),      emit: allelefreqs
+    tuple val(meta), path("*BAF.txt"),                         emit: bafs
+    tuple val(meta), path("*cnvs.txt"),                        emit: cnvs
+    tuple val(meta), path("*LogR.txt"),                        emit: logrs
+    tuple val(meta), path("*metrics.txt"),                     emit: metrics
+    tuple val(meta), path("*purityploidy.txt"),                emit: purityploidy
+    tuple val(meta), path("*segments.txt"),                    emit: segments
 
     script:
-    def tum = "${metadata.tumor}"
-    def norm = "${metadata.normal}"
-    def sexchr = "${metadata.sexchr}"
+    def tum = "${meta.tumor}"
+    def norm = "${meta.normal}"
+    def sexchr = "${meta.sexchr}"
 
     """
     run_ascat_exome.R \
@@ -38,9 +38,12 @@ process RUN_ASCAT_EXOMES {
     """
     
     stub:
-    def prefix = "${metadata.normal}"[1]
+    def prefix = "${meta.normal}"[1]
     """
     echo stub > ASCAT_estimates_chr1.tsv
+    echo stub > QC_temp.tsv
+    echo stub > gistic2_segs_temp.tsv
+    echo stub > ASCAT_objects.Rdata
     echo stub > ${prefix}.after_correction.gc_rt.test.tumour.germline.png
     echo stub > ${prefix}.after_correction.gc_rt.test.tumour.tumour.png
     echo stub > ${prefix}.before_correction.test.tumour.germline.png
@@ -67,7 +70,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
     publishDir "${params.OUTDIR}", mode: 'copy'
     input: 
     tuple val(meta), path(collected_files)
-    // path(sample_metadata)
+    // path(sample_meta)
 
     output:
     tuple val(meta), path("ascat_stats.tsv"), path("samples2sex.tsv"), path("ascat_low_qual.list"), path("sample_purity_ploidy.tsv"), emit: ascat_sstats
