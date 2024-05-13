@@ -1,18 +1,31 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.OUTDIR}", mode: 'copy'
+    
     input: 
     tuple val(metadata), path(normbam), path(tumbam)
     path(outdir)
     path(project_dir)
     
     output:
+    tuple val(meta), path("QC_*.tsv"),                   emit: qc_metrics
+    tuple val(meta), path("ASCAT_estimates_*.tsv"),      emit: estimates
+    tuple val(meta), path("gistic2_segs_*.tsv"),         emit: gistic_inputs
+    tuple val(meta), path("*.png")                       emit: plots
+    tuple val(meta), path("ASCAT_objects.Rdata")         emit:rdata
 
+    // tuple val(meta), path("*alleleFrequencies_chr*.txt"),      emit: allelefreqs
+    // tuple val(meta), path("*BAF.txt"),                         emit: bafs
+    // tuple val(meta), path("*cnvs.txt"),                        emit: cnvs
+    // tuple val(meta), path("*LogR.txt"),                        emit: logrs
+    // tuple val(meta), path("*metrics.txt"),                     emit: metrics
+    // tuple val(meta), path("*purityploidy.txt"),                emit: purityploidy
+    // tuple val(meta), path("*segments.txt"),                    emit: segments
 
     script:
     def tum = "${metadata.tumor}"
     def norm = "${metadata.normal}"
     def sexchr = "${metadata.sexchr}"
-    
+
     """
     echo run_ascat_exome.R \
     --tum_bam $tumbam \
@@ -22,5 +35,49 @@ process RUN_ASCAT_EXOMES {
     --sex $sexchr \
     --outdir $tum-$norm \
     --project_dir $project_dir
+    """
+    
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.normal}"
+    """
+    echo stub > ${prefix}.after_correction.gc_rt.test.tumour.germline.png
+    echo stub > ${prefix}.after_correction.gc_rt.test.tumour.tumour.png
+    echo stub > ${prefix}.before_correction.test.tumour.germline.png
+    echo stub > ${prefix}.before_correction.test.tumour.tumour.png
+    echo stub > ${prefix}.cnvs.txt
+    echo stub > ${prefix}.metrics.txt
+    echo stub > ${prefix}.normal_alleleFrequencies_chr21.txt
+    echo stub > ${prefix}.normal_alleleFrequencies_chr22.txt
+    echo stub > ${prefix}.purityploidy.txt
+    echo stub > ${prefix}.segments.txt
+    echo stub > ${prefix}.tumour.ASPCF.png
+    echo stub > ${prefix}.tumour.sunrise.png
+    echo stub > ${prefix}.tumour_alleleFrequencies_chr21.txt
+    echo stub > ${prefix}.tumour_alleleFrequencies_chr22.txt
+    echo stub > ${prefix}.tumour_normalBAF.txt
+    echo stub > ${prefix}.tumour_normalLogR.txt
+    echo stub > ${prefix}.tumour_tumourBAF.txt
+    echo stub > ${prefix}.tumour_tumourLogR.txt
+    """
+}
+
+
+process SUMMARISE_ASCAT_ESTIMATES {
+    publishDir "${params.OUTDIR}", mode: 'copy'
+    input: 
+    path one_tumor_per_patient
+
+    output:
+
+    script:
+    """"
+    source source_me_summarise.sh
+    ../../PD*/*est* | grep -wf $one_tumor_per_patient | sort > ascat_estimate_files.list
+    summarise_ascat_estimates.pl ascat_estimate_files.list > ascat_stats.tsv
+    awk '{print $1"\t"$5"\t"$3}' ascat_stats.tsv  | sed 's/-/\t/' |cut -f 1,3,4 | grep PD | xargs -i basename {} > sample_purity_ploidy.tsv
+    awk '{print $3"\t"$2}' ${PROJECTDIR}/metadata/allsamples2sex.tsv | grep PD > samples2sex.tsv
+    
+    # For all matched independent tumours, create a ${PROJECTDIR}/analysis/ASCAT/release_v1/independent directory
+    # and use the ${STUDY}_${PROJ}-independent_tumours_matched_tum.txt file
     """
 }

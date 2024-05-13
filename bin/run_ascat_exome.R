@@ -173,7 +173,7 @@ ascat.prepareHTS(
        allelecounter_exe = allelecounter_exe,
        alleles.prefix = alleles,
        loci.prefix = loci,
-	   gender = sex,
+       gender = sex,
        genomeVersion = "hg38",
        nthreads = 8,
        tumourLogR_file = NA,
