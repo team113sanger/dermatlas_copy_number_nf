@@ -35,5 +35,10 @@ CREATE_FREQUENCY_PLOTS(
     RUN_ASCAT_EXOMES.out.segments,
     SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats
     )
+
+GISTIC(
     
+)
+
+
 }
