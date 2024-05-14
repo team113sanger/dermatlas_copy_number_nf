@@ -11,7 +11,7 @@ process RUN_GISTIC {
     script:
     def f = 0
     """
-    gp_gistic2_from_seg \
+    echo gp_gistic2_from_seg \
     -b ${OUTDIR}/MIN_${f} \
     -seg min${f}_segments.tsv \
     -refgene $refgenefile \
