@@ -52,7 +52,7 @@ workflow DERMATLAS_METADATA {
          }
     .map{
         id, meta -> key = groupKey(meta.subMap("pair_id"),2)
-        [key,meta]
+        [key, meta]
     }
     .groupTuple()
     .map{
