@@ -72,11 +72,11 @@ process SUMMARISE_ASCAT_ESTIMATES {
     path(collected_files)
 
     output:
-    tuple path("ascat_stats.tsv"), path("samples2sex.tsv"),  path("ascat_low_qual.list"), path("sample_purity_ploidy.tsv"), emit: ascat_sstats
+    tuple path("ascat_stats.tsv"), path("ascat_low_qual.list"), path("sample_purity_ploidy.tsv"), emit: ascat_sstats
 
     script:
     """
-    echo summarise_ascat_estimates.pl $collected_files > ascat_stats.tsv
+    summarise_ascat_estimate.R
     awk '{print \$1"\t"\$5"\t"\$3}' ascat_stats.tsv  | sed 's/-/\t/' |cut -f 1,3,4 | grep PD | xargs -i basename {} > sample_purity_ploidy.tsv
     awk '\$2<90' ascat_stats.tsv | cut -f 1 -d "-" | cut -f 3 -d "/" >  ascat_low_qual.list
     """
@@ -95,11 +95,13 @@ process CREATE_FREQUENCY_PLOTS {
     publishDir "${params.OUTDIR}", mode: 'copy'
     input:
     path(segfiles_list)
-    tuple path(stats), path(sample_sex), path(ascat_low_qual), path(purity_ploidy)
+    tuple path(stats), path(ascat_low_qual), path(purity_ploidy)
+    path(sample_sex)
 
     output:
     tuple path("*_cn-loh.pdf"), path("*_cn-loh.tsv")
     script:
+    def prefix="TBC"
     """
     echo plot_ascat_cna_and_loh.R \
     $segfiles_list \

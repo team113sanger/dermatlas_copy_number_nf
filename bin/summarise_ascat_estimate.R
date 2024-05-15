@@ -1,6 +1,8 @@
-suppressPackageStartupMessages(library(dplyr))
-suppressPackageStartupMessages(library(purrr))
-suppressPackageStartupMessages(library(tidyr))
+#!/usr/bin/env Rscript
+
+library(dplyr)
+library(purrr)
+library(tidyr)
 
 estimate_files <- list.files(path = ".", 
                             full.names = TRUE, 
@@ -16,5 +18,5 @@ read_stats_file <- function(file){
 map_dfr(estimate_files, read_stats_file,.id = "File") |> 
 pivot_wider(names_from = key, values_from = value) |> 
 mutate(File = paste0("../../", File)) |>
-write.table("ascat_summary.tsv", 
+write.table("ascat_stats.tsv", 
             sep = "\t",quote = FALSE, row.names = FALSE)
