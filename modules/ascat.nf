@@ -1,6 +1,6 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.OUTDIR}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:629e43c0'
+    // container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:629e43c0'
     
     input: 
     tuple val(meta), path(normbam), path(tumbam)
