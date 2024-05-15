@@ -11,24 +11,24 @@ workflow ASCAT_ANALYSIS {
                     output_dir,
                     project_dir)
 
-    segments_list = RUN_ASCAT_EXOMES.out.segments
-                    | collect{meta, file -> file}
+    segments_list  = RUN_ASCAT_EXOMES.out.segments.collect{meta, file -> file}
+    segments_list.view()
+    estimates_list = RUN_ASCAT_EXOMES.out.estimates.collect{meta, file -> file}
+    // metadata \
+    // | collectFile(name: 'samples2chr.tsv', storeDir: $"{params.OUTDIR}"){
+    //     meta, tumor_bam, normal_bam -> 
+    //     [meta[0].subMap("pair_id"), meta[1].subMap("sexchr")],
+    //    }
     
-    metadata
-    | collectFile(name: 'samples2chr.tsv', storeDir: $"{params.OUTDIR}"){
-        meta, tumor_bam, normal_bam -> 
-        [meta[0].subMap("pair_id"), meta[1].subMap("sexchr")],
-       }
-    
-    SUMMARISE_ASCAT_ESTIMATES(RUN_ASCAT_EXOMES.out.estimates.collect{meta, file -> file})
-    SUMMARISE_ASCAT_ESTIMATES.out.ascat.low_quality
-    .splitCsv(sep:"\t",header:['pair_id'])
-    .set { pair_qualities }
+    SUMMARISE_ASCAT_ESTIMATES(estimates_list)
+    // SUMMARISE_ASCAT_ESTIMATES.out.ascat.low_quality
+    // .splitCsv(sep:"\t",header:['pair_id'])
+    // .set { pair_qualities }
 
-    all_ascat = RUN_ASCAT_EXOMES.out.segments
-                | map{ it -> }
-    pair_qualities
-    .join()
+    // all_ascat = RUN_ASCAT_EXOMES.out.segments
+    //             | map{ it -> }
+    // pair_qualities
+    // .join()
 
 
     CREATE_FREQUENCY_PLOTS(
