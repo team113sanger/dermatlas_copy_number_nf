@@ -12,7 +12,8 @@ nextflow run main.nf \
 -stub-run \
 -c nextflow.config
 
-module load alleleCount/4.3.0
+module load dermatlas-ascat/3.1.2__wip
+module load nextflow
 nextflow run main.nf \
 -params-file params.json \
 -c nextflow.config \

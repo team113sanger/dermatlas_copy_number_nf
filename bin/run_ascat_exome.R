@@ -1,6 +1,5 @@
 #!/usr/bin/env Rscript
-.libPaths(c(.libPaths(), "/software/team113/dermatlas/R/R-4.2.2/lib/R/library/"))
-.libPaths()
+source("/opt/repo/renv/activate.R")
 suppressMessages(library(ASCAT))
 suppressMessages(library(dplyr))
 suppressMessages(library(optparse))
@@ -21,12 +20,12 @@ suppressMessages(library(optparse))
 
 allelecounter_exe = "alleleCounter"
 
-allelecount_status <- system("alleleCounter", intern = F, ignore.stdout = T)
+# allelecount_status <- system("alleleCounter", intern = F, ignore.stdout = T)
 
-if (allelecount_status == 127) {
-	stop("alleleCounter/4.3.0 module not loaded.")
-}
-
+# if (allelecount_status == 127) {
+# 	stop("alleleCounter/4.3.0 module not loaded.")
+# }
+print(allelecount_status)
 ########## Create an options list and parse options ##########
 
 option_list<- list(
