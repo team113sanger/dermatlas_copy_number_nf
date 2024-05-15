@@ -2,6 +2,8 @@
     "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
     "features": {
         "ghcr.io/robsyme/features/nextflow:1": {},
-        "ghcr.io/robsyme/features/nf-test:1": {}
+        "ghcr.io/robsyme/features/nf-test:1": {},
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/rocker-org/devcontainer-features/r-rig:1": {}
     }
 }

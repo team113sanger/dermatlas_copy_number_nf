@@ -7,8 +7,7 @@ workflow ASCAT_ANALYSIS {
     project_dir
 
     main:
-    metadata_ch = metadata
-    RUN_ASCAT_EXOMES(metadata_ch,
+    RUN_ASCAT_EXOMES(metadata,
                     output_dir,
                     project_dir)
 
@@ -18,18 +17,17 @@ workflow ASCAT_ANALYSIS {
     //     meta, tumor_bam, normal_bam -> 
     //     [meta[0].subMap("pair_id"), meta[1].subMap("sexchr")],
     //     name: 'samples2chr.tsv' }
-    SUMMARISE_ASCAT_ESTIMATES(
-        RUN_ASCAT_EXOMES.out.estimates.collect{meta, file -> file}
-        )
+    SUMMARISE_ASCAT_ESTIMATES( RUN_ASCAT_EXOMES.out.estimates.collect{meta, file -> file})
 
     CREATE_FREQUENCY_PLOTS(
         segments_list,
         SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats
         )
     segments = RUN_ASCAT_EXOMES.out.segments
-    estimates = CREATE_FREQUENCY_PLOTS.out    
+    estimates = RUN_ASCAT_EXOMES.out.estimates    
     plots = CREATE_FREQUENCY_PLOTS.out
 emit: 
     segments
+    estimates
     plots
 }

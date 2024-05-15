@@ -1,7 +1,7 @@
 nextflow_workflow {
 
     name "Test Workflow DERMATLAS_METADATA"
-    script "subworkflows/ingest_dermatlas.nf"
+    script "subworkflows/process_metadata.nf"
     workflow "DERMATLAS_METADATA"
 
     test("Should run without failures") {

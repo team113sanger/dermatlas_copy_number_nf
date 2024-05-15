@@ -1,8 +1,3 @@
-#.libPaths(c("/nfs/casm/team113da/users/kw10/lib/R-4.1.3/"))
-#.libPaths(c(.libPaths(), "/software/team113/dermatlas/R/R-4.2.2/lib/R/library/", "/nfs/casm/team113da/dermatlas/lib/R-4-2.2/"))
-.libPaths(c(.libPaths(), "/software/team113/dermatlas/R/R-4.2.2/lib/R/library/"))
-.libPaths()
-
 suppressMessages(library(ASCAT))
 suppressMessages(library(dplyr))
 suppressMessages(library(optparse))

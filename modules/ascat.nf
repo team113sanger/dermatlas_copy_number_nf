@@ -1,6 +1,6 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.OUTDIR}", mode: 'copy'
-    // container: 
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:629e43c0'
     
     input: 
     tuple val(meta), path(normbam), path(tumbam)
@@ -70,7 +70,6 @@ process SUMMARISE_ASCAT_ESTIMATES {
     publishDir "${params.OUTDIR}", mode: 'copy'
     input: 
     path(collected_files)
-    // path(sample_meta)
 
     output:
     tuple path("ascat_stats.tsv"), path("samples2sex.tsv"), path("ascat_low_qual.list"), path("sample_purity_ploidy.tsv"), emit: ascat_sstats

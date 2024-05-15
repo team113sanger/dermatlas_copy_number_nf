@@ -15,6 +15,7 @@ workflow {
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out, 
                     params.OUTDIR, 
                     params.PROJECTDIR)
+    ASCAT_ANALYSIS.out.estimates.view()
     ASCAT_ANALYSIS.out.segments.view()
     // GISTIC(segments_list)
     // SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats[4]
