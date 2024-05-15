@@ -31,15 +31,15 @@ workflow ASCAT_ANALYSIS {
     // .join()
 
 
-    CREATE_FREQUENCY_PLOTS(
-        segments_list,
-        SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats
-        )
-    segments = RUN_ASCAT_EXOMES.out.segments
-    estimates = RUN_ASCAT_EXOMES.out.estimates    
-    plots = CREATE_FREQUENCY_PLOTS.out
-emit: 
-    segments
-    estimates
-    plots
+    // CREATE_FREQUENCY_PLOTS(
+    //     segments_list,
+    //     SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats
+    //     )
+    // segments = RUN_ASCAT_EXOMES.out.segments
+    // estimates = RUN_ASCAT_EXOMES.out.estimates    
+    // plots = CREATE_FREQUENCY_PLOTS.out
+// emit: 
+    // segments
+    // estimates
+    // plots
 }

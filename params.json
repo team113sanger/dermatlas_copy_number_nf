@@ -1,8 +1,7 @@
 {
-    "PROJECTDIR": "/workspaces/ascat",
-    "OUTDIR": "/workspaces/ascat/results",
-    "bamfiles": "tests/testdata/*.bam",
-    "pair_ids": "tests/testdata/pair_ids.tsv",
-    "metadata": "tests/testdata/metadata_tab.tsv"
-
+    "PROJECTDIR": "/lustre/scratch125/casm/team113da/projects/dermatlas_pu2_project_dir/6509_2707_DERMATLAS_Leiomyoma_WES",
+    "OUTDIR": "/lustre/scratch125/casm/team113da/users/jb63/ascat_testing/results",
+    "bamfiles": "/lustre/scratch125/casm/team113da/projects/dermatlas_pu2_project_dir/6509_2707_DERMATLAS_Leiomyoma_WES/bams/*/*.bam",
+    "pair_ids": "/lustre/scratch125/casm/team113da/users/jb63/ascat/tests/testdata/pair_ids.tsv",
+    "metadata": "/lustre/scratch125/casm/team113da/users/jb63/ascat/tests/testdata/metadata_tab.tsv"
 }

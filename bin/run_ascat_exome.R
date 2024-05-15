@@ -1,18 +1,21 @@
+#!/usr/bin/env Rscript
+.libPaths(c(.libPaths(), "/software/team113/dermatlas/R/R-4.2.2/lib/R/library/"))
+.libPaths()
 suppressMessages(library(ASCAT))
 suppressMessages(library(dplyr))
 suppressMessages(library(optparse))
 
 ########## Load alleleCount/4.3.0 ##########
-#
-#print("Loading alleleCount/4.3.0")
-#
-#load_status <- system("bash -c \"module load alleleCount/4.3.0\"", intern = F, ignore.stdout   = T)
-#
-#if (as.numeric(load_status > 0)) {
-#	stop("Problem loading alleleCount/4.3.0")
-#} else {
-#	print("Loaded alleleCount 4.3.0")
-#}
+
+# print("Loading alleleCount/4.3.0")
+
+# load_status <- system("bash -c \"module load alleleCount/4.3.0\"", intern = F, ignore.stdout   = T)
+
+# if (as.numeric(load_status > 0)) {
+# 	stop("Problem loading alleleCount/4.3.0")
+# } else {
+# 	print("Loaded alleleCount 4.3.0")
+# }
 
 ########## Test for alleleCounter ##########
 

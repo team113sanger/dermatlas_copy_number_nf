@@ -5,7 +5,7 @@ process RUN_ASCAT_EXOMES {
     input: 
     tuple val(meta), path(normbam), path(tumbam)
     path(outdir)
-    path(project_dir)
+    val(project_dir)
     
     output:
     tuple val(meta), path("QC_*.tsv"),                     emit: qc_metrics
@@ -22,9 +22,9 @@ process RUN_ASCAT_EXOMES {
     tuple val(meta), path("*segments.txt"),                emit: segments
 
     script:
-    def tum = "${meta.tumor}"
-    def norm = "${meta.normal}"
-    def sexchr = "${meta.sexchr}"
+    def tum = "${meta[1].tumor}"
+    def norm = "${meta[1].normal}"
+    def sexchr = "${meta[1].sexchr}"
     """
     run_ascat_exome.R \
     --tum_bam $tumbam \
