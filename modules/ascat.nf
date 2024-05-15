@@ -72,7 +72,8 @@ process SUMMARISE_ASCAT_ESTIMATES {
     path(collected_files)
 
     output:
-    tuple path("ascat_stats.tsv"), path("samples2sex.tsv"), path("ascat_low_qual.list"), path("sample_purity_ploidy.tsv"), emit: ascat_sstats
+    tuple path("ascat_stats.tsv"), path("samples2sex.tsv"), path("sample_purity_ploidy.tsv"), emit: ascat_sstats
+    path("ascat_low_qual.list"), emit: low_quality
 
     script:
     """
