@@ -6,6 +6,8 @@ process RUN_ASCAT_EXOMES {
     tuple val(meta), path(normbam), path(tumbam)
     path(outdir)
     val(project_dir)
+    tuple path(genome), path(baits)
+
     
     output:
     tuple val(meta), path("QC_*.tsv"),                     emit: qc_metrics
@@ -33,6 +35,8 @@ process RUN_ASCAT_EXOMES {
     --norm_name $norm \
     --sex $sexchr \
     --outdir $tum-$norm \
+    --ref_file $genome \
+    --bed_file $baits \
     --project_dir $project_dir
     """
     

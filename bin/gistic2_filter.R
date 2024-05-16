@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 ################################################################################################################
 ## The goal of the script get_wide_peaks.R is to generate a list of GISTIC2 wide peaks that can be considered ##
 ## in downstream analyses. Taking a GISTIC2 all_lesions file and an ASCAT segments file, this script will do  ##
@@ -14,14 +16,14 @@
 ####---- Load packages ----####
 ###############################
 
-suppressWarnings(suppressMessages(library(Matrix)))
-suppressWarnings(suppressMessages(library(expm)))
-suppressWarnings(suppressMessages(library(DescTools)))
-suppressWarnings(suppressMessages(library(optparse)))
-suppressWarnings(suppressMessages(library(stringr)))
-suppressWarnings(suppressMessages(library(dplyr)))
-suppressWarnings(suppressMessages(library(tidyr)))
-suppressWarnings(suppressMessages(library(reshape2)))
+(library(Matrix))
+(library(expm))
+(library(DescTools))
+(library(optparse))
+(library(stringr))
+(library(dplyr))
+(library(tidyr))
+(library(reshape2))
 library(valr)
 
 

@@ -3,6 +3,8 @@
     "OUTDIR": "/workspaces/ascat/results",
     "bamfiles": "/opt/data/bams/**.bam",
     "pair_ids": "tests/testdata/pair_ids.tsv",
-    "metadata": "tests/testdata/metadata_tab.tsv"
+    "metadata": "tests/testdata/metadata_tab.tsv",
+    "ref_genome": "/opt/GRCh38_full_analysis_set_plus_decoy_hla.fa",
+    "bait_set": "/opt/GRCh38_WES5_canonical_pad100.merged.bed"
 
 }

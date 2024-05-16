@@ -11,7 +11,7 @@ process RUN_GISTIC {
     script:
     def f = 0
     """
-    echo gp_gistic2_from_seg \
+    gp_gistic2_from_seg \
     -b ${OUTDIR}/MIN_${f} \
     -seg min${f}_segments.tsv \
     -refgene $refgenefile \
@@ -26,6 +26,9 @@ process RUN_GISTIC {
     -v 20 \
     -ta 0.25 \
     -td 0.25
+    """
+    script:
+    """
     """
 
     stub: 
@@ -42,16 +45,20 @@ process FILTER_GISTIC_CALLS{
     path(difficult_regions)
 
     output:
-    tuple path("_gistic_sample_summary.tsv"), path("_gistic_cohort_summary.tsv")
+    tuple path("*_gistic_sample_summary.tsv"), path("*_gistic_cohort_summary.tsv")
 
     script:
     """
-    run_gistic2_filter.sh ${PROJECTDIR} \
-    all_lesions.conf_95.txt ${ASCAT_SEGS} \
+    gistic2_filter.R
+    ${PROJECTDIR} \
+    all_lesions.conf_95.txt \
+    ${ASCAT_SEGS} \
     QC \
     $difficult_regions
     """
-
+    script:
+    """
+    """
     stub: 
     """
     echo stub > QC_gistic_sample_summary.tsv

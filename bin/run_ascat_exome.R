@@ -1,21 +1,9 @@
 #!/usr/bin/env Rscript
 source("/opt/repo/renv/activate.R")
-# renv::update()
-suppressMessages(library(ASCAT))
-suppressMessages(library(dplyr))
-suppressMessages(library(optparse))
+ibrary(ASCAT)
+ibrary(dplyr)
+ibrary(optparse)
 
-########## Load alleleCount/4.3.0 ##########
-
-# print("Loading alleleCount/4.3.0")
-
-# load_status <- system("bash -c \"module load alleleCount/4.3.0\"", intern = F, ignore.stdout   = T)
-
-# if (as.numeric(load_status > 0)) {
-# 	stop("Problem loading alleleCount/4.3.0")
-# } else {
-# 	print("Loaded alleleCount 4.3.0")
-# }
 
 ########## Test for alleleCounter ##########
 
@@ -23,9 +11,6 @@ allelecounter_exe = "alleleCounter"
 
 allelecount_status <- system("alleleCounter", intern = F, ignore.stdout = T)
 
-# if (allelecount_status == 127) {
-# 	stop("alleleCounter/4.3.0 module not loaded.")
-# }
 print(allelecount_status)
 ########## Create an options list and parse options ##########
 
@@ -34,9 +19,12 @@ option_list<- list(
   make_option(c("--norm_bam"), action = "store_true", default = NA, type = "character", help = "Path to the normal BAM file"), 
   make_option(c("--tum_name"), action = "store_true", default = NA, type = "character", help = "Tumour sample name"), 
   make_option(c("--norm_name"), action = "store_true", default = NA, type = "character", help = "Normal sample name"), 
+  make_option(c("--ref_file"), action = "store_true", default = NA, type = "character", help = "Reference genome file"), 
+  make_option(c("--bed_file"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
   make_option(c("--sex"), action = "store_true", default = NA, type = "character", help = "Patient sex, XX or XY"), 
   make_option(c("--project_dir"), action = "store_true", type = "character", default = NA,  help = "This is the path of the project directory"), 
   make_option(c("--outdir" ), action = "store_true", type = "character", default = NA, help = "Path to the output directory")
+
 )
 
 arguments <- parse_args(OptionParser(option_list = option_list), positional_arguments = 0)
@@ -128,8 +116,8 @@ print(paste("Output dir is", outdir))
 
 # Shared reference files
 
-ref_file = "/lustre/scratch124/casm/team113/ref/human/GRCh38/GRCh38_full_analysis_set_plus_decoy_hla.fa"
-bed_file = "/lustre/scratch125/casm/team113da/projects/DERMATLAS/metadata/references/baitset/DNA/GRCh38_WES5_canonical_pad100.merged.bed"
+ref_file <- args$ref_file
+bed_file <- args$bait_file
 
 # ASCAT/Battenberg files in project directory
 

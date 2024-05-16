@@ -11,8 +11,9 @@ workflow ASCAT_ANALYSIS {
                     output_dir,
                     project_dir)
 
-    segments_list  = RUN_ASCAT_EXOMES.out.segments.collect{meta, file -> file}
-    segments_list.view()
+    segments_list  = RUN_ASCAT_EXOMES.out.segments
+    .filter{meta, file -> meta[0]['pair_id'] in }
+    // .collect{meta, file -> file}
     estimates_list = RUN_ASCAT_EXOMES.out.estimates.collect{meta, file -> file}
     // metadata \
     // | collectFile(name: 'samples2chr.tsv', storeDir: $"{params.OUTDIR}"){
@@ -21,9 +22,11 @@ workflow ASCAT_ANALYSIS {
     //    }
     
     SUMMARISE_ASCAT_ESTIMATES(estimates_list)
-    // SUMMARISE_ASCAT_ESTIMATES.out.ascat.low_quality
-    // .splitCsv(sep:"\t",header:['pair_id'])
-    // .set { pair_qualities }
+    SUMMARISE_ASCAT_ESTIMATES.out.ascat.low_quality
+    .splitCsv(sep:"\t",header:['pair_id'])
+    .flatten()
+    .set { pair_qualities }
+    pair_qualities.view()
 
     // all_ascat = RUN_ASCAT_EXOMES.out.segments
     //             | map{ it -> }
