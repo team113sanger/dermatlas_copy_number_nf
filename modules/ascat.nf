@@ -44,8 +44,7 @@ process RUN_ASCAT_EXOMES {
     --bed_file $baits \
     --alleles $allele_dir \
     --gc_file $gc_file \
-    --rt_file $rt_file \
-    --project_dir $project_dir
+    --rt_file $rt_file 
     """
     
     stub:
@@ -86,7 +85,9 @@ process SUMMARISE_ASCAT_ESTIMATES {
     path(collected_files)
 
     output:
-    tuple path("ascat_stats.tsv"), path("ascat_low_qual.list"), path("sample_purity_ploidy.tsv"), emit: ascat_sstats
+    path("ascat_stats.tsv"), emit: ascat_sstats
+    path("ascat_low_qual.list"), emit: low_quality
+    path("sample_purity_ploidy.tsv"), emit: purity
 
     script:
     """

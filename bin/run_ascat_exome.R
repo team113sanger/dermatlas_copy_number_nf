@@ -4,14 +4,10 @@ library(ASCAT)
 library(dplyr)
 library(optparse)
 
-
-########## Test for alleleCounter ##########
-
 allelecounter_exe = "alleleCounter"
 
-allelecount_status <- system("alleleCounter", intern = F, ignore.stdout = T)
+# allelecount_status <- system("alleleCounter", intern = F, ignore.stdout = T)
 
-print(allelecount_status)
 
 ########## Create an options list and parse options ##########
 
@@ -25,7 +21,6 @@ option_list<- list(
   make_option(c("--alleles"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"),   make_option(c("--gc_file"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
   make_option(c("--rt_file"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
   make_option(c("--sex"), action = "store_true", default = NA, type = "character", help = "Patient sex, XX or XY"), 
-  make_option(c("--project_dir"), action = "store_true", type = "character", default = NA,  help = "This is the path of the project directory"), 
   make_option(c("--outdir" ), action = "store_true", type = "character", default = NA, help = "Path to the output directory")
 
 )
@@ -70,17 +65,6 @@ if (is.na(args$sex) || ((! is.na(args$sex) && (args$sex != "XX" && args$sex != "
 	stop("Patient sex must be provided as --sex XX or --sex XY")
 }
 
-
-# Check project directory exists
-
-if (is.na(args$project_dir)) {
-	stop("Provide a path to the project directory with --project_dir")
-} else {
-	if (! dir.exists(args$project_dir)) {
-		stop(paste("Directory does not exist:", args$project_dir))
-	}
-}
-
 # Check output directory
 
 if (is.na(args$outdir)) {
@@ -102,12 +86,10 @@ tum_bam <- args$tum_bam
 norm_bam <- args$norm_bam
 tum_name <- args$tum_name
 norm_name <- args$norm_name
-sex <- args$sex  # XX or XY
+sex <- args$sex 
 outdir <- args$outdir
 ref_file <- args$ref_file
 bed_file <- args$bed_file
-print(ref_file)
-print(bed_file)
 alleles <- args$alleles
 gc_file <- args$gc_file
 rt_file <- args$rt_file
@@ -123,31 +105,24 @@ print(paste("Output dir is", outdir))
 
 ########## Check required input files ##########
 
-# Shared reference files
-
-
-# ASCAT/Battenberg files in project directory
-
-
-
 # Check that required inputs exist
 
-# for (file in c(gc_file, rt_file)) {
-# 	if(! file.exists(file)) {
-# 		stop(paste("Reference file does not exist:", file))
-# 	} else {
-# 		print(paste("Found:", file))
-# 	}
-# }
+for (file in c(gc_file, rt_file)) {
+	if(! file.exists(file)) {
+		stop(paste("Reference file does not exist:", file))
+	} else {
+		print(paste("Found:", file))
+	}
+}
 
-# for (prefix in c(alleles, loci)) {
-# 	dirs <- dirname(prefix)
-# 	if (! dir.exists(dirs)) {
-# 		stop(paste("Directory does not exist:", dirs))
-# 	} else {
-# 		print(paste("Found:", dirs))
-# 	}
-# }
+for (prefix in c(alleles)) {
+	dirs <- dirname(prefix)
+	if (! dir.exists(dirs)) {
+		stop(paste("Directory does not exist:", dirs))
+	} else {
+		print(paste("Found:", dirs))
+	}
+}
 
 
 

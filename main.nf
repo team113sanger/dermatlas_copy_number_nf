@@ -17,7 +17,7 @@ workflow {
     rt_file = Channel.of(file(params.rt_file))
 
 
-    DERMATLAS_METADATA(bamfiles, index_files, pair_ids, patient_md).view()
+    DERMATLAS_METADATA(bamfiles, index_files, pair_ids, patient_md)
 
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out, 
                     params.OUTDIR, 
