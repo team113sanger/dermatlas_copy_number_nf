@@ -8,13 +8,13 @@ workflow {
     bamfiles   = Channel.fromPath(params.bam_files)
     pair_ids   = Channel.fromPath(params.tumor_normal_pairs)
     patient_md = Channel.fromPath(params.metadata_manifest)
-    reference_files = Channel.of([file(params.reference_genome), 
-                                  file(params.bait_set), 
-                                  file(params.allele_files),
-                                  file(params.loci_files), 
-                                  file(params.gc_file), 
-                                  file(params.rt_file)])
-    reference_files.view()
+    reference_genome = Channel.of(file(params.reference_genome))
+    bait_set = Channel.of(file(params.bait_set))
+    allele_files = Channel.of(file(params.allele_files))
+    loci_files = Channel.of(file(params.loci_files)) 
+    gc_file = Channel.of(file(params.gc_file))
+    rt_file = Channel.of(file(params.rt_file))
+
 
     DERMATLAS_METADATA(bamfiles, pair_ids, patient_md)
 
@@ -22,8 +22,13 @@ workflow {
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out, 
                     params.OUTDIR, 
                     params.PROJECTDIR, 
-                    reference_files)
-    // ASCAT_ANALYSIS.out.estimates.view()
+                    reference_genome,
+                    bait_set,
+                    allele_files,
+                    loci_files,
+                    gc_file,
+                    rt_file)
+    ASCAT_ANALYSIS.out.estimates.view()
     // ASCAT_ANALYSIS.out.segments.view()
     // GISTIC_ANALYSIS()
     // GISTIC(segments_list)

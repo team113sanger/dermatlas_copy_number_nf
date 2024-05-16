@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
-# source("/opt/repo/renv/activate.R")
+source("/opt/repo/renv/activate.R")
 library(ASCAT)
 library(dplyr)
 library(optparse)
@@ -154,7 +154,10 @@ for (prefix in c(alleles, loci)) {
 }
 
 
-
+    allele_path <- normalizePath(alleles)
+    allele_prefix <- paste0(allele_path, "/", alleles, "_chr")
+    loci_path <- normalizePath(loci)
+    loci_prefix <- paste0(loci_path, "/", loci, "_chr")
 ########## Run ASCAT ##########
 
 # Run prepareHTS with a fixed seed for reproducibility
@@ -165,8 +168,8 @@ ascat.prepareHTS(
        tumourname = tum_name,
        normalname = norm_name,
        allelecounter_exe = allelecounter_exe,
-       alleles.prefix = alleles,
-       loci.prefix = loci,
+       alleles.prefix = allele_prefix,
+       loci.prefix = loci_prefix,
        gender = sex,
        genomeVersion = "hg38",
        nthreads = 8,
