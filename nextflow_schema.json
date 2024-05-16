@@ -24,13 +24,16 @@
             "type": "string"
         },
         "metadata_manifest": {
-            "type": "file"
+            "type": "string"
         },
         "reference_genome": {
-            "type": "file"
+            "type": "string",
+            "format": "file-path"
+
         }, 
         "bait_set": {
-            "type": "file"
+            "type": "string",
+            "format": "file-path"
         },
         "allele_files": {
             "type": "string"
@@ -39,10 +42,12 @@
             "type": "string"
         },
         "gc_file": {
-            "type": "string"
+            "type": "string",
+            "format": "file-path"
         },
         "rt_file": {
-            "type": "string"
+            "type": "string",
+            "format": "file-path"
         }
     }}
 
