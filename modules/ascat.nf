@@ -1,6 +1,6 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.OUTDIR}", mode: 'copy'
-    // container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:629e43c0'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:0ee0535c'
     
     input: 
     tuple val(meta), path(normbam), path(tumbam)
@@ -68,6 +68,8 @@ process RUN_ASCAT_EXOMES {
 
 process SUMMARISE_ASCAT_ESTIMATES {
     publishDir "${params.OUTDIR}", mode: 'copy'
+        container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:0ee0535c'
+
     input: 
     path(collected_files)
 
@@ -93,6 +95,8 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
 process CREATE_FREQUENCY_PLOTS {
     publishDir "${params.OUTDIR}", mode: 'copy'
+        container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:92593e3a'
+
     input:
     path(segfiles_list)
     tuple path(stats), path(ascat_low_qual), path(purity_ploidy)
@@ -103,7 +107,7 @@ process CREATE_FREQUENCY_PLOTS {
     script:
     def prefix="TBC"
     """
-    echo plot_ascat_cna_and_loh.R \
+    plot_ascat_cna_and_loh.R \
     $segfiles_list \
     $purity_ploidy \
     $sample_sex \

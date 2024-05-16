@@ -1,4 +1,5 @@
 #!/usr/bin/env Rscript
+source("/opt/repo/renv/activate.R")
 
 library(dplyr)
 library(purrr)

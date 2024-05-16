@@ -14,7 +14,7 @@ nextflow_process {
                 input[1] = tuple('$baseDir/tests/testdata/ascat_stats.tsv', 
                                  '$baseDir/tests/testdata/ascat_low_qual.list',
                                  '$baseDir/tests/testdata/sample_purity_ploidy.tsv')
-                input[2] = '$baseDir/tests/testdata/samples2sex.tsv'
+                input[2] =       '$baseDir/tests/testdata/samples2sex.tsv'
                 """
             }
         }

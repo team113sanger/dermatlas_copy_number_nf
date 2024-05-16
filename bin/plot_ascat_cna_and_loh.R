@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+source("/opt/repo/renv/activate.R")
 suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(IRanges))
 suppressPackageStartupMessages(library(GenomicRanges))

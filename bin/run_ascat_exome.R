@@ -1,5 +1,6 @@
 #!/usr/bin/env Rscript
 source("/opt/repo/renv/activate.R")
+# renv::update()
 suppressMessages(library(ASCAT))
 suppressMessages(library(dplyr))
 suppressMessages(library(optparse))
@@ -20,7 +21,7 @@ suppressMessages(library(optparse))
 
 allelecounter_exe = "alleleCounter"
 
-# allelecount_status <- system("alleleCounter", intern = F, ignore.stdout = T)
+allelecount_status <- system("alleleCounter", intern = F, ignore.stdout = T)
 
 # if (allelecount_status == 127) {
 # 	stop("alleleCounter/4.3.0 module not loaded.")

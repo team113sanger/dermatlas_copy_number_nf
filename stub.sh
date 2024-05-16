@@ -12,9 +12,8 @@ nextflow run main.nf \
 -stub-run \
 -c nextflow.config
 
-module load dermatlas-ascat/3.1.2__wip
-module load nextflow
+# module load dermatlas-ascat/3.1.2__wip
+# module load nextflow
 nextflow run main.nf \
 -params-file params.json \
--c nextflow.config \
--profile cluster
+-c tests/nf-test.config 
