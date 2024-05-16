@@ -10,8 +10,8 @@ workflow {
     patient_md = Channel.fromPath(params.metadata_manifest)
     reference_files = Channel.of([file(params.reference_genome), 
                                   file(params.bait_set), 
-                                  file(params.alleles),
-                                  file(params.loci), 
+                                  file(params.allele_files),
+                                  file(params.loci_files), 
                                   file(params.gc_file), 
                                   file(params.rt_file)])
     reference_files.view()

@@ -1,6 +1,6 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.OUTDIR}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:0ee0535c'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:92593e3a'
     
     input: 
     tuple val(meta), path(normbam), path(tumbam)
@@ -27,8 +27,9 @@ process RUN_ASCAT_EXOMES {
     def tum = "${meta[1].tumor}"
     def norm = "${meta[1].normal}"
     def sexchr = "${meta[1].sexchr}"
+    // def idxbase = allele[0].baseName
     """
-    run_ascat_exome.R \
+    /opt/repo/run_ascat_exome.R \
     --tum_bam $tumbam \
     --norm_bam $normbam \
     --tum_name $tum \

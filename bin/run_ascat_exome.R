@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
-source("/opt/repo/renv/activate.R")
+# source("/opt/repo/renv/activate.R")
 library(ASCAT)
 library(dplyr)
 library(optparse)
@@ -12,6 +12,7 @@ allelecounter_exe = "alleleCounter"
 allelecount_status <- system("alleleCounter", intern = F, ignore.stdout = T)
 
 print(allelecount_status)
+
 ########## Create an options list and parse options ##########
 
 option_list<- list(
