@@ -105,7 +105,6 @@ norm_bam <- args$norm_bam
 tum_name <- args$tum_name
 norm_name <- args$norm_name
 sex <- args$sex  # XX or XY
-PROJECTDIR <- args$project_dir
 outdir <- args$outdir
 ref_file <- args$ref_file
 bed_file <- args$bed_file
@@ -154,10 +153,10 @@ for (prefix in c(alleles, loci)) {
 }
 
 
-    allele_path <- normalizePath(alleles)
-    allele_prefix <- paste0(allele_path, "/", alleles, "_chr")
-    loci_path <- normalizePath(loci)
-    loci_prefix <- paste0(loci_path, "/", loci, "_chr")
+allele_path <- normalizePath(alleles)
+allele_prefix <- paste0(allele_path, "/", alleles, "_chr")
+loci_path <- normalizePath(loci)
+loci_prefix <- paste0(loci_path, "/", loci, "_chr")
 ########## Run ASCAT ##########
 
 # Run prepareHTS with a fixed seed for reproducibility
