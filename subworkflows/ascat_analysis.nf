@@ -5,15 +5,24 @@ workflow ASCAT_ANALYSIS {
     metadata
     output_dir
     project_dir
-    ref_files
+    genome
+    baits
+    allele_dir
+    gc_file
+    rt_file
+
     
     main:
     RUN_ASCAT_EXOMES(metadata,
                     output_dir,
                     project_dir,
-                    ref_files)
+                    genome,
+                    baits,
+                    allele_dir,
+                    gc_file,
+                    rt_file)
 
-    // segments_list  = RUN_ASCAT_EXOMES.out.segments
+    segments_list  = RUN_ASCAT_EXOMES.out.segments
     // .filter{meta, file -> meta[0]['pair_id'] in }
     // .collect{meta, file -> file}
     // estimates_list = RUN_ASCAT_EXOMES.out.estimates.collect{meta, file -> file}
@@ -40,11 +49,11 @@ workflow ASCAT_ANALYSIS {
     //     segments_list,
     //     SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats
     //     )
-    // segments = RUN_ASCAT_EXOMES.out.segments
+    segments = RUN_ASCAT_EXOMES.out.segments
     // estimates = RUN_ASCAT_EXOMES.out.estimates    
     // plots = CREATE_FREQUENCY_PLOTS.out
-// emit: 
-    // segments
+emit: 
+    segments
     // estimates
     // plots
 }

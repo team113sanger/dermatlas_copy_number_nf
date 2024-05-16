@@ -11,5 +11,5 @@ nextflow run main.nf \
 
 nextflow run main.nf \
 -params-file params.json \
--c nextflow.config
--profile local
+-c nextflow.config \
+-profile standard

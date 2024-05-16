@@ -22,9 +22,7 @@ option_list<- list(
   make_option(c("--norm_name"), action = "store_true", default = NA, type = "character", help = "Normal sample name"), 
   make_option(c("--ref_file"), action = "store_true", default = NA, type = "character", help = "Reference genome file"), 
   make_option(c("--bed_file"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
-  make_option(c("--alleles"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
-  make_option(c("--loci"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
-  make_option(c("--gc_file"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
+  make_option(c("--alleles"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"),   make_option(c("--gc_file"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
   make_option(c("--rt_file"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
   make_option(c("--sex"), action = "store_true", default = NA, type = "character", help = "Patient sex, XX or XY"), 
   make_option(c("--project_dir"), action = "store_true", type = "character", default = NA,  help = "This is the path of the project directory"), 
@@ -94,8 +92,8 @@ if (is.na(args$outdir)) {
 	} else {
 		print(paste("Output directory exist:", args$outdir))
 	}
-	print(paste("Moving to output directory", args$outdir))
-	setwd(args$outdir)
+	# print(paste("Moving to output directory", args$outdir))
+	# setwd(args$outdir)
 	print(paste("Working dirctory is:", getwd()))
 }
 
@@ -111,7 +109,6 @@ bed_file <- args$bed_file
 print(ref_file)
 print(bed_file)
 alleles <- args$alleles
-loci <- args$loci
 gc_file <- args$gc_file
 rt_file <- args$rt_file
 
@@ -135,28 +132,31 @@ print(paste("Output dir is", outdir))
 
 # Check that required inputs exist
 
-for (file in c(gc_file, rt_file)) {
-	if(! file.exists(file)) {
-		stop(paste("Reference file does not exist:", file))
-	} else {
-		print(paste("Found:", file))
-	}
-}
+# for (file in c(gc_file, rt_file)) {
+# 	if(! file.exists(file)) {
+# 		stop(paste("Reference file does not exist:", file))
+# 	} else {
+# 		print(paste("Found:", file))
+# 	}
+# }
 
-for (prefix in c(alleles, loci)) {
-	dirs <- dirname(prefix)
-	if (! dir.exists(dirs)) {
-		stop(paste("Directory does not exist:", dirs))
-	} else {
-		print(paste("Found:", dirs))
-	}
-}
+# for (prefix in c(alleles, loci)) {
+# 	dirs <- dirname(prefix)
+# 	if (! dir.exists(dirs)) {
+# 		stop(paste("Directory does not exist:", dirs))
+# 	} else {
+# 		print(paste("Found:", dirs))
+# 	}
+# }
 
 
-allele_path <- normalizePath(alleles)
-allele_prefix <- paste0(allele_path, "/", alleles, "_chr")
-loci_path <- normalizePath(loci)
-loci_prefix <- paste0(loci_path, "/", loci, "_chr")
+
+allele_prefix <- paste0(alleles, "/", "1kg.phase3.v5a_GRCh38nounref_allele_index_chr")
+
+loci_prefix <- paste0(alleles, "/", "1kg.phase3.v5a_GRCh38nounref_loci_chr")
+print(allele_prefix)
+print(loci_prefix)
+
 ########## Run ASCAT ##########
 
 # Run prepareHTS with a fixed seed for reproducibility

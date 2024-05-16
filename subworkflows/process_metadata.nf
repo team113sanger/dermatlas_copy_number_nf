@@ -1,6 +1,7 @@
 workflow DERMATLAS_METADATA {
     take: 
     bamfile_ch
+    index_ch
     pair_identities
     patient_metadata
 
@@ -10,6 +11,12 @@ workflow DERMATLAS_METADATA {
     .map { file ->
         tuple(file.baseName.replace(".sample.dupmarked", ""), file)
     }
+   indices = index_ch
+    .map { file ->
+        tuple(file.baseName.replace(".sample.dupmarked.bam", ""), file)
+    }
+    indexed_bams = bams.join(indices)
+
 
     pids = pair_identities 
     .splitCsv(sep:"\t",header:['normal', 'tumor']) 
@@ -35,18 +42,20 @@ workflow DERMATLAS_METADATA {
     // }
 
  
-    combined_metadata = bams
+    combined_metadata = indexed_bams
     .join(pids)
     .join(pmdata)
     .map{
-         id, file, meta, patients -> 
-         def combinedMap = meta[0] + [file: file] + patients[0]
+         id, file, index, meta, patients -> 
+         def combinedMap = meta[0] + [file: file, index: index] + patients[0]
         // Check if the 'Sanger DNA ID' matches the 'normal',
         // rename 'file' key accordingly
         if (combinedMap["Sanger DNA ID"] == combinedMap.normal) {
             combinedMap['normal_file'] = combinedMap.remove('file')
+            combinedMap['normal_index'] = combinedMap.remove('index')
         } else {
             combinedMap['tumor_file'] = combinedMap.remove('file')
+            combinedMap['tumor_index'] = combinedMap.remove('index')
         }
         [id,combinedMap]
          }
@@ -59,7 +68,8 @@ workflow DERMATLAS_METADATA {
         pair_id, meta -> 
         [pair_id, meta[0] + meta[1]]
     }
-    .map{ meta -> tuple(meta, meta[1]["normal_file"], meta[1]["tumor_file"])
+    .map{ meta -> tuple(meta, meta[1]["normal_file"], 
+                        meta[1]["normal_index"], meta[1]["tumor_file"],  meta[1]["tumor_index"])
     }
     
     emit:
