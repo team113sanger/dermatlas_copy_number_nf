@@ -14,7 +14,10 @@
                 "input"
             ],
     "properties": {
-        "project": {
+        "PROJECTDIR": {
+            "type": "string"
+        },
+        "OUTDIR": {
             "type": "string"
         },
         "bam_files": {
