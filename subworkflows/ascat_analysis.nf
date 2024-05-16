@@ -5,28 +5,30 @@ workflow ASCAT_ANALYSIS {
     metadata
     output_dir
     project_dir
-
+    ref_files
+    
     main:
     RUN_ASCAT_EXOMES(metadata,
                     output_dir,
-                    project_dir)
+                    project_dir,
+                    ref_files)
 
-    segments_list  = RUN_ASCAT_EXOMES.out.segments
-    .filter{meta, file -> meta[0]['pair_id'] in }
+    // segments_list  = RUN_ASCAT_EXOMES.out.segments
+    // .filter{meta, file -> meta[0]['pair_id'] in }
     // .collect{meta, file -> file}
-    estimates_list = RUN_ASCAT_EXOMES.out.estimates.collect{meta, file -> file}
+    // estimates_list = RUN_ASCAT_EXOMES.out.estimates.collect{meta, file -> file}
     // metadata \
     // | collectFile(name: 'samples2chr.tsv', storeDir: $"{params.OUTDIR}"){
     //     meta, tumor_bam, normal_bam -> 
     //     [meta[0].subMap("pair_id"), meta[1].subMap("sexchr")],
     //    }
     
-    SUMMARISE_ASCAT_ESTIMATES(estimates_list)
-    SUMMARISE_ASCAT_ESTIMATES.out.ascat.low_quality
-    .splitCsv(sep:"\t",header:['pair_id'])
-    .flatten()
-    .set { pair_qualities }
-    pair_qualities.view()
+    // SUMMARISE_ASCAT_ESTIMATES(estimates_list)
+    // SUMMARISE_ASCAT_ESTIMATES.out.ascat.low_quality
+    // .splitCsv(sep:"\t",header:['pair_id'])
+    // .flatten()
+    // .set { pair_qualities }
+    // pair_qualities.view()
 
     // all_ascat = RUN_ASCAT_EXOMES.out.segments
     //             | map{ it -> }

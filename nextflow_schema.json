@@ -16,6 +16,33 @@
     "properties": {
         "project": {
             "type": "string"
+        },
+        "bam_files": {
+            "type": "string"
+        },
+        "tumor_normal_pairs": {
+            "type": "string"
+        },
+        "metadata_manifest": {
+            "type": "file"
+        },
+        "reference_genome": {
+            "type": "file"
+        }, 
+        "bait_set": {
+            "type": "file"
+        },
+        "allele_files": {
+            "type": "string"
+        },
+        "loci_files": {
+            "type": "string"
+        },
+        "gc_file": {
+            "type": "string"
+        },
+        "rt_file": {
+            "type": "string"
         }
     }}
 

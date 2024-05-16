@@ -6,7 +6,7 @@ process RUN_ASCAT_EXOMES {
     tuple val(meta), path(normbam), path(tumbam)
     path(outdir)
     val(project_dir)
-    tuple path(genome), path(baits)
+    tuple path(genome), path(baits), path(allele), path(loci), path(gc_file), path(rt_file)
 
     
     output:
@@ -37,6 +37,10 @@ process RUN_ASCAT_EXOMES {
     --outdir $tum-$norm \
     --ref_file $genome \
     --bed_file $baits \
+    --alleles $allele \
+    --loci $loci \
+    --gc_file $gc_file \
+    --rt_file $rt_file \
     --project_dir $project_dir
     """
     

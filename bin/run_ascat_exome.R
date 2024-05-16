@@ -1,8 +1,8 @@
 #!/usr/bin/env Rscript
 source("/opt/repo/renv/activate.R")
-ibrary(ASCAT)
-ibrary(dplyr)
-ibrary(optparse)
+library(ASCAT)
+library(dplyr)
+library(optparse)
 
 
 ########## Test for alleleCounter ##########
@@ -21,6 +21,10 @@ option_list<- list(
   make_option(c("--norm_name"), action = "store_true", default = NA, type = "character", help = "Normal sample name"), 
   make_option(c("--ref_file"), action = "store_true", default = NA, type = "character", help = "Reference genome file"), 
   make_option(c("--bed_file"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
+  make_option(c("--alleles"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
+  make_option(c("--loci"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
+  make_option(c("--gc_file"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
+  make_option(c("--rt_file"), action = "store_true", default = NA, type = "character", help = "Bait regions used for WES"), 
   make_option(c("--sex"), action = "store_true", default = NA, type = "character", help = "Patient sex, XX or XY"), 
   make_option(c("--project_dir"), action = "store_true", type = "character", default = NA,  help = "This is the path of the project directory"), 
   make_option(c("--outdir" ), action = "store_true", type = "character", default = NA, help = "Path to the output directory")
@@ -102,6 +106,14 @@ norm_name <- args$norm_name
 sex <- args$sex  # XX or XY
 PROJECTDIR <- args$project_dir
 outdir <- args$outdir
+ref_file <- args$ref_file
+bed_file <- args$bed_file
+print(ref_file)
+print(bed_file)
+alleles <- args$alleles
+loci <- args$loci
+gc_file <- args$gc_file
+rt_file <- args$rt_file
 
 print(paste("Tumour BAM is", tum_bam))
 print(paste("Normal BAM is", norm_bam))
@@ -116,19 +128,14 @@ print(paste("Output dir is", outdir))
 
 # Shared reference files
 
-ref_file <- args$ref_file
-bed_file <- args$bait_file
 
 # ASCAT/Battenberg files in project directory
 
-alleles = paste0(PROJECTDIR, "/resources/ascat/1000G_loci_hg38_chr/1kg.phase3.v5a_GRCh38nounref_allele_index_chr")
-loci = paste0(PROJECTDIR, "/resources/ascat/1000G_loci_hg38_chr/1kg.phase3.v5a_GRCh38nounref_loci_chr")
-gc_file = paste0(PROJECTDIR, "/resources/ascat/1000G_GC_exome_chr.txt")
-rt_file = paste0(PROJECTDIR, "/resources/ascat/1000G_RT_exome_chr.txt")
+
 
 # Check that required inputs exist
 
-for (file in c(ref_file, bed_file, gc_file, rt_file)) {
+for (file in c(gc_file, rt_file)) {
 	if(! file.exists(file)) {
 		stop(paste("Reference file does not exist:", file))
 	} else {

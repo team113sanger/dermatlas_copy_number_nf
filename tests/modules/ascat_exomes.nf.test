@@ -7,6 +7,17 @@ nextflow_process {
     test("Should run without failures") {
 
         when {
+            params {
+                    ref_genome = "/opt/data/GRCh38_full_analysis_set_plus_decoy_hla.fa"
+                    bait_set = "/opt/data/GRCh38_WES5_canonical_pad100.merged.bed"
+                    alleles =  "/opt/data/resources/ascat/1000G_loci_hg38_chr/1kg.phase3.v5a_GRCh38nounref_allele_index_chr"
+                    loci =  "/opt/data/resources/ascat/1000G_loci_hg38_chr/1kg.phase3.v5a_GRCh38nounref_loci_chr"
+                    gc_file =  "/opt/data/resources/ascat/1000G_GC_exome_chr.txt"
+                    rt_file =  "/opt/data/resources/ascat/1000G_RT_exome_chr.txt"
+            }
+
+
+            }
             process {
             
                 """
@@ -16,6 +27,7 @@ nextflow_process {
                 file("$baseDir/tests/testdata/PD52292b.sample.dupmarked.bam"))
                 input[1] = "$baseDir"
                 input[2] = "$baseDir/results"
+                input[3] = ['/opt/GRCh38_full_analysis_set_plus_decoy_hla.fa', '/opt/GRCh38_WES5_canonical_pad100.merged.bed', '/opt/data/resources/ascat/1000G_loci_hg38_chr/1kg.phase3.v5a_GRCh38nounref_allele_index_chr', '/opt/data/resources/ascat/1000G_loci_hg38_chr/1kg.phase3.v5a_GRCh38nounref_loci_chr.txt', /opt/data/resources/ascat/1000G_GC_exome_chr.txt, /opt/data/resources/ascat/1000G_RT_exome_chr.txt']
                 """
             }
         }
@@ -24,8 +36,6 @@ nextflow_process {
             assert process.success
             // assert snapshot(process.out).match()
         }
-
-    }
 
 }
 
