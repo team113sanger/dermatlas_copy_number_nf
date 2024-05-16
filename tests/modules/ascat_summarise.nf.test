@@ -1,0 +1,29 @@
+nextflow_process {
+
+    name "Test Process SUMMARISE_ASCAT_ESTIMATES"
+    script "modules/ascat.nf"
+    process "SUMMARISE_ASCAT_ESTIMATES"
+
+    test("Should run without failures") {
+
+        when {
+            params {
+                OUTDIR = 'results' 
+            }
+            process {
+            
+                """
+                input[0] = ['$baseDir/tests/testdata/ASCAT_estimates_PD62468a_PD62468b.tsv']
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert snapshot(process.out).match()
+        }
+
+    }
+
+}
+

@@ -1,0 +1,29 @@
+
+nextflow_process {
+
+    name "Test Process CREATE_FREQUENCY_PLOTS"
+    script "modules/ascat.nf"
+    process "CREATE_FREQUENCY_PLOTS"
+
+    test("Should run without failures") {
+
+        when {
+            process {
+                """
+                input[0] = ['$baseDir/tests/testdata/ASCAT_estimates_PD62468a_PD62468b.tsv']
+                input[1] = tuple('$baseDir/tests/testdata/ascat_stats.tsv', 
+                                 '$baseDir/tests/testdata/ascat_low_qual.list',
+                                 '$baseDir/tests/testdata/sample_purity_ploidy.tsv')
+                input[2] =       '$baseDir/tests/testdata/samples2sex.tsv'
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            // assert snapshot(process.out).match()
+        }
+
+    }
+
+}

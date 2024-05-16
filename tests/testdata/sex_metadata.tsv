@@ -1,0 +1,125 @@
+Phenotype	Sex	Sanger DNA ID	OK_to_analyse_DNA?
+T	F	PD52288a	Yes
+N	F	PD52288b	Yes
+T	F	PD52289a	Yes
+N	F	PD52289b	Yes
+T	M	PD52290a	Yes
+N	M	PD52290b	Yes
+T	M	PD52291a	Yes
+N	M	PR52291b	Yes
+T	M	PD52292a	Yes
+N	M	PD52292b	Yes
+T	F	PD52293a	Yes
+T	M	PD52294a	Yes
+N	M	PD52294b	Yes
+T	F	PD52295a	Yes
+N	F	PD52295b	Yes
+T	F	PD52296a	Yes
+N	F	PD52296b	Yes
+T	F	PD52297a	Yes
+N	F	PD52297b	Yes
+T	F	PD52298a	Yes
+N	F	PD52298b	Yes
+T	F	PD52299a	Yes
+N	F	PD52299b	Yes
+T	M	PD52300a	Yes
+N	M	PD52300b	Yes
+T	F	PD52301a	Yes
+T	F	PD52302a	Yes
+N	F	PD52302b	Yes
+T	M	PD52303a	Yes
+N	M	PD52303b	Yes
+T	F	PD52299d	Yes
+N	F	PD52299c	Yes
+T	M	PD52305a	Yes
+N	M	PD52305b	Yes
+T	F	PD52306a	Yes
+N	F	PD52306b	Yes
+T	M	PD52308a	Yes
+T	M	PD52310a	NO
+N	M	PD52310b	NO
+T	F	PD52312a	NO
+T	M	PD52313a	NO
+N	M	PD52313b	NO
+T	F	PD52315a	Yes_choose	which	is	best
+N	F	PD52315b	Yes_choose	which	is	best
+T	F	PD52315d	Yes_choose	which	is	best
+N	F	PD52315c	Yes_choose	which	is	best
+T	M	PD52317a	Yes
+N	M	PD52317b	Yes
+T	F	PD54395a	Yes
+N	F	PD54395b	Yes
+T	M	PD54396a	Yes
+N	M	PD54396b	Yes
+T	F	PD54397a	Yes
+N	F	PD54397b	Yes
+T	M	PD54398a	Yes
+T	M	PD54398c	Yes
+N	M	PD54398b	Yes_choose	which	is	best
+T	M	PD54399a	Yes
+T	M	PD54399c	Yes
+T	M	PD54399d	Yes
+N	M	PD54399b	Yes
+T	M	PD54398d	Yes
+N	M	PD54398e	Yes_choose	which	is	best
+T	M	PD54398f	Yes
+T	M	PD54398g	Yes
+T	M	PD54401a	Yes
+N	M	PD54401b	Yes
+T	F	PD54402a	Yes
+N	F	PD54402b	Yes
+T	F	PD54402c	Yes
+T	M	PD54403a	Yes
+N	M	PD54403b	Yes
+T	M	PD54404a	Yes
+N	M	PD54404b	Yes
+T	F	PD54405a	Yes
+N	F	PD54405b	Yes
+T	F	PD54406a	Yes
+N	F	PD54406b	Yes
+T	F	PD54406c	Yes
+N	F	-	-
+T	F	PD54406d	Yes
+N	F	-	-
+T	M	PD54407a	Yes
+N	M	PD54407b	Yes_choose	which	is	best
+T	M	PD54407c	Yes
+N	M	-	-
+T	M	PD54407d	Yes
+N	M	-	-
+T	M	PD54407e	Yes
+N	M	PD54407f	Yes_choose	which	is	best
+T	M	PD54407g	Yes
+N	M	-	-
+T	F	PD54408a	Yes
+N	F	PD54408b	Yes_choose	which	is	best
+T	F	PD54408c	Yes
+N	F	PD54408d	Yes_choose	which	is	best
+T	F	PD54408e	Yes
+N	F	PD54408f	Yes_choose	which	is	best
+T	M	PD57521a	Yes
+N	M	PD57521b	Yes
+T	F	PD57522a	Yes
+N	F	PD57522b	Yes
+T	M	PD57523a	Yes
+N	M	PD57523b	Yes
+T	F	PD57524a	Yes
+N	F	PD57524b	Yes
+T	M	PD57525a	Yes
+T	M	PD57526a	Yes
+N	M	PD57526b	Yes
+T	M	PD57527a	Yes
+N	M	PD57527b	Yes
+T	M	PD57528a	Yes
+N	M	PD57528b	Yes
+T	M	PD57529a	Yes
+N	M	PD57529b	Yes
+T	F	PD57530a	Yes
+T	M	PD57531a	Yes
+N	M	PD57531b	Yes
+T	M	PD57532a	Yes
+N	M	PD57532b	Yes
+T	F	PD57533a	Yes
+T	M	PD57534a	Yes
+T	M	PD57535a	Yes
+T	M	PD57536a	Yes
