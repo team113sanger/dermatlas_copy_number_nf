@@ -6,7 +6,12 @@ process RUN_ASCAT_EXOMES {
     tuple val(meta), path(normbam), path(tumbam)
     path(outdir)
     val(project_dir)
-    tuple path(genome), path(baits), path(allele), path(loci), path(gc_file), path(rt_file)
+    path(genome)
+    path(baits) 
+    path(allele_files)
+    path(loci_files)
+    path(gc_file)
+    path(rt_file)
 
     
     output:
@@ -27,9 +32,8 @@ process RUN_ASCAT_EXOMES {
     def tum = "${meta[1].tumor}"
     def norm = "${meta[1].normal}"
     def sexchr = "${meta[1].sexchr}"
-    // def idxbase = allele[0].baseName
     """
-    /opt/repo/run_ascat_exome.R \
+    run_ascat_exome.R \
     --tum_bam $tumbam \
     --norm_bam $normbam \
     --tum_name $tum \
