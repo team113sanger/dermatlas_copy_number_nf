@@ -1,6 +1,6 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.OUTDIR}/${meta[1].tumor}-${meta[1].normal}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:92593e3a'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:8d38a7e5'
     
     input: 
     tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
@@ -32,7 +32,7 @@ process RUN_ASCAT_EXOMES {
     def sexchr = "${meta[1].sexchr}"
 
     """
-    run_ascat_exome.R \
+    /opt/repo/run_ascat_exome.R \
     --tum_bam $tumbam \
     --norm_bam $normbam \
     --tum_name $tum \
@@ -90,7 +90,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
     script:
     """
-    summarise_ascat_estimate.R
+    /opt/repo/summarise_ascat_estimate.R
     awk '{print \$1"\t"\$5"\t"\$3}' ascat_stats.tsv  | sed 's/-/\t/' |cut -f 1,3,4 | grep PD | xargs -i basename {} > sample_purity_ploidy.tsv
     awk '\$2<90' ascat_stats.tsv | cut -f 1 -d "-" | cut -f 3 -d "/" >  ascat_low_qual.list
     """
@@ -120,7 +120,7 @@ process CREATE_FREQUENCY_PLOTS {
     script:
     def prefix="TBC"
     """
-    plot_ascat_cna_and_loh.R \
+    /opt/repo/plot_ascat_cna_and_loh.R \
     $segfiles_list \
     $purity_ploidy \
     $sample_sex \
