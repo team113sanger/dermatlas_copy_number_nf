@@ -11,7 +11,7 @@ workflow {
     patient_md = Channel.fromPath(params.metadata_manifest)
     reference_genome = file(params.reference_genome)
     bait_set = file(params.bait_set)
-    allele_files = file(params.resource_files)
+    per_chrom_files = file(params.resource_files)
     gc_file = file(params.gc_file)
     rt_file = file(params.rt_file)
 
@@ -28,7 +28,7 @@ workflow {
                     params.PROJECTDIR, 
                     reference_genome,
                     bait_set,
-                    allele_files,
+                    per_chrom_files,
                     gc_file,
                     rt_file)
     
