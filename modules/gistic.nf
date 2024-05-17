@@ -1,8 +1,6 @@
 process RUN_GISTIC {
     input: 
     tuple val(meta), path(SEGFILE)
-    path(PROJECTDIR)
-    path(OUTPUTDIR)
     path(refgenefile)
     
     output:
@@ -12,7 +10,7 @@ process RUN_GISTIC {
     def f = 0
     """
     gp_gistic2_from_seg \
-    -b ${OUTDIR}/MIN_${f} \
+    -b MIN_${f} \
     -seg min${f}_segments.tsv \
     -refgene $refgenefile \
     -genegistic 1 \
@@ -26,9 +24,6 @@ process RUN_GISTIC {
     -v 20 \
     -ta 0.25 \
     -td 0.25
-    """
-    script:
-    """
     """
 
     stub: 
