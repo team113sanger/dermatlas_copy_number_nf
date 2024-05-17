@@ -110,7 +110,9 @@ process CREATE_FREQUENCY_PLOTS {
 
     input:
     path(segfiles_list)
-    tuple path(stats), path(ascat_low_qual), path(purity_ploidy)
+    path(stats) 
+    path(ascat_low_qual)
+    path(purity_ploidy)
     path(sample_sex)
 
     output:

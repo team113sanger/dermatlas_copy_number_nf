@@ -23,8 +23,7 @@ workflow ASCAT_ANALYSIS {
                     gc_file,
                     rt_file)
 
-    RUN_ASCAT_EXOMES.out.estimates 
-    | collect{meta, file -> file}
+    RUN_ASCAT_EXOMES.out.estimates.collect{meta, file -> file}
     | set { estimates_list }
     
     SUMMARISE_ASCAT_ESTIMATES(estimates_list)
@@ -32,10 +31,11 @@ workflow ASCAT_ANALYSIS {
     | splitCsv(sep:"\t", header:['pair_id'])
     | flatten()
     | set { pair_qualities }
-    pair_qualities.view()
+
 
 
     RUN_ASCAT_EXOMES.out.segments
+    // | filter {meta, it }
     | map{ meta, it -> it}
     | collectFile(name: 'one_patient_per_tumor.txt', 
                  keepHeader: true, 
@@ -43,12 +43,14 @@ workflow ASCAT_ANALYSIS {
                  storeDir: output_dir)
     | set {segments_file}
 
+
     CREATE_FREQUENCY_PLOTS(segments_file, 
                            SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats,
-                            sex2chr_ch)
+                           SUMMARISE_ASCAT_ESTIMATES.out.low_quality,
+                           SUMMARISE_ASCAT_ESTIMATES.out.purity,
+                           sex2chr_ch)
 
-emit: 
+    emit: 
     segments_file
     RUN_ASCAT_EXOMES.out.estimates
-    // plots
 }

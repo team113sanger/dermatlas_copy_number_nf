@@ -31,8 +31,9 @@ workflow {
                     allele_files,
                     gc_file,
                     rt_file)
-    GISTIC_ANALYSIS(ASCAT_ANALYSIS.out.segments, 
-                    params.gistic_refgene_file)
+    
+    // GISTIC_ANALYSIS(ASCAT_ANALYSIS.out.segments, 
+    //                 params.gistic_refgene_file)
 
 
 }
