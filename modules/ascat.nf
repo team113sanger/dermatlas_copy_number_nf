@@ -1,6 +1,6 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.OUTDIR}/${meta[1].tumor}-${meta[1].normal}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:8d38a7e5'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:3db25c5f'
     
     input: 
     tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
@@ -78,7 +78,7 @@ process RUN_ASCAT_EXOMES {
 
 process SUMMARISE_ASCAT_ESTIMATES {
     publishDir "${params.OUTDIR}", mode: 'copy'
-        container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:0ee0535c'
+        container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:3db25c5f'
 
     input: 
     path(collected_files)
@@ -108,7 +108,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
 process CREATE_FREQUENCY_PLOTS {
     publishDir "${params.OUTDIR}", mode: 'copy'
-        container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:92593e3a'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:3db25c5f'
 
     input:
     path(segfiles_list)
