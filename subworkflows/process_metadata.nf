@@ -8,41 +8,45 @@ workflow DERMATLAS_METADATA {
 
     main:
 
-    bams = bamfile_ch
-    .map { file ->
-        tuple(file.baseName.replace(".sample.dupmarked", ""), file)
-    }
-   indices = index_ch
-    .map { file ->
-        tuple(file.baseName.replace(".sample.dupmarked.bam", ""), file)
-    }
-    indexed_bams = bams.join(indices)
+    bamfile_ch
+    | map { file ->
+        tuple(file.baseName.replace(".sample.dupmarked", ""), file)}
+    | set {bams}
+
+   index_ch
+   | map { file ->
+        tuple(file.baseName.replace(".sample.dupmarked.bam", ""), file)} 
+    | set { indices }
+
+    bams
+    | join(indices)
+    | set { indexed_bams }
 
 
-    pids = pair_identities 
-    .splitCsv(sep:"\t",header:['normal', 'tumor']) 
-    .map{ meta -> 
+    pair_identities 
+    | splitCsv(sep:"\t",header:['normal', 'tumor']) 
+    | map{ meta -> 
         [meta + [pair_id: meta.normal+ "_" + meta.tumor]]
         }
-    .flatMap { meta -> 
+    | flatMap { meta -> 
     [
         [meta["normal"][0], meta],
         [meta["tumor"][0],  meta]
-    ]
-    }
+    ]}
+    | set { pair_id_ch }
     
 
-    pmdata = patient_metadata
+    patient_metadata
     | splitCsv(sep:"\t",header : true)
     | map {meta -> meta.subMap("Sex", "Sanger DNA ID", "OK_to_analyse_DNA?", "Phenotype")} 
     | map {meta -> 
-            tuple(meta["Sanger DNA ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])
-    }
+            tuple(meta["Sanger DNA ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])}
+    |  set{ patient_metadata_ch }
 
  
-    combined_metadata = indexed_bams
-    | join(pids)
-    | join(pmdata)
+    indexed_bams
+    | join(pair_id_ch)
+    | join(patient_metadata_ch)
     | map{
          id, file, index, meta, patients -> 
          def combinedMap = meta[0] + [file: file, index: index] + patients[0]
@@ -69,8 +73,8 @@ workflow DERMATLAS_METADATA {
                         meta[1]["normal_file"], 
                         meta[1]["normal_index"], 
                         meta[1]["tumor_file"],  
-                        meta[1]["tumor_index"])
-    }
+                        meta[1]["tumor_index"])}
+    | set { combined_metadata }
 
     combined_metadata 
     | collectFile(name: "sex2chr.txt", storeDir: outdir){

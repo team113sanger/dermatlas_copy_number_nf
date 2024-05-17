@@ -12,7 +12,6 @@ workflow {
     reference_genome = file(params.reference_genome)
     bait_set = file(params.bait_set)
     allele_files = file(params.resource_files)
-    // loci_files = Channel.of(file(params.loci_files)) 
     gc_file = file(params.gc_file)
     rt_file = file(params.rt_file)
 
@@ -32,11 +31,8 @@ workflow {
                     allele_files,
                     gc_file,
                     rt_file)
-    // GISTIC_ANALYSIS(ASCAT_ANALYSIS.out.segments, 
-    //                 params.gistic_refgene_file)
-    // SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats[4]
-    //  .splitCsv( header: true )
-    // RUN_ASCAT_EXOMES.out.segments.map{groupkey, file -> groupkey.target}.view()
+    GISTIC_ANALYSIS(ASCAT_ANALYSIS.out.segments, 
+                    params.gistic_refgene_file)
 
 
 }

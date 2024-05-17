@@ -22,8 +22,6 @@ process RUN_ASCAT_EXOMES {
     tuple val(meta), path("*alleleFrequencies_chr*.txt"),  emit: allelefreqs
     tuple val(meta), path("*BAF.txt"),                     emit: bafs
     tuple val(meta), path("*LogR.txt"),                    emit: logrs
-    // tuple val(meta), path("*metrics.txt"),                 emit: metrics
-    // tuple val(meta), path("*purityploidy.txt"),            emit: purityploidy
     tuple val(meta), path("*segments.txt"),                emit: segments
 
     script:
@@ -78,7 +76,7 @@ process RUN_ASCAT_EXOMES {
 
 process SUMMARISE_ASCAT_ESTIMATES {
     publishDir "${params.OUTDIR}", mode: 'copy'
-        container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:3db25c5f'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:3db25c5f'
 
     input: 
     path(collected_files)
