@@ -24,13 +24,13 @@ workflow {
 
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
                    DERMATLAS_METADATA.out.sex2chr_ch,
-                    params.OUTDIR, 
-                    params.PROJECTDIR, 
-                    reference_genome,
-                    bait_set,
-                    per_chrom_files,
-                    gc_file,
-                    rt_file)
+                   params.OUTDIR, 
+                   params.PROJECTDIR, 
+                   reference_genome,
+                   bait_set,
+                   per_chrom_files,
+                   gc_file,
+                   rt_file)
     
     // GISTIC_ANALYSIS(ASCAT_ANALYSIS.out.segments, 
     //                 params.gistic_refgene_file)
