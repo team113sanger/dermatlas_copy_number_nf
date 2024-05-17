@@ -1,5 +1,5 @@
 process RUN_ASCAT_EXOMES {
-    publishDir "${params.OUTDIR}", mode: 'copy'
+    publishDir "${params.OUTDIR}/${meta[1].tumor}-${meta[1].normal}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:92593e3a'
     
     input: 
@@ -18,12 +18,11 @@ process RUN_ASCAT_EXOMES {
     tuple val(meta), path("ASCAT_estimates_*.tsv"),        emit: estimates
     tuple val(meta), path("gistic2_segs_*.tsv"),           emit: gistic_inputs
     tuple val(meta), path("*.png"),                        emit: plots
-    tuple val(meta), path("ASCAT_objects.Rdata"),          emit:rdata
+    tuple val(meta), path("ASCAT_objects.Rdata"),          emit: rdata
     tuple val(meta), path("*alleleFrequencies_chr*.txt"),  emit: allelefreqs
     tuple val(meta), path("*BAF.txt"),                     emit: bafs
-    tuple val(meta), path("*cnvs.txt"),                    emit: cnvs
     tuple val(meta), path("*LogR.txt"),                    emit: logrs
-    tuple val(meta), path("*metrics.txt"),                 emit: metrics
+    // tuple val(meta), path("*metrics.txt"),                 emit: metrics
     tuple val(meta), path("*purityploidy.txt"),            emit: purityploidy
     tuple val(meta), path("*segments.txt"),                emit: segments
 
@@ -85,9 +84,9 @@ process SUMMARISE_ASCAT_ESTIMATES {
     path(collected_files)
 
     output:
-    path("ascat_stats.tsv"), emit: ascat_sstats
-    path("ascat_low_qual.list"), emit: low_quality
-    path("sample_purity_ploidy.tsv"), emit: purity
+    path("ascat_stats.tsv"),                        emit: ascat_sstats
+    path("ascat_low_qual.list"),                    emit: low_quality
+    path("sample_purity_ploidy.tsv"),               emit: purity
 
     script:
     """
@@ -95,6 +94,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
     awk '{print \$1"\t"\$5"\t"\$3}' ascat_stats.tsv  | sed 's/-/\t/' |cut -f 1,3,4 | grep PD | xargs -i basename {} > sample_purity_ploidy.tsv
     awk '\$2<90' ascat_stats.tsv | cut -f 1 -d "-" | cut -f 3 -d "/" >  ascat_low_qual.list
     """
+    
     stub:
     """
     echo stub > samples2sex.tsv
