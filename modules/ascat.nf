@@ -8,7 +8,7 @@ process RUN_ASCAT_EXOMES {
     val(project_dir)
     path(genome)
     path(baits) 
-    path(allele_dir)
+    path(per_chrom_dir)
     path(gc_file)
     path(rt_file)
 
@@ -23,7 +23,7 @@ process RUN_ASCAT_EXOMES {
     tuple val(meta), path("*BAF.txt"),                     emit: bafs
     tuple val(meta), path("*LogR.txt"),                    emit: logrs
     // tuple val(meta), path("*metrics.txt"),                 emit: metrics
-    tuple val(meta), path("*purityploidy.txt"),            emit: purityploidy
+    // tuple val(meta), path("*purityploidy.txt"),            emit: purityploidy
     tuple val(meta), path("*segments.txt"),                emit: segments
 
     script:
@@ -41,7 +41,7 @@ process RUN_ASCAT_EXOMES {
     --outdir $tum-$norm \
     --ref_file $genome \
     --bed_file $baits \
-    --alleles $allele_dir \
+    --per_chrom $per_chrom_dir \
     --gc_file $gc_file \
     --rt_file $rt_file 
     """

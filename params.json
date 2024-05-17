@@ -1,6 +1,6 @@
 {
     "PROJECTDIR": "/lustre/scratch124/jb63/ascat/resources/",
-    "OUTDIR": "/workspaces/ascat/results",
+    "OUTDIR": "/home/ubuntu/projects/dermatlas_copy_number_nf/results",
     "bam_files": "/lustre/scratch124/jb63/ascat/bams/**.bam",
     "index_files": "/lustre/scratch124/jb63/ascat/bams/**.bam.bai",
     "tumor_normal_pairs": "tests/testdata/pair_ids.tsv",

@@ -7,7 +7,7 @@ workflow ASCAT_ANALYSIS {
     project_dir
     genome
     baits
-    allele_dir
+    per_chrom_dir
     gc_file
     rt_file
 
@@ -17,7 +17,7 @@ workflow ASCAT_ANALYSIS {
                     project_dir,
                     genome,
                     baits,
-                    allele_dir,
+                    per_chrom_dir,
                     gc_file,
                     rt_file)
 
@@ -26,19 +26,21 @@ workflow ASCAT_ANALYSIS {
     // .collect{meta, file -> file}
     estimates_list = RUN_ASCAT_EXOMES.out.estimates.collect{meta, file -> file}
    
-    RUN_ASCAT_EXOMES.out.plots.map{
-           meta, plots -> 
-           [meta[0].subMap("pair_id"), meta[1].subMap("sexchr")]
-    }
-    | collectFile(name: 'samples2sex.tsv') 
-    | set {sex_chr_ch}
-    sex_chr_ch.view()
+
     
     SUMMARISE_ASCAT_ESTIMATES(estimates_list)
     SUMMARISE_ASCAT_ESTIMATES.out.low_quality.splitCsv(sep:"\t", header:['pair_id'])
     | flatten()
     | set { pair_qualities }
     pair_qualities.view()
+
+    // RUN_ASCAT_EXOMES.out.plots.map{
+    // meta, plots -> 
+    // [meta[0].subMap("pair_id"), meta[1].subMap("sexchr")]
+    // }
+    // | collectFile(name: 'samples2sex.tsv') 
+    // | set {sex_chr_ch}
+    // sex_chr_ch.view()
 
     // all_ascat = RUN_ASCAT_EXOMES.out.segments
     //             | map{ it -> }
@@ -50,10 +52,10 @@ workflow ASCAT_ANALYSIS {
     //                        SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats,
     //                        sex_chr_ch)
     segments = RUN_ASCAT_EXOMES.out.segments
-    // estimates = RUN_ASCAT_EXOMES.out.estimates    
+    estimates = RUN_ASCAT_EXOMES.out.estimates    
     // plots = CREATE_FREQUENCY_PLOTS.out
 emit: 
     segments
-    // estimates
+    estimates
     // plots
 }
