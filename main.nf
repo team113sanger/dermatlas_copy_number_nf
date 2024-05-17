@@ -17,9 +17,14 @@ workflow {
     rt_file = file(params.rt_file)
 
 
-    DERMATLAS_METADATA(bamfiles, index_files, pair_ids, patient_md)
+    DERMATLAS_METADATA(bamfiles, 
+                       index_files, 
+                       pair_ids, 
+                       patient_md, 
+                       params.OUTDIR)
 
-    ASCAT_ANALYSIS(DERMATLAS_METADATA.out, 
+    ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
+                   DERMATLAS_METADATA.out.sex2chr_ch,
                     params.OUTDIR, 
                     params.PROJECTDIR, 
                     reference_genome,
@@ -27,8 +32,6 @@ workflow {
                     allele_files,
                     gc_file,
                     rt_file)
-    // ASCAT_ANALYSIS.out.estimates.view()
-    // ASCAT_ANALYSIS.out.segments.view()
     // GISTIC_ANALYSIS(ASCAT_ANALYSIS.out.segments, 
     //                 params.gistic_refgene_file)
     // SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats[4]

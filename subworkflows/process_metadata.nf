@@ -4,6 +4,7 @@ workflow DERMATLAS_METADATA {
     index_ch
     pair_identities
     patient_metadata
+    outdir
 
     main:
 
@@ -32,24 +33,20 @@ workflow DERMATLAS_METADATA {
     
 
     pmdata = patient_metadata
-    .splitCsv(sep:"\t",header : true)
-    .map {meta -> meta.subMap("Sex", "Sanger DNA ID", "OK_to_analyse_DNA?", "Phenotype")} 
-    .map {meta -> 
+    | splitCsv(sep:"\t",header : true)
+    | map {meta -> meta.subMap("Sex", "Sanger DNA ID", "OK_to_analyse_DNA?", "Phenotype")} 
+    | map {meta -> 
             tuple(meta["Sanger DNA ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])
     }
-    // .filter{meta -> 
-    //         meta["OK_to_analyse_DNA?"] == Yes
-    // }
 
  
     combined_metadata = indexed_bams
-    .join(pids)
-    .join(pmdata)
-    .map{
+    | join(pids)
+    | join(pmdata)
+    | map{
          id, file, index, meta, patients -> 
          def combinedMap = meta[0] + [file: file, index: index] + patients[0]
-        // Check if the 'Sanger DNA ID' matches the 'normal',
-        // rename 'file' key accordingly
+        // Check if the 'Sanger DNA ID' matches the 'normal',rename 'file' key accordingly
         if (combinedMap["Sanger DNA ID"] == combinedMap.normal) {
             combinedMap['normal_file'] = combinedMap.remove('file')
             combinedMap['normal_index'] = combinedMap.remove('index')
@@ -59,20 +56,31 @@ workflow DERMATLAS_METADATA {
         }
         [id,combinedMap]
          }
-    .map{
+    | map{
         id, meta -> key = groupKey(meta.subMap("pair_id"),2)
         [key, meta]
     }
-    .groupTuple()
-    .map{
+    | groupTuple()
+    | map{
         pair_id, meta -> 
         [pair_id, meta[0] + meta[1]]
     }
-    .map{ meta -> tuple(meta, meta[1]["normal_file"], 
-                        meta[1]["normal_index"], meta[1]["tumor_file"],  meta[1]["tumor_index"])
+    | map{ meta -> tuple(meta, 
+                        meta[1]["normal_file"], 
+                        meta[1]["normal_index"], 
+                        meta[1]["tumor_file"],  
+                        meta[1]["tumor_index"])
     }
-    
+
+    combined_metadata 
+    | collectFile(name: "sex2chr.txt", storeDir: outdir){
+        meta ->
+        ["sex2chr.txt", "${meta[0].pair_id[0]}\t${meta[0].sexchr[1]}\n"]
+    }
+    | set {sex2chr_ch}
+
     emit:
         combined_metadata
+        sex2chr_ch
 
 }
