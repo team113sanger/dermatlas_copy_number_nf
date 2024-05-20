@@ -11,6 +11,7 @@ workflow ASCAT_ANALYSIS {
     per_chrom_dir
     gc_file
     rt_file
+    cohort_prefix
 
     main:
     
@@ -45,10 +46,9 @@ workflow ASCAT_ANALYSIS {
 
 
     CREATE_FREQUENCY_PLOTS(segments_file, 
-                           SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats,
-                           SUMMARISE_ASCAT_ESTIMATES.out.low_quality,
                            SUMMARISE_ASCAT_ESTIMATES.out.purity,
-                           sex2chr_ch)
+                           sex2chr_ch, 
+                           cohort_prefix)
 
     emit: 
     segments_file

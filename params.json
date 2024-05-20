@@ -1,4 +1,4 @@
-{
+{   "cohort_prefix": "6509_2707_Leiomyoma",
     "PROJECTDIR": "/lustre/scratch124/jb63/ascat/resources/",
     "OUTDIR": "/home/ubuntu/projects/dermatlas_copy_number_nf/results",
     "bam_files": "/lustre/scratch124/jb63/ascat/bams/**.bam",
