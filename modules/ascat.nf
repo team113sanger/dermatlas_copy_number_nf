@@ -1,6 +1,6 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.OUTDIR}/${meta[1].tumor}-${meta[1].normal}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:3db25c5f'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:4aaa2fd1'
     
     input: 
     tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
@@ -76,7 +76,7 @@ process RUN_ASCAT_EXOMES {
 
 process SUMMARISE_ASCAT_ESTIMATES {
     publishDir "${params.OUTDIR}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:3db25c5f'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:4aaa2fd1'
 
     input: 
     path(collected_files)
@@ -89,8 +89,6 @@ process SUMMARISE_ASCAT_ESTIMATES {
     script:
     """
     /opt/repo/summarise_ascat_estimate.R
-    awk '{print \$1"\t"\$5"\t"\$3}' ascat_stats.tsv  | sed 's/-/\t/' |cut -f 1,3,4 | grep PD | xargs -i basename {} > sample_purity_ploidy.tsv
-    awk '\$2<90' ascat_stats.tsv | cut -f 1 -d "-" | cut -f 3 -d "/" >  ascat_low_qual.list
     """
     
     stub:
@@ -106,25 +104,22 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
 process CREATE_FREQUENCY_PLOTS {
     publishDir "${params.OUTDIR}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:3db25c5f'
-
+container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:4aaa2fd1'
     input:
     path(segfiles_list)
-    path(stats) 
-    path(ascat_low_qual)
     path(purity_ploidy)
     path(sample_sex)
+    val(cohort_prefix)
 
     output:
     tuple path("*_cn-loh.pdf"), path("*_cn-loh.tsv")
     script:
-    def prefix="TBC"
     """
     /opt/repo/plot_ascat_cna_and_loh.R \
     $segfiles_list \
     $purity_ploidy \
     $sample_sex \
-    $prefix
+    $cohort_prefix
     """
     stub:
     """
