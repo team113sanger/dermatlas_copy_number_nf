@@ -1,4 +1,5 @@
 process RUN_GISTIC {
+    container: "asntech/gistic2:v2.0.23"
     input: 
     tuple val(meta), path(SEGFILE)
     path(refgenefile)
