@@ -1,7 +1,9 @@
 process RUN_GISTIC {
-    container: "asntech/gistic2:v2.0.23"
+    // publishDir ""
+    container "gistic2:latest"
+    
     input: 
-    tuple val(meta), path(SEGFILE)
+    path(segment_file)
     path(refgenefile)
     
     output:
@@ -10,15 +12,14 @@ process RUN_GISTIC {
     script:
     def f = 0
     """
-    gp_gistic2_from_seg \
-    -b MIN_${f} \
-    -seg min${f}_segments.tsv \
+    ./gp_gistic2_from_seg \
+    -seg $segment_file \
     -refgene $refgenefile \
     -genegistic 1 \
     -smallmem 1 \
     -broad 1 \
     -brlen 0.75 \
-    -conf 0.95 \ 
+    -conf 0.95 \
     -armpeel 1 \
     -savegene 1 \
     -gcm extreme \
@@ -37,23 +38,23 @@ process RUN_GISTIC {
 
 process FILTER_GISTIC_CALLS{
     input:
-
-    path(difficult_regions)
+    path(PREFIX)
+    path(LESIONS)
+    path(SEGMENTS)
 
     output:
     tuple path("*_gistic_sample_summary.tsv"), path("*_gistic_cohort_summary.tsv")
 
     script:
     """
-    gistic2_filter.R
-    ${PROJECTDIR} \
-    all_lesions.conf_95.txt \
-    ${ASCAT_SEGS} \
-    QC \
-    $difficult_regions
-    """
-    script:
-    """
+    /opt/repo/gistic2_filter.R \
+    --prefix ${PREFIX} \
+    --gistic-all-lesions-file ${LESIONS} \
+    --ascat-segments-file ${SEGMENTS} \
+    --residual-q-value-cutoff 0.1 \
+    --output-dir $PWD \
+    -d ${DIFF}
+
     """
     stub: 
     """
