@@ -30,7 +30,8 @@ workflow {
                    bait_set,
                    per_chrom_files,
                    gc_file,
-                   rt_file)
+                   rt_file,
+                   params.cohort_prefix)
     
     // GISTIC_ANALYSIS(ASCAT_ANALYSIS.out.segments, 
     //                 params.gistic_refgene_file)
