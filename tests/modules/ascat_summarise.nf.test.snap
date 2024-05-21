@@ -3,18 +3,28 @@
         "content": [
             {
                 "0": [
-                    [
-                        "ascat_stats.tsv:md5,c62dffd1bcf538283acc0632b78edd95",
-                        "ascat_low_qual.list:md5,d41d8cd98f00b204e9800998ecf8427e",
-                        "sample_purity_ploidy.tsv:md5,c89e7c7abcbbf13c01ec3b46a7df7f17"
-                    ]
+                    "ascat_stats.tsv:md5,a102df90ee75b4a9473c27aa75767c50"
+                ],
+                "1": [
+                    "ascat_low_qual.list:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ],
+                "2": [
+                    "sample_purity_ploidy.tsv:md5,80485b1f3983333638273f56d98f317f"
+                ],
+                "3": [
+                    "samples2sex.tsv:md5,997d89f5485abb845dffaa1c75983aa2"
                 ],
                 "ascat_sstats": [
-                    [
-                        "ascat_stats.tsv:md5,c62dffd1bcf538283acc0632b78edd95",
-                        "ascat_low_qual.list:md5,d41d8cd98f00b204e9800998ecf8427e",
-                        "sample_purity_ploidy.tsv:md5,c89e7c7abcbbf13c01ec3b46a7df7f17"
-                    ]
+                    "ascat_stats.tsv:md5,a102df90ee75b4a9473c27aa75767c50"
+                ],
+                "low_quality": [
+                    "ascat_low_qual.list:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ],
+                "purity": [
+                    "sample_purity_ploidy.tsv:md5,80485b1f3983333638273f56d98f317f"
+                ],
+                "sex_stats": [
+                    "samples2sex.tsv:md5,997d89f5485abb845dffaa1c75983aa2"
                 ]
             }
         ],
@@ -22,6 +32,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-05-15T10:02:21.556088"
+        "timestamp": "2024-05-21T13:35:04.595771"
     }
 }

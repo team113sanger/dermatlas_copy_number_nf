@@ -1,5 +1,5 @@
 process RUN_ASCAT_EXOMES {
-    publishDir "${params.OUTDIR}/${meta[1].tumor}-${meta[1].normal}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT/${meta[1].tumor}-${meta[1].normal}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:d84fa3ad'
     input: 
     tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
@@ -83,6 +83,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
     path("ascat_stats.tsv"),                        emit: ascat_sstats
     path("ascat_low_qual.list"),                    emit: low_quality
     path("sample_purity_ploidy.tsv"),               emit: purity
+    path("samples2sex.tsv"),                        emit: sex_stats
 
     script:
     """
