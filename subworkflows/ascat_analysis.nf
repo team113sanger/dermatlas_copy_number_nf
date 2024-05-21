@@ -42,15 +42,16 @@ workflow ASCAT_ANALYSIS {
                  keepHeader: true, 
                  skip: 1,
                  storeDir: output_dir)
-    | set {segments_file}
+    | set {segment_summary}
+    
+    segment_files =  RUN_ASCAT_EXOMES.out.segments.collect()
 
-
-    CREATE_FREQUENCY_PLOTS(segments_file, 
+    CREATE_FREQUENCY_PLOTS(segment_summary,
                            SUMMARISE_ASCAT_ESTIMATES.out.purity,
                            sex2chr_ch, 
                            cohort_prefix)
 
     emit: 
-    segments_file
+    segment_summary
     RUN_ASCAT_EXOMES.out.estimates
 }
