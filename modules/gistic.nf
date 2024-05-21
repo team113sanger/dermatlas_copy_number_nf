@@ -1,16 +1,19 @@
 process RUN_GISTIC {
-    // publishDir ""
-    container "gistic2:latest"
+    publishDir "${params.OUTDIR}/GISTIC"
+    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic2/feature/import_dockerisation:5b9abb93"
     
     input: 
     path(segment_file)
     path(refgenefile)
-    
     output:
-    path("all_lesions.conf_95.txt")
+    path("all_lesions.conf_95.txt"), emit: lesions
+    path("*.png"), emit: plots
+    path("*.pdf"), emit: pdfs
+    path("*.mat"), emit: mats
+    path("*.txt"), emit: tables
+    path(segment_file), emit: segment_file
     
     script:
-    def f = 0
     """
     /opt/repo/gp_gistic2_from_seg \
     -b . \
@@ -38,10 +41,12 @@ process RUN_GISTIC {
 }
 
 process FILTER_GISTIC_CALLS{
+    container: 
     input:
-    path(PREFIX)
-    path(LESIONS)
-    path(SEGMENTS)
+    path(prefix)
+    path(lesions)
+    path(segments)
+    path(difficult_reigions)
 
     output:
     tuple path("*_gistic_sample_summary.tsv"), path("*_gistic_cohort_summary.tsv")
@@ -49,11 +54,11 @@ process FILTER_GISTIC_CALLS{
     script:
     """
     /opt/repo/gistic2_filter.R \
-    --prefix ${PREFIX} \
-    --gistic-all-lesions-file ${LESIONS} \
-    --ascat-segments-file ${SEGMENTS} \
+    --prefix $prefix \
+    --gistic-all-lesions-file $lesions \
+    --ascat-segments-file $segments \
     --residual-q-value-cutoff 0.1 \
-    --output-dir $PWD \
+    --output-dir . \
     -d ${DIFF}
 
     """
