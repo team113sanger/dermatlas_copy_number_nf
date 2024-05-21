@@ -1,0 +1,32 @@
+
+nextflow_function {
+
+    name "Test Functions"
+    script "functions/functions.nf"
+
+	
+
+    test("Test Function filter_ascat_qc_fails") {
+
+        function "filter_ascat_qc_fails"
+
+        when {
+            function {
+                """
+                // define inputs of the function here. Example:
+                input[0] = ['Tbc': 'tbc']
+                input[1] = file("$baseDir/tests/testdata/ascat_low_qual.list")
+                """
+            }
+        }
+
+        then {
+            assert function.success
+            assert snapshot(function.result).match()
+        }
+
+    }
+
+	
+
+}

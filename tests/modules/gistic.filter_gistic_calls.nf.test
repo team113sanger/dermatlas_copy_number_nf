@@ -8,13 +8,15 @@ nextflow_process {
 
         when {
             params {
-                // define parameters here. Example:
-                // outdir = "tests/results"
+                difficult_regions_file = "/lustre/scratch124/jb63/ascat/resources/GRCh38_alldifficultregions.bed"
+                cohort_prefix = "TBC"
             }
             process {
                 """
-                // define inputs of the process here. Example:
-                // input[0] = file("test-file.txt")
+                input[0] = file("$baseDir/tests/testdata/one_tumor_per_patient.tsv")
+                input[1] = file("$baseDir/tests/testdata/all_lesions.conf_95.txt")
+                input[2] = file("${params.difficult_regions_file}")
+                input[3] = "${params.cohort_prefix}"
                 """
             }
         }
