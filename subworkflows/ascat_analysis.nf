@@ -1,9 +1,9 @@
 include { RUN_ASCAT_EXOMES; SUMMARISE_ASCAT_ESTIMATES; CREATE_FREQUENCY_PLOTS } from '../modules/ascat.nf'
+include { filter_ascat_qc_fails } from '../functions/functions.nf'
 
 workflow ASCAT_ANALYSIS {
     take: 
     metadata
-    sex2chr_ch
     output_dir
     project_dir
     genome
@@ -28,15 +28,16 @@ workflow ASCAT_ANALYSIS {
     | set { estimates_list }
     
     SUMMARISE_ASCAT_ESTIMATES(estimates_list)
-    SUMMARISE_ASCAT_ESTIMATES.out.low_quality
-    | splitCsv(sep:"\t", header:['pair_id'])
-    | flatten()
-    | set { pair_qualities }
+    // SUMMARISE_ASCAT_ESTIMATES.out.low_quality
+    // | splitCsv(sep:"\t", header:['pair_id'])
+    // | flatten()
+    // | set { pair_qualities }
 
 
 
-    RUN_ASCAT_EXOMES.out.segments
+    RUN_ASCAT_EXOMES.out.segments.view()
     // | filter {meta, it }
+    RUN_ASCAT_EXOMES.out.segments
     | map{ meta, it -> it}
     | collectFile(name: 'one_patient_per_tumor.txt', 
                  keepHeader: true, 
