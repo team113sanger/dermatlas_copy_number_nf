@@ -5,6 +5,7 @@ process RUN_GISTIC {
     input: 
     path(segment_file)
     path(refgenefile)
+
     output:
     path("all_lesions.conf_95.txt"), emit: lesions
     path("*.png"), emit: plots
@@ -41,12 +42,12 @@ process RUN_GISTIC {
 }
 
 process FILTER_GISTIC_CALLS{
-    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess/develop:402acee2"
+    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess/feature/nf_image:11f3209c"
     input:
-    path(prefix)
     path(lesions)
     path(segments)
-    path(difficult_reigions)
+    path(difficult_regions)
+    val(prefix)
 
     output:
     tuple path("*_gistic_sample_summary.tsv"), path("*_gistic_cohort_summary.tsv")

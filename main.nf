@@ -14,6 +14,7 @@ workflow {
     per_chrom_files = file(params.resource_files)
     gc_file = file(params.gc_file)
     rt_file = file(params.rt_file)
+    GIAB_regions = file(params.difficult_regions_file)
 
 
     DERMATLAS_METADATA(bamfiles, 
@@ -23,7 +24,6 @@ workflow {
                        params.OUTDIR)
 
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
-                   DERMATLAS_METADATA.out.sex2chr_ch,
                    params.OUTDIR, 
                    params.PROJECTDIR, 
                    reference_genome,
@@ -33,8 +33,10 @@ workflow {
                    rt_file,
                    params.cohort_prefix)
     
-    // GISTIC_ANALYSIS(ASCAT_ANALYSIS.out.segments, 
-    //                 params.gistic_refgene_file)
+    GISTIC_ANALYSIS(ASCAT_ANALYSIS.out.segment_summary, 
+                    params.gistic_refgene_file, 
+                    GIAB_regions,
+                    params.cohort_prefix)
 
 
 }
