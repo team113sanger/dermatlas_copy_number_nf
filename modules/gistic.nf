@@ -12,7 +12,8 @@ process RUN_GISTIC {
     script:
     def f = 0
     """
-    ./gp_gistic2_from_seg \
+    /opt/repo/gp_gistic2_from_seg \
+    -b . \
     -seg $segment_file \
     -refgene $refgenefile \
     -genegistic 1 \
