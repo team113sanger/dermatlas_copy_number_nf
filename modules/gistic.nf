@@ -41,7 +41,7 @@ process RUN_GISTIC {
 }
 
 process FILTER_GISTIC_CALLS{
-    container: 
+    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess/develop:402acee2"
     input:
     path(prefix)
     path(lesions)
@@ -59,7 +59,7 @@ process FILTER_GISTIC_CALLS{
     --ascat-segments-file $segments \
     --residual-q-value-cutoff 0.1 \
     --output-dir . \
-    -d ${DIFF}
+    -d $difficult_regions
 
     """
     stub: 
