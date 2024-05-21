@@ -48,7 +48,7 @@ workflow ASCAT_ANALYSIS {
 
     CREATE_FREQUENCY_PLOTS(segment_summary,
                            SUMMARISE_ASCAT_ESTIMATES.out.purity,
-                           sex2chr_ch, 
+                           SUMMARISE_ASCAT_ESTIMATES.out.sex_stats, 
                            cohort_prefix)
 
     emit: 

@@ -76,15 +76,15 @@ workflow DERMATLAS_METADATA {
                         meta[1]["tumor_index"])}
     | set { combined_metadata }
 
-    combined_metadata 
-    | collectFile(name: "sex2chr.txt", storeDir: outdir){
-        meta ->
-        ["sex2chr.txt", "${meta[0].pair_id[0]}\t${meta[0].sexchr[1]}\n"]
-    }
-    | set {sex2chr_ch}
+    // combined_metadata 
+    // | collectFile(name: "sex2chr.txt", storeDir: outdir){
+    //     meta ->
+    //     ["sex2chr.txt", "${meta[0].pair_id[0]}\t${meta[0].sexchr[1]}\n"]
+    // }
+    // | set {sex2chr_ch}
 
     emit:
         combined_metadata
-        sex2chr_ch
+        // sex2chr_ch
 
 }
