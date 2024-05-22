@@ -1,5 +1,5 @@
 process RUN_ASCAT_EXOMES {
-    publishDir "${params.OUTDIR}/ASCAT/${meta[1].tumor}-${meta[1].normal}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT/${meta.tumor}-${meta.normal}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:d84fa3ad'
     input: 
     tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
@@ -24,9 +24,9 @@ process RUN_ASCAT_EXOMES {
     tuple val(meta), path("*segments.txt"),                emit: segments
 
     script:
-    def tum = "${meta[1].tumor}"
-    def norm = "${meta[1].normal}"
-    def sexchr = "${meta[1].sexchr}"
+    def tum = "$meta.tumor"
+    def norm = "$meta.normal"
+    def sexchr = "$meta.sexchr"
 
     """
     /opt/repo/run_ascat_exome.R \
@@ -44,8 +44,8 @@ process RUN_ASCAT_EXOMES {
     """
     
     stub:
-    def prefix = "${meta[1].tumor}"
-    def pair = "${meta[1].pair_id}"
+    def prefix = "${meta.tumor}"
+    def pair = "${meta.pair_id}"
     """
     echo stub > ASCAT_estimates_${pair}.tsv
     echo stub > QC_${pair}.tsv
@@ -127,4 +127,19 @@ process CREATE_FREQUENCY_PLOTS {
     """
 
 
+}
+
+process EXTRACT_GOF {
+    input:
+    tuple val(meta), path(txtFile)
+
+    output:
+    tuple val(meta), val(goodnessOfFit)
+
+    script:
+    // Extract the "Goodness-of-fit" value using grep and cut
+    """
+    goodnessOfFit=\$(grep 'Goodness-of-fit' ${txtFile} | cut -f2)
+    echo "\$goodnessOfFit"
+    """
 }
