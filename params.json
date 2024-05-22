@@ -1,6 +1,7 @@
-{   "cohort_prefix": "6509_2707_Leiomyoma",
+{   
     "PROJECTDIR": "/lustre/scratch124/jb63/ascat/resources/",
     "OUTDIR": "/home/ubuntu/projects/dermatlas_copy_number_nf/results",
+    "cohort_prefix": "6509_2707_Leiomyoma",
     "bam_files": "/lustre/scratch124/jb63/ascat/bams/**.bam",
     "index_files": "/lustre/scratch124/jb63/ascat/bams/**.bam.bai",
     "tumor_normal_pairs": "tests/testdata/pair_ids.tsv",
@@ -10,7 +11,7 @@
     "resource_files" :"/lustre/scratch124/jb63/ascat/resources/1000G_loci_hg38_chr",
     "gc_file": "/lustre/scratch124/jb63/ascat/resources/1000G_GC_exome_chr.txt",
     "rt_file": "/lustre/scratch124/jb63/ascat/resources/1000G_RT_exome_chr.txt",
-    "gistic_refgene_file": "/lustre/scratch124/jb63/ascat/resouces/hg38.UCSC.add_miR.160920.refgene.mat",
+    "gistic_refgene_file": "/lustre/scratch124/jb63/ascat/hg38.UCSC.add_miR.160920.refgene.mat",
     "difficult_regions_file": "/lustre/scratch124/jb63/ascat/resources/GRCh38_alldifficultregions.bed"
 
 }
