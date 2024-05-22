@@ -58,33 +58,27 @@ workflow DERMATLAS_METADATA {
             combinedMap['tumor_file'] = combinedMap.remove('file')
             combinedMap['tumor_index'] = combinedMap.remove('index')
         }
-        [id,combinedMap]
+        [id, combinedMap]
          }
     | map{
-        id, meta -> key = groupKey(meta.subMap("pair_id"),2)
+        id, meta -> key = groupKey(meta.subMap("pair_id") ,2)
         [key, meta]
     }
     | groupTuple()
     | map{
         pair_id, meta -> 
-        [pair_id, meta[0] + meta[1]]
+        pair_id + meta[0] + meta[1]
     }
     | map{ meta -> tuple(meta, 
-                        meta[1]["normal_file"], 
-                        meta[1]["normal_index"], 
-                        meta[1]["tumor_file"],  
-                        meta[1]["tumor_index"])}
+                        meta["normal_file"], 
+                        meta["normal_index"], 
+                        meta["tumor_file"],  
+                        meta["tumor_index"])}
     | set { combined_metadata }
 
-    // combined_metadata 
-    // | collectFile(name: "sex2chr.txt", storeDir: outdir){
-    //     meta ->
-    //     ["sex2chr.txt", "${meta[0].pair_id[0]}\t${meta[0].sexchr[1]}\n"]
-    // }
-    // | set {sex2chr_ch}
+
 
     emit:
         combined_metadata
-        // sex2chr_ch
 
 }
