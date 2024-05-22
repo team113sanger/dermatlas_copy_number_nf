@@ -1,10 +1,7 @@
-
 nextflow_function {
 
     name "Test Functions"
     script "functions/functions.nf"
-
-	
 
     test("Test Function filter_ascat_qc_fails") {
 
@@ -13,20 +10,24 @@ nextflow_function {
         when {
             function {
                 """
-                // define inputs of the function here. Example:
-                input[0] = ['Tbc': 'tbc']
-                input[1] = file("$baseDir/tests/testdata/ascat_low_qual.list")
+                // Define inputs for the function here.
+                input[0] = Channel.of(
+                    tuple([pair_id: "PD54403a_PD54403b"], file('/path/to/PD54403b.segments.txt')),
+                    tuple([pair_id: "PD12345_PD67890"], file('/path/to/PD67890.segments.txt'))
+                )
+                input[1] = Channel.value(file("$baseDir/tests/testdata/ascat_low_qual.list"))
                 """
             }
         }
 
         then {
             assert function.success
-            assert snapshot(function.result).match()
+            function.result.view { result -> 
+                expected_result = [
+                    tuple([pair_id: "PD54403a_PD54403b"], file('/path/to/PD54403b.segments.txt'))
+                ]
+                assert result == expected_result
+            }
         }
-
     }
-
-	
-
 }
