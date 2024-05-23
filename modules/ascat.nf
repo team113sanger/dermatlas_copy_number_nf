@@ -1,6 +1,8 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.OUTDIR}/ASCAT/${meta.tumor}-${meta.normal}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:d84fa3ad'
+    label 'big_mem'
+    
     input: 
     tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
     path(outdir)
@@ -129,12 +131,12 @@ process CREATE_FREQUENCY_PLOTS {
 
 }
 
-process EXTRACT_GOF {
+process EXTRACT_GOODNESS_OF_FIT {
     input:
     tuple val(meta), path(txtFile)
 
     output:
-    tuple val(meta), val(goodnessOfFit)
+    tuple val(meta), env(goodnessOfFit)
 
     script:
     // Extract the "Goodness-of-fit" value using grep and cut

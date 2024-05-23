@@ -1,4 +1,4 @@
-include { RUN_ASCAT_EXOMES; SUMMARISE_ASCAT_ESTIMATES; CREATE_FREQUENCY_PLOTS; EXTRACT_GOF } from '../modules/ascat.nf'
+include { RUN_ASCAT_EXOMES; SUMMARISE_ASCAT_ESTIMATES; CREATE_FREQUENCY_PLOTS; EXTRACT_GOODNESS_OF_FIT } from '../modules/ascat.nf'
 
 workflow ASCAT_ANALYSIS {
     take: 
@@ -15,41 +15,34 @@ workflow ASCAT_ANALYSIS {
     main:
     
     RUN_ASCAT_EXOMES(metadata,
-                    output_dir,
-                    project_dir,
-                    genome,
-                    baits,
-                    per_chrom_dir,
-                    gc_file,
-                    rt_file)
+                     output_dir,
+                     project_dir,
+                     genome,
+                     baits,
+                     per_chrom_dir,
+                     gc_file,
+                     rt_file)
+
+    EXTRACT_GOODNESS_OF_FIT(RUN_ASCAT_EXOMES.out.estimates)
+    | set { quality_ch }
 
     RUN_ASCAT_EXOMES.out.estimates.collect{meta, file -> file}
     | set { estimates_list }
     
-    
     SUMMARISE_ASCAT_ESTIMATES(estimates_list)
     
-    EXTRACT_GOF(SUMMARISE_ASCAT_ESTIMATES.out.low_quality)
-    | set {quality_ch}
-
-
-    // RUN_ASCAT_EXOMES.out.segments.join(quality_ch)
-
-    filtered_segments = RUN_ASCAT_EXOMES.out.segments
-    | join(quality_ch)
-    | filter{ meta, file, gof -> gof > 95}
-    filtered_segments.view()
-
-
     RUN_ASCAT_EXOMES.out.segments
-    | map{ meta, it -> it}
+    | join(quality_ch)
+    | view {meta, file, gof -> gof[0]}
+    // | filter{ meta, file, gof -> gof[0].toDouble() > 95}
+    // | view()
+    | map{ meta, file, gof -> file}
     | collectFile(name: 'one_patient_per_tumor.txt', 
                  keepHeader: true, 
                  skip: 1,
                  storeDir: output_dir)
     | set {segment_summary}
-    
-    segment_files =  RUN_ASCAT_EXOMES.out.segments.collect()
+    segment_summary.view()
 
     CREATE_FREQUENCY_PLOTS(segment_summary,
                            SUMMARISE_ASCAT_ESTIMATES.out.purity,
