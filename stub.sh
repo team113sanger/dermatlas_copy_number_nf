@@ -9,7 +9,7 @@ nextflow run main.nf \
 -c tests/nextflow.config 
 
 
-nextflow run main.nf \
+nextflow run main.nf -resume \
 -params-file params.json \
 -c nextflow.config \
--profile standard
+-profile secure_lustre

@@ -5,10 +5,10 @@ include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
 include { GISTIC_ANALYSIS } from './subworkflows/gistic_analysis.nf'
 
 workflow {
-    bamfiles   = Channel.fromPath(params.bam_files)
+    bamfiles    = Channel.fromPath(params.bam_files)
     index_files = Channel.fromPath(params.index_files)
-    pair_ids   = Channel.fromPath(params.tumor_normal_pairs)
-    patient_md = Channel.fromPath(params.metadata_manifest)
+    pair_ids    = Channel.fromPath(params.tumor_normal_pairs)
+    patient_md  = Channel.fromPath(params.metadata_manifest)
     reference_genome = file(params.reference_genome)
     bait_set = file(params.bait_set)
     per_chrom_files = file(params.resource_files)

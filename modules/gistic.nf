@@ -42,10 +42,10 @@ process RUN_GISTIC {
 }
 
 process FILTER_GISTIC_CALLS{
-    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess/feature/nf_image:11f3209c"
+    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess/feature/nf_image:fe793813"
     input:
-    path(lesions)
     path(segments)
+    path(lesions)
     path(difficult_regions)
     val(prefix)
 
