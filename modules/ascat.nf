@@ -122,6 +122,7 @@ process CREATE_FREQUENCY_PLOTS {
     $sample_sex \
     $cohort_prefix
     """
+    
     stub:
     """
     echo stub > x_cn-loh.pdf
@@ -132,6 +133,7 @@ process CREATE_FREQUENCY_PLOTS {
 }
 
 process EXTRACT_GOODNESS_OF_FIT {
+    
     input:
     tuple val(meta), path(txtFile)
 

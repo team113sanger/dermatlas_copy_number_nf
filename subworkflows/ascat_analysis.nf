@@ -33,15 +33,15 @@ workflow ASCAT_ANALYSIS {
     
     RUN_ASCAT_EXOMES.out.segments
     | join(quality_ch)
-    | view {meta, file, gof -> gof[0]}
-    // | filter{ meta, file, gof -> gof[0].toDouble() > 95}
-    // | view()
-    | map{ meta, file, gof -> file}
+    | view { meta, file, gof -> gof }
+    | filter{ meta, file, gof -> gof.toDouble() > 95}
+    | view()
+    | map { meta, file, gof -> file }
     | collectFile(name: 'one_patient_per_tumor.txt', 
                  keepHeader: true, 
                  skip: 1,
                  storeDir: output_dir)
-    | set {segment_summary}
+    | set { segment_summary }
     segment_summary.view()
 
     CREATE_FREQUENCY_PLOTS(segment_summary,
