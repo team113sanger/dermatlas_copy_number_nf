@@ -33,9 +33,7 @@ workflow ASCAT_ANALYSIS {
     
     RUN_ASCAT_EXOMES.out.segments
     | join(quality_ch)
-    | view { meta, file, gof -> gof }
     | filter{ meta, file, gof -> gof.toDouble() > 95}
-    | view()
     | map { meta, file, gof -> file }
     | collectFile(name: 'one_patient_per_tumor.txt', 
                  keepHeader: true, 
