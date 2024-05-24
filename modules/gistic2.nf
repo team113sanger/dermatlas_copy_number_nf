@@ -1,5 +1,5 @@
-process RUN_GISTIC {
-    publishDir "${params.OUTDIR}/GISTIC"
+process RUN_GISTIC2 {
+    publishDir "${params.OUTDIR}/GISTIC2"
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic2/feature/import_dockerisation:5b9abb93"
     
     input: 
@@ -41,7 +41,8 @@ process RUN_GISTIC {
     
 }
 
-process FILTER_GISTIC_CALLS{
+process FILTER_GISTIC2_CALLS{
+    publishDir "${params.OUTDIR}/GISTIC2"
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess/feature/nf_image:fe793813"
     input:
     path(segments)
