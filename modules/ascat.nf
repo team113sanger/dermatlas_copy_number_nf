@@ -76,7 +76,7 @@ process RUN_ASCAT_EXOMES {
 
 
 process SUMMARISE_ASCAT_ESTIMATES {
-    publishDir "${params.OUTDIR}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:d84fa3ad'
     input: 
     path(collected_files)
@@ -104,7 +104,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
 
 process CREATE_FREQUENCY_PLOTS {
-    publishDir "${params.OUTDIR}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:d84fa3ad'
     input:
     path(segfiles_list)
