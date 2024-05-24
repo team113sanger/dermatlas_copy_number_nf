@@ -41,7 +41,7 @@ workflow DERMATLAS_METADATA {
     | map {meta -> meta.subMap("Sex", "Sanger DNA ID", "OK_to_analyse_DNA?", "Phenotype")} 
     | map {meta -> 
             tuple(meta["Sanger DNA ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])}
-    |  set{ patient_metadata_ch }
+    | set{ patient_metadata_ch }
 
  
     indexed_bams
@@ -75,8 +75,6 @@ workflow DERMATLAS_METADATA {
                         meta["tumor_file"],  
                         meta["tumor_index"])}
     | set { combined_metadata }
-
-
 
     emit:
         combined_metadata

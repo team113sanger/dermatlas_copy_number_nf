@@ -19,10 +19,10 @@ In brief the pipeline takes a cohort of samples and
 
 ## Inputs 
 
-BAM files: path to a collection of Bamfiles 
+BAM files: path to a directory containing a Bamfiles 
 Index files: path to the corresponding .bai index files for those BAMS 
 Sample metadata: path to a file containing sample PD IDs, tumor normal info, and sex
-Pair IDs: path to a file containing predefined tumor normal pairs.
+Pair IDs: path to a file containing a tab-delimited list of matched tumour and normal pairs.
 
 **Reference files**
 ASCAT 
