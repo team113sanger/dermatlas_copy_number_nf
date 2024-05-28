@@ -1,15 +1,14 @@
 nextflow_workflow {
 
-    name "Test Workflow GISTIC_ANALYSIS"
-    script "subworkflows/gistic_analysis.nf"
-    workflow "GISTIC_ANALYSIS"
+    name "Test Workflow GISTIC2_ANALYSIS"
+    script "subworkflows/gistic2_analysis.nf"
+    workflow "GISTIC2_ANALYSIS"
 
     test("Should run without failures") {
 
         when {
             params {
-                // define parameters here. Example:
-                // outdir = "tests/results"
+                load("$baseDir/tests/testdata/test_params.json")
             }
             workflow {
                 """
