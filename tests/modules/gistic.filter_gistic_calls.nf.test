@@ -1,8 +1,8 @@
 nextflow_process {
 
-    name "Test Process FILTER_GISTIC_CALLS"
-    script "modules/gistic.nf"
-    process "FILTER_GISTIC_CALLS"
+    name "Test Process FILTER_GISTIC2_CALLS"
+    script "modules/gistic2.nf"
+    process "FILTER_GISTIC2_CALLS"
 
     test("Should run without failures") {
 
