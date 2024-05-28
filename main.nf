@@ -49,7 +49,7 @@ workflow {
     | concat(GISTIC2_ANALYSIS.out.cohort_summary)
     | set { tabular_ch }
     
-    FORMAT_OUTPUTS( tabular_ch )
+    REFORMAT_TSV( tabular_ch )
 
 
 }
