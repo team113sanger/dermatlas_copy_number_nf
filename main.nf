@@ -3,6 +3,7 @@ nextflow.enable.dsl = 2
 include { DERMATLAS_METADATA } from './subworkflows/process_metadata.nf'
 include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
 include { GISTIC2_ANALYSIS } from './subworkflows/gistic2_analysis.nf'
+include { REFORMAT_TSV } from './modules/publish.sh'
 
 workflow {
 
@@ -35,10 +36,19 @@ workflow {
                    rt_file,
                    params.cohort_prefix)
     
-    GISTIC2_ANALYSIS(ASCAT_ANALYSIS.out.segment_summary, 
+    GISTIC2_ANALYSIS(ASCAT_ANALYSIS.out.segments, 
                     params.gistic_refgene_file, 
                     giab_regions,
                     params.cohort_prefix)
+    
+    ASCAT_ANALYSIS.out.table
+    | concat(ASCAT_ANALYSIS.out.purity)
+    | concat(ASCAT_ANALYSIS.out.summary_stats) 
+    | concat(ASCAT_ANALYSIS.out.freq_tab) 
+    | concat(GISTIC2_ANALYSIS.out.tables)
+    | set { tabular_ch }
+    
+    FORMAT_OUTPUTS( tabular_ch )
 
 
 }

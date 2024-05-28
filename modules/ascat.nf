@@ -111,7 +111,9 @@ process CREATE_FREQUENCY_PLOTS {
     val(cohort_prefix)
 
     output:
-    tuple path("*_cn-loh.pdf"), path("*_cn-loh.tsv")
+    path("*_cn-loh.tsv"), emit: table
+    path("*_cn-loh.pdf"), emit: plot
+    
     script:
     """
     /opt/repo/plot_ascat_cna_and_loh.R \

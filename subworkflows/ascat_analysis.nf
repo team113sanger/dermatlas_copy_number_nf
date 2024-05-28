@@ -39,7 +39,6 @@ workflow ASCAT_ANALYSIS {
                  skip: 1,
                  storeDir: output_dir)
     | set { segment_summary }
-    segment_summary.view()
 
     CREATE_FREQUENCY_PLOTS(segment_summary,
                            SUMMARISE_ASCAT_ESTIMATES.out.purity,
@@ -47,6 +46,9 @@ workflow ASCAT_ANALYSIS {
                            cohort_prefix)
 
     emit: 
-    segment_summary
-    RUN_ASCAT_EXOMES.out.estimates
+    segments      =   segment_summary
+    estimates     =   RUN_ASCAT_EXOMES.out.estimates
+    purity        =   SUMMARISE_ASCAT_ESTIMATES.out.purity
+    summary_stats =   SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats
+    freq_tab      =   CREATE_FREQUENCY_PLOTS.out.table
 }
