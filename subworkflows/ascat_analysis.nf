@@ -4,7 +4,6 @@ workflow ASCAT_ANALYSIS {
     take: 
     metadata
     output_dir
-    project_dir
     genome
     baits
     per_chrom_dir
@@ -16,7 +15,6 @@ workflow ASCAT_ANALYSIS {
     
     RUN_ASCAT_EXOMES(metadata,
                      output_dir,
-                     project_dir,
                      genome,
                      baits,
                      per_chrom_dir,

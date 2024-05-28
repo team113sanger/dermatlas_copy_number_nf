@@ -4,7 +4,6 @@ process RUN_ASCAT_EXOMES {
     input: 
     tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
     path(outdir)
-    val(project_dir)
     path(genome)
     path(baits) 
     path(per_chrom_dir)
@@ -74,6 +73,7 @@ process RUN_ASCAT_EXOMES {
 
 
 process SUMMARISE_ASCAT_ESTIMATES {
+    label 'process_medium'
     publishDir "${params.OUTDIR}/ASCAT", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:d84fa3ad'
     input: 
@@ -102,6 +102,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
 
 process CREATE_FREQUENCY_PLOTS {
+    label 'process_medium'
     publishDir "${params.OUTDIR}/ASCAT", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:d84fa3ad'
     input:
