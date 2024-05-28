@@ -10,10 +10,10 @@ dermatlas_copy_number_nf is a bioinfromatics pipeline written in [Nextflow](http
 
 ## Pipeline summary
 
-In brief, the pipeline takes a cohort of samples that have been ingested and preprocessed by the Dermatlas pipeline and:
-- Links cohort sample metadata to sample bamfiles and links pairs for each tumor/normal sample.
+In brief, the pipeline takes a cohort of samples that have been pre-processed by the Dermatlas ingestion pipeline and then:
+- Links a sample's metadata to it's associated bamfile and links pairs of samples each tumor/normal pair.
 - Runs ASCAT on each tumor-normal pair, outputting segment calls. 
-- Collates summary statistics for the ASCAT runs and removes those samples below a threshold Goodness-of-Fit level 
+- Collates summary statistics for the ASCAT runs and filters out samples that fall below a threshold Goodness-of-Fit level.
 - Merges the segment calls from ASCAT that pass filtering.
 - Runs GISTIC2 to identify regions with significant copy-number alterations (CNAs).
 - Filters GISTIC calls to identify those that overlap with ASCAT.
@@ -21,24 +21,24 @@ In brief, the pipeline takes a cohort of samples that have been ingested and pre
 ## Inputs 
 
 ### Cohort variables
-`bam_files`: wildcard capturing the path to a set of `.bam` files in a directory and their corresponding `.bam.bai` index files. Index files are assumed to be pre-generated and co-located with bams.
-`metadata_manifest`: path to a file containing sample PD IDs, tumor normal info, and sex.
-`tumor_normal_pairs`: path to a file containing a tab-delimited list of matched tumour and normal pairs.
+- `bam_files`: wildcard capturing the path to a set of `.bam` files in a project directory and their corresponding `.bam.bai` index files. Note: the pipeline assumes that index files have been pre-generated and are co-located with bams.
+- `metadata_manifest`: path to a tab-delimited manifest containing sample PDIDs and information about sample phenotype/preparation.
+- `tumor_normal_pairs`: path to a file containing a tab-delimited list of matched tumour and normal pairs.
 
 ### Reference files 
-References that are used across pipeline executions have been placed within the pipeline's default `nextflow.config` file.
-`reference_genome`: path to a reference genome file (used by ASCAT)
-`bait_set`: path to a `.bed` file describing the regions  (used by ASCAT)
-`resource_files`: path to a directory containing loci and allele 
-`gc_file`: path to the ASCAT GC correction file
-`rt_file`: path to the GISTIC replication timing correction file
-`difficult_regions_file`: path to a Genome in a "difficult regions" file
+References that are reused across pipeline executions have been placed within the pipeline's default `nextflow.config` file to simplify configuration. The following reference files are required for a run: 
+- `reference_genome`: path to a reference genome file (used by ASCAT)
+- `bait_set`: path to a `.bed` file describing the regions  (used by ASCAT)
+- `resource_files`: path to a directory containing ASCAT loci and allele 
+- `gc_file`: path to the ASCAT GC correction file
+- `rt_file`: path to the GISTIC replication timing correction file
+- `difficult_regions_file`: path to a Genome in a "difficult regions" file
 
 ## Usage 
 
-The recommended way to launch this pipeline is using a wrapper script that records the revision (-r ) and the specific params `json` file supplied for a run. 
+The recommended way to launch this pipeline is using a wrapper script that records the revision (-r ) and the specific params `json` file supplied for a run. `bsub < my_wrapper.sh`
 
-Basic Sanger FARM usage:
+An example wrapper script:
 ```
 #!/bin/bash
 #BSUB -q normal
@@ -60,13 +60,13 @@ nextflow run 'https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/de
 -c /lustre/scratch125/casm/team113da/users/jb63/nf_cna_testing/nextflow.config \
 -profile farm22 
 ```
-This can also 
 
-A usage profile for OpenStack secure-lustre instances is provided and can be launched by specifying. 
-`-profile secure-lustre`
+The pipeline has been configured to run on Sanger OpenStack secure-lustre instances and farm22. Different configurations can be launched by specifying:
+`-profile secure-lustre` or `-profile farm22`
 
 
 ## Pipeline visualisation 
+Created using nextflow's inbuilt visualitation features.
 
 ```mermaid
 flowchart TB
@@ -159,12 +159,22 @@ flowchart TB
 
 ## Testing
 
-This pipeline has been built with nf-test framework to generate unit tests and perfom some integration tesing. Small test data is provided within test/testdata and snapshots for outputs of steps have been provided to detect regressions. You can run all tests with:
+This pipeline has been developed with the [nf-test](http://nf-test.com) testing framework. Unit tests and small test data are provided within the pipeline within the `test` subdirectory. A snapshot has been taken of the outputs of most steps in the pipeline to help detect regressions. You can run all tests on Openstack with:
 
 ```
 nf-test test 
 ```
-Individual tests with:
+and individual tests with:
 ```
 nf-test test tests/modules/ascat_exomes.nf.test
 ```
+
+For faster testing of dataflow through the pipeline **without running any of the tools involved**
+```
+nextflow run main.nf \
+-params-file params.json \
+-c tests/nextflow.config \
+--stub-run
+```
+
+
