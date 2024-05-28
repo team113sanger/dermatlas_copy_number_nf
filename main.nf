@@ -5,16 +5,16 @@ include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
 include { GISTIC2_ANALYSIS } from './subworkflows/gistic2_analysis.nf'
 
 workflow {
-    bamfiles    = Channel.fromPath(params.bam_files)
+    bamfiles    = Channel.fromPath(params.bam_files, checkIfExists: true)
     index_files = Channel.fromPath(params.index_files)
-    pair_ids    = Channel.fromPath(params.tumor_normal_pairs)
-    patient_md  = Channel.fromPath(params.metadata_manifest)
-    reference_genome = file(params.reference_genome)
-    bait_set = file(params.bait_set)
-    per_chrom_files = file(params.resource_files)
-    gc_file = file(params.gc_file)
-    rt_file = file(params.rt_file)
-    giab_regions = file(params.difficult_regions_file)
+    pair_ids    = Channel.fromPath(params.tumor_normal_pairs, checkIfExists: true)
+    patient_md  = Channel.fromPath(params.metadata_manifest, checkIfExists: true)
+    reference_genome = file(params.reference_genome, checkIfExists: true)
+    bait_set = file(params.bait_set, checkIfExists: true)
+    per_chrom_files = file(params.resource_files, checkIfExists: true)
+    gc_file = file(params.gc_file, checkIfExists: true)
+    rt_file = file(params.rt_file, checkIfExists: true)
+    giab_regions = file(params.difficult_regions_file, checkIfExists: true)
 
 
     DERMATLAS_METADATA(bamfiles, 
