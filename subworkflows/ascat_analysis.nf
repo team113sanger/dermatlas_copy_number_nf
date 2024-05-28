@@ -3,6 +3,7 @@ include { RUN_ASCAT_EXOMES; SUMMARISE_ASCAT_ESTIMATES; CREATE_FREQUENCY_PLOTS; E
 workflow ASCAT_ANALYSIS {
     take: 
     metadata
+    sex2chr_ch
     output_dir
     genome
     baits
@@ -42,7 +43,7 @@ workflow ASCAT_ANALYSIS {
 
     CREATE_FREQUENCY_PLOTS(segment_summary,
                            SUMMARISE_ASCAT_ESTIMATES.out.purity,
-                           SUMMARISE_ASCAT_ESTIMATES.out.sex_stats, 
+                           sex2chr_ch, 
                            cohort_prefix)
 
     emit: 

@@ -14,7 +14,7 @@ workflow DERMATLAS_METADATA {
     | map { file, index ->
         tuple(file.baseName.replace(".sample.dupmarked", ""), file, index)}
     | set { indexed_bams } 
-    
+
     pair_identities 
     | splitCsv(sep:"\t",header:['normal', 'tumor']) 
     | map{ meta -> 
@@ -34,6 +34,8 @@ workflow DERMATLAS_METADATA {
     | map {meta -> 
             tuple(meta["Sanger DNA ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])}
     | set{ patient_metadata_ch }
+
+    
 
  
     indexed_bams
@@ -68,7 +70,17 @@ workflow DERMATLAS_METADATA {
                         meta["tumor_index"])}
     | set { combined_metadata }
 
+    combined_metadata 
+    | view{}
+    | collectFile(name: "sex2chr.txt", storeDir: outdir){
+        meta, nf, ni, tf, ti ->
+        ["sex2chr.txt", "${meta["pair_id"]}\t${meta["sexchr"]}\n"]
+    }
+    | set {sex2chr_ch}
+
+
     emit:
         combined_metadata
+        sex2chr_ch
 
 }
