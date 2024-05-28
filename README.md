@@ -20,7 +20,7 @@ In brief, the pipeline takes a cohort of samples that have been ingested and pre
 
 ## Inputs 
 
-`bam_files`: a wildcard containing a path to a directory containing a Bamfiles
+`bam_files`: a wildcard describing a path to a directory containing a bamfiles and their corresponding index files. Index files are assumed to be pre-generated and colocated with bams.
 Sample metadata: path to a file containing sample PD IDs, tumor normal info, and sex
 `tumor_normal_pairs`: path to a file containing a tab-delimited list of matched tumour and normal pairs.
 
@@ -34,6 +34,7 @@ The following reference files, which will be used across pipeline executions are
 `difficult_regions_file`
 
 ## Usage 
+
 The recommended way to launch this pipeline is using a wrapper script that records the revision (-r ) and the specific params `json` file supplied for a run. 
 
 Basic Sanger FARM usage:
@@ -60,7 +61,7 @@ nextflow run 'https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/de
 ```
 This can also 
 
-A usage profile for OpenStack secure-lustre instances is provided. 
+A usage profile for OpenStack secure-lustre instances is provided and can be launched by specifying. 
 `-profile secure-lustre`
 
 
@@ -72,89 +73,87 @@ flowchart TB
     v0["Channel.fromPath"]
     v1["Channel.fromPath"]
     v2["Channel.fromPath"]
-    v3["Channel.fromPath"]
-    v20["outdir"]
-    v21["genome"]
-    v22["baits"]
-    v23["per_chrom_dir"]
-    v24["gc_file"]
-    v25["rt_file"]
-    v45["cohort_prefix"]
-    v48["refgenefile"]
-    v54["difficult_regions"]
-    v55["prefix"]
+    v18["outdir"]
+    v19["genome"]
+    v20["baits"]
+    v21["per_chrom_dir"]
+    v22["gc_file"]
+    v23["rt_file"]
+    v43["cohort_prefix"]
+    v46["refgenefile"]
+    v52["difficult_regions"]
+    v53["prefix"]
     end
     subgraph ASCAT_ANALYSIS
-    v26([RUN_ASCAT_EXOMES])
-    v34([EXTRACT_GOODNESS_OF_FIT])
-    v36([SUMMARISE_ASCAT_ESTIMATES])
-    v46([CREATE_FREQUENCY_PLOTS])
-    v4(( ))
-    v35(( ))
-    v39(( ))
+    v24([RUN_ASCAT_EXOMES])
+    v32([EXTRACT_GOODNESS_OF_FIT])
+    v34([SUMMARISE_ASCAT_ESTIMATES])
+    v44([CREATE_FREQUENCY_PLOTS])
+    v3(( ))
+    v33(( ))
+    v37(( ))
     end
     subgraph " "
+    v25[" "]
+    v26[" "]
     v27[" "]
     v28[" "]
     v29[" "]
     v30[" "]
     v31[" "]
-    v32[" "]
-    v33[" "]
-    v37[" "]
-    v38[" "]
-    v44[" "]
-    v47[" "]
+    v35[" "]
+    v36[" "]
+    v42[" "]
+    v45[" "]
+    v48[" "]
+    v49[" "]
     v50[" "]
     v51[" "]
-    v52[" "]
-    v53[" "]
-    v57[" "]
+    v55[" "]
     end
     subgraph GISTIC2_ANALYSIS
-    v49([RUN_GISTIC2])
-    v56([FILTER_GISTIC2_CALLS])
+    v47([RUN_GISTIC2])
+    v54([FILTER_GISTIC2_CALLS])
     end
-    v0 --> v4
-    v1 --> v4
-    v2 --> v4
-    v3 --> v4
-    v20 --> v26
-    v21 --> v26
-    v22 --> v26
-    v23 --> v26
+    v0 --> v3
+    v1 --> v3
+    v2 --> v3
+    v18 --> v24
+    v19 --> v24
+    v20 --> v24
+    v21 --> v24
+    v22 --> v24
+    v23 --> v24
+    v3 --> v24
+    v24 --> v31
+    v24 --> v32
+    v24 --> v30
+    v24 --> v29
+    v24 --> v28
+    v24 --> v27
     v24 --> v26
-    v25 --> v26
-    v4 --> v26
-    v26 --> v33
-    v26 --> v34
-    v26 --> v32
-    v26 --> v31
-    v26 --> v30
-    v26 --> v29
-    v26 --> v28
-    v26 --> v27
-    v26 --> v35
-    v26 --> v39
-    v34 --> v39
-    v35 --> v36
-    v36 --> v38
-    v36 --> v37
-    v36 --> v46
-    v39 --> v44
-    v45 --> v46
-    v39 --> v46
+    v24 --> v25
+    v24 --> v33
+    v24 --> v37
+    v32 --> v37
+    v33 --> v34
+    v34 --> v36
+    v34 --> v35
+    v34 --> v44
+    v37 --> v42
+    v43 --> v44
+    v37 --> v44
+    v44 --> v45
     v46 --> v47
-    v48 --> v49
-    v39 --> v49
-    v49 --> v56
-    v49 --> v53
-    v49 --> v52
-    v49 --> v51
-    v49 --> v50
-    v54 --> v56
-    v55 --> v56
-    v56 --> v57
+    v37 --> v47
+    v47 --> v54
+    v47 --> v51
+    v47 --> v50
+    v47 --> v49
+    v47 --> v48
+    v52 --> v54
+    v53 --> v54
+    v54 --> v55
 ```
 
 ## Testing
