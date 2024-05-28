@@ -41,10 +41,9 @@ workflow {
                     giab_regions,
                     params.cohort_prefix)
     
-    ASCAT_ANALYSIS.out.table
+    ASCAT_ANALYSIS.out.freq_tab
     | concat(ASCAT_ANALYSIS.out.purity)
     | concat(ASCAT_ANALYSIS.out.summary_stats) 
-    | concat(ASCAT_ANALYSIS.out.freq_tab) 
     | concat(GISTIC2_ANALYSIS.out.tables)
     | set { tabular_ch }
     
