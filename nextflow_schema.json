@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "https://raw.githubusercontent.com/YOUR_PIPELINE/devlop/nextflow_schema.json",
     "title": "Tdflow pipeline parameters",
-    "description": "This pipeline uses Nextflow to generate variant libraries from targetons. The JSON Schema was built using the nf-core pipeline schema builder.",
+    "description": "This pipeline uses Nextflow to generate CNA calls for dermatlas. The JSON Schema was built using the nf-core pipeline schema builder.",
     "type": "object",
     "definitions": {
         "input_output_options": {
