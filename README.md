@@ -20,18 +20,19 @@ In brief, the pipeline takes a cohort of samples that have been ingested and pre
 
 ## Inputs 
 
-`bam_files`: a wildcard describing a path to a directory containing a bamfiles and their corresponding index files. Index files are assumed to be pre-generated and colocated with bams.
-Sample metadata: path to a file containing sample PD IDs, tumor normal info, and sex
+### Cohort variables
+`bam_files`: wildcard capturing the path to a set of `.bam` files in a directory and their corresponding `.bam.bai` index files. Index files are assumed to be pre-generated and co-located with bams.
+`metadata_manifest`: path to a file containing sample PD IDs, tumor normal info, and sex.
 `tumor_normal_pairs`: path to a file containing a tab-delimited list of matched tumour and normal pairs.
 
-The following reference files, which will be used across pipeline executions are located within the `nextflow.config` file.
-`reference_genome`
-`bait_set`
-`resource_files`
-`gc_file`
-`rt_file`
-`gistic_refgene_file`
-`difficult_regions_file`
+### Reference files 
+References that are used across pipeline executions have been placed within the pipeline's default `nextflow.config` file.
+`reference_genome`: path to a reference genome file (used by ASCAT)
+`bait_set`: path to a `.bed` file describing the regions  (used by ASCAT)
+`resource_files`: path to a directory containing loci and allele 
+`gc_file`: path to the ASCAT GC correction file
+`rt_file`: path to the GISTIC replication timing correction file
+`difficult_regions_file`: path to a Genome in a "difficult regions" file
 
 ## Usage 
 
