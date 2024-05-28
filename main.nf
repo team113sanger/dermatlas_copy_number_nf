@@ -3,7 +3,7 @@ nextflow.enable.dsl = 2
 include { DERMATLAS_METADATA } from './subworkflows/process_metadata.nf'
 include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
 include { GISTIC2_ANALYSIS } from './subworkflows/gistic2_analysis.nf'
-include { REFORMAT_TSV } from './modules/publish.sh'
+include { REFORMAT_TSV } from './modules/publish.nf'
 
 workflow {
 
