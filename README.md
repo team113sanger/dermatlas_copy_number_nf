@@ -68,7 +68,6 @@ A usage profile for OpenStack secure-lustre instances is provided.
 ## Pipeline visualisation 
 
 ```mermaid
-%%{init: { 'theme': 'forest' } }%%
 flowchart TB
     subgraph " "
     v0["Channel.fromPath"]
@@ -76,89 +75,87 @@ flowchart TB
     v2["Channel.fromPath"]
     v3["Channel.fromPath"]
     v20["outdir"]
-    v21["project_dir"]
-    v22["genome"]
-    v23["baits"]
-    v24["per_chrom_dir"]
-    v25["gc_file"]
-    v26["rt_file"]
-    v46["cohort_prefix"]
-    v49["refgenefile"]
-    v55["difficult_regions"]
-    v56["prefix"]
+    v21["genome"]
+    v22["baits"]
+    v23["per_chrom_dir"]
+    v24["gc_file"]
+    v25["rt_file"]
+    v45["cohort_prefix"]
+    v48["refgenefile"]
+    v54["difficult_regions"]
+    v55["prefix"]
     end
     subgraph ASCAT_ANALYSIS
-    v27([RUN_ASCAT_EXOMES])
-    v35([EXTRACT_GOODNESS_OF_FIT])
-    v37([SUMMARISE_ASCAT_ESTIMATES])
-    v47([CREATE_FREQUENCY_PLOTS])
+    v26([RUN_ASCAT_EXOMES])
+    v34([EXTRACT_GOODNESS_OF_FIT])
+    v36([SUMMARISE_ASCAT_ESTIMATES])
+    v46([CREATE_FREQUENCY_PLOTS])
     v4(( ))
-    v36(( ))
-    v40(( ))
+    v35(( ))
+    v39(( ))
     end
     subgraph " "
+    v27[" "]
     v28[" "]
     v29[" "]
     v30[" "]
     v31[" "]
     v32[" "]
     v33[" "]
-    v34[" "]
+    v37[" "]
     v38[" "]
-    v39[" "]
-    v45[" "]
-    v48[" "]
+    v44[" "]
+    v47[" "]
+    v50[" "]
     v51[" "]
     v52[" "]
     v53[" "]
-    v54[" "]
-    v58[" "]
+    v57[" "]
     end
     subgraph GISTIC2_ANALYSIS
-    v50([RUN_GISTIC2])
-    v57([FILTER_GISTIC2_CALLS])
+    v49([RUN_GISTIC2])
+    v56([FILTER_GISTIC2_CALLS])
     end
     v0 --> v4
     v1 --> v4
     v2 --> v4
     v3 --> v4
-    v20 --> v27
-    v21 --> v27
-    v22 --> v27
-    v23 --> v27
-    v24 --> v27
-    v25 --> v27
+    v20 --> v26
+    v21 --> v26
+    v22 --> v26
+    v23 --> v26
+    v24 --> v26
+    v25 --> v26
+    v4 --> v26
+    v26 --> v33
+    v26 --> v34
+    v26 --> v32
+    v26 --> v31
+    v26 --> v30
+    v26 --> v29
+    v26 --> v28
     v26 --> v27
-    v4 --> v27
-    v27 --> v34
-    v27 --> v35
-    v27 --> v33
-    v27 --> v32
-    v27 --> v31
-    v27 --> v30
-    v27 --> v29
-    v27 --> v28
-    v27 --> v36
-    v27 --> v40
-    v35 --> v40
+    v26 --> v35
+    v26 --> v39
+    v34 --> v39
+    v35 --> v36
+    v36 --> v38
     v36 --> v37
-    v37 --> v39
-    v37 --> v38
-    v37 --> v47
-    v40 --> v45
+    v36 --> v46
+    v39 --> v44
+    v45 --> v46
+    v39 --> v46
     v46 --> v47
-    v40 --> v47
-    v47 --> v48
+    v48 --> v49
+    v39 --> v49
+    v49 --> v56
+    v49 --> v53
+    v49 --> v52
+    v49 --> v51
     v49 --> v50
-    v40 --> v50
-    v50 --> v57
-    v50 --> v54
-    v50 --> v53
-    v50 --> v52
-    v50 --> v51
-    v55 --> v57
+    v54 --> v56
+    v55 --> v56
     v56 --> v57
-    v57 --> v58
 ```
 
 ## Testing
