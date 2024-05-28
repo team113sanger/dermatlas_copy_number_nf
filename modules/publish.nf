@@ -10,7 +10,7 @@ process REFORMAT_TSV {
 
     script:
     """
-    #!/usr/bin/env R 
+    #!/usr/bin/env Rscript
     library(writexl)
     library(stringr)
     library(dplyr)
