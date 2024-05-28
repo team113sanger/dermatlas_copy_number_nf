@@ -1,7 +1,6 @@
 workflow DERMATLAS_METADATA {
     take: 
     bamfile_ch
-    index_ch
     pair_identities
     patient_metadata
     outdir
@@ -9,20 +8,13 @@ workflow DERMATLAS_METADATA {
     main:
 
     bamfile_ch
-    | map { file ->
-        tuple(file.baseName.replace(".sample.dupmarked", ""), file)}
-    | set {bams}
-
-   index_ch
-   | map { file ->
-        tuple(file.baseName.replace(".sample.dupmarked.bam", ""), file)} 
-    | set { indices }
-
-    bams
-    | join(indices)
-    | set { indexed_bams }
-
-
+    | map { file -> 
+            index = file + ".bai"
+            tuple(file, index)}
+    | map { file, index ->
+        tuple(file.baseName.replace(".sample.dupmarked", ""), file, index)}
+    | set { indexed_bams } 
+    
     pair_identities 
     | splitCsv(sep:"\t",header:['normal', 'tumor']) 
     | map{ meta -> 

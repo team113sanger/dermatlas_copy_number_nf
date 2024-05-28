@@ -6,11 +6,11 @@
 
 ## Introduction
 
-dermatlas_copy_number_nf is a bioinfromatics pipeline written in nextflow for performing copy-number alteration (CNA) analysis on cohorts of tumors within the Dermatlas project. 
+dermatlas_copy_number_nf is a bioinfromatics pipeline written in [Nextflow](http://www.nextflow.io) for performing copy-number alteration (CNA) analysis on cohorts of tumors within the Dermatlas project. 
 
 ## Pipeline summary
 
-In brief, the pipeline takes a cohort of samples that have been ingested and preprocessed and:
+In brief, the pipeline takes a cohort of samples that have been ingested and preprocessed by the Dermatlas pipeline and:
 - Links cohort sample metadata to sample bamfiles and links pairs for each tumor/normal sample.
 - Runs ASCAT on each tumor-normal pair, outputting segment calls. 
 - Collates summary statistics for the ASCAT runs and removes those samples below a threshold Goodness-of-Fit level 
@@ -20,8 +20,7 @@ In brief, the pipeline takes a cohort of samples that have been ingested and pre
 
 ## Inputs 
 
-`bam_files`: a wildcard containing a path to a directory containing a Bamfiles 
-`index_files`: a path to the corresponding .bai index files for those BAMS 
+`bam_files`: a wildcard containing a path to a directory containing a Bamfiles
 Sample metadata: path to a file containing sample PD IDs, tumor normal info, and sex
 `tumor_normal_pairs`: path to a file containing a tab-delimited list of matched tumour and normal pairs.
 
