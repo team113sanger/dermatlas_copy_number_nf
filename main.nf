@@ -24,8 +24,7 @@ workflow {
                        params.OUTDIR)
 
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
-                   params.OUTDIR, 
-                   params.PROJECTDIR, 
+                   params.OUTDIR,  
                    reference_genome,
                    bait_set,
                    per_chrom_files,
