@@ -83,7 +83,6 @@ process SUMMARISE_ASCAT_ESTIMATES {
     path("ascat_stats.tsv"),                        emit: ascat_sstats
     path("ascat_low_qual.list"),                    emit: low_quality
     path("sample_purity_ploidy.tsv"),               emit: purity
-    path("samples2sex.tsv"),                        emit: sex_stats
 
     script:
     """
