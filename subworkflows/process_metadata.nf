@@ -71,7 +71,6 @@ workflow DERMATLAS_METADATA {
     | set { combined_metadata }
 
     combined_metadata 
-    | view{}
     | collectFile(name: "sex2chr.txt", storeDir: outdir){
         meta, nf, ni, tf, ti ->
         ["sex2chr.txt", "${meta["pair_id"]}\t${meta["sexchr"]}\n"]
