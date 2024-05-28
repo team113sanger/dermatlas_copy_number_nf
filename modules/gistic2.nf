@@ -53,7 +53,8 @@ process FILTER_GISTIC2_CALLS{
     val(prefix)
 
     output:
-    tuple path("*_gistic_sample_summary.tsv"), path("*_gistic_cohort_summary.tsv")
+    path("*_gistic_sample_summary.tsv"), emit: cs
+    path("*_gistic_cohort_summary.tsv"), emit: ss
 
     script:
     """

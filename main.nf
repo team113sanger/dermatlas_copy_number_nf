@@ -44,7 +44,9 @@ workflow {
     ASCAT_ANALYSIS.out.freq_tab
     | concat(ASCAT_ANALYSIS.out.purity)
     | concat(ASCAT_ANALYSIS.out.summary_stats) 
-    | concat(GISTIC2_ANALYSIS.out.tables)
+    | concat(GISTIC2_ANALYSIS.out.gistic_tabs)
+    | concat(GISTIC2_ANALYSIS.out.sample_summary)
+    | concat(GISTIC2_ANALYSIS.out.cohort_summary)
     | set { tabular_ch }
     
     FORMAT_OUTPUTS( tabular_ch )
