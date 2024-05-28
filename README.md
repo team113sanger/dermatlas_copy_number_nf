@@ -27,16 +27,17 @@ In brief, the pipeline takes a cohort of samples that have been pre-processed by
 
 ### Reference files 
 References that are reused across pipeline executions have been placed within the pipeline's default `nextflow.config` file to simplify configuration. The following reference files are required for a run: 
-- `reference_genome`: path to a reference genome file (used by ASCAT)
-- `bait_set`: path to a `.bed` file describing the regions  (used by ASCAT)
-- `resource_files`: path to a directory containing ASCAT loci and allele 
-- `gc_file`: path to the ASCAT GC correction file
-- `rt_file`: path to the GISTIC replication timing correction file
-- `difficult_regions_file`: path to a Genome in a "difficult regions" file
+- `reference_genome`: path to a reference genome file (ASCAT).
+- `bait_set`: path to a `.bed` file describing the analysed genomic regions  ( ASCAT).
+- `resource_files`: path to a directory containing ASCAT loci and allele.
+- `gc_file`: path to the ASCAT GC correction file.
+- `rt_file`: path to the GISTIC replication timing correction file.
+- `difficult_regions_file`: genomic regions considered to be 
+problematic for analyses such as variant calling by Genome In A Bottle (GIAB).
 
 ## Usage 
 
-The recommended way to launch this pipeline is using a wrapper script that records the revision (-r ) and the specific params `json` file supplied for a run. `bsub < my_wrapper.sh`
+The recommended way to launch this pipeline is using a wrapper script that records the revision (-r ) and the specific params `json` file supplied for a run (e.g. `bsub < my_wrapper.sh`)
 
 An example wrapper script:
 ```
