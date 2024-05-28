@@ -8,7 +8,7 @@ nextflow_process {
 
         when {
             params {
-                OUTDIR = 'results' 
+                load("$baseDir/tests/testdata/test_params.json")
             }
             process {
             

@@ -8,8 +8,7 @@ nextflow_workflow {
 
         when {
             params {
-                // define parameters here. Example:
-                outdir = "tests/results"
+                load("$baseDir/tests/testdata/test_params.json")
             }
             workflow {
                 """
@@ -20,14 +19,14 @@ nextflow_workflow {
                 file("/lustre/scratch124/jb63/ascat/bams/PD54403a/PD54403a.sample.dupmarked.bam.bai"), 
                 file("/lustre/scratch124/jb63/ascat/bams/PD54403b/PD54403b.sample.dupmarked.bam"),
                 file("/lustre/scratch124/jb63/ascat/bams/PD54403b/PD54403b.sample.dupmarked.bam.bai"))
-                input[2] = file("$baseDir/tests/testdata/sex2chr.txt")
-                input[3] = "${params.outdir}"
-                input[4] = file("${params.reference_genome}")
-                input[5] = file("${params.bait_set}") 
-                input[6] = file("${params.resource_files}")
-                input[7] = file("${params.gc_file}")
-                input[8] = file("${params.rt_file}")
-                input[9] = "test"
+                input[1] = file("$baseDir/tests/testdata/sex2chr.txt")
+                input[2] = "${params.OUTDIR}"
+                input[3] = file("${params.reference_genome}")
+                input[4] = file("${params.bait_set}") 
+                input[5] = file("${params.resource_files}")
+                input[6] = file("${params.gc_file}")
+                input[7] = file("${params.rt_file}")
+                input[8] = "test"
                 """
             }
         }
