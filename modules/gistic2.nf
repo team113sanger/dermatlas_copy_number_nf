@@ -1,7 +1,7 @@
 process RUN_GISTIC2 {
     label 'process_high'
     publishDir "${params.OUTDIR}/GISTIC2"
-    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic2/feature/import_dockerisation:5b9abb93"
+    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic2/feature/import_dockerisation:566ac22b"
     
     input: 
     path(segment_file)
