@@ -12,5 +12,9 @@
     "gc_file":"/lustre/scratch124/jb63/ascat/resources/1000G_GC_exome_chr.txt",
     "rt_file":"/lustre/scratch124/jb63/ascat/resources/1000G_RT_exome_chr.txt",
     "gistic_refgene_file":"/lustre/scratch124/jb63/ascat/hg38.UCSC.add_miR.160920.refgene.mat",
-    "difficult_regions_file":"/lustre/scratch124/jb63/ascat/resources/GRCh38_alldifficultregions.bed"
+    "difficult_regions_file":"/lustre/scratch124/jb63/ascat/resources/GRCh38_alldifficultregions.bed",
+    "max_cpus": 12,
+    "max_memory": "35.GB",
+    "max_time": "240.h"
+
 }
