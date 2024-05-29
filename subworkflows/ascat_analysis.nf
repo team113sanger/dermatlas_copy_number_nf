@@ -40,6 +40,17 @@ workflow ASCAT_ANALYSIS {
                  storeDir: output_dir)
     | set { segment_summary }
 
+
+    RUN_ASCAT_EXOMES.out.gistic_inputs
+    | join(quality_ch)
+    | filter{ meta, file, gof -> gof.toDouble() > 95}
+    | map { meta, file, gof -> file }
+    | collectFile(name: 'one_tumor_per_patient_segs.tsv', 
+                 keepHeader: true, 
+                 skip: 1,
+                 storeDir: output_dir)
+    | set { gistic_inputs }
+
     CREATE_FREQUENCY_PLOTS(segment_summary,
                            SUMMARISE_ASCAT_ESTIMATES.out.purity,
                            sex2chr_ch, 
@@ -48,6 +59,7 @@ workflow ASCAT_ANALYSIS {
     emit: 
     segments      =   segment_summary
     estimates     =   RUN_ASCAT_EXOMES.out.estimates
+    gistic_inputs =   gistic_inputs
     purity        =   SUMMARISE_ASCAT_ESTIMATES.out.purity
     summary_stats =   SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats
     freq_tab      =   CREATE_FREQUENCY_PLOTS.out.table

@@ -36,7 +36,7 @@ workflow {
                    rt_file,
                    params.cohort_prefix)
     
-    GISTIC2_ANALYSIS(ASCAT_ANALYSIS.out.segments, 
+    GISTIC2_ANALYSIS(ASCAT_ANALYSIS.out.gistic_inputs, 
                     params.gistic_refgene_file, 
                     giab_regions,
                     params.cohort_prefix)

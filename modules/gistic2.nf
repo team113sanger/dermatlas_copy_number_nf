@@ -44,7 +44,7 @@ process RUN_GISTIC2 {
 
 process FILTER_GISTIC2_CALLS{
     label 'process_medium'
-    publishDir "${params.OUTDIR}/GISTIC2", mode: 'copy'
+    publishDir "${params.OUTDIR}/GISTIC2_ASSESS", mode: 'copy'
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess/feature/nf_image:fe793813"
     input:
     path(segments)
