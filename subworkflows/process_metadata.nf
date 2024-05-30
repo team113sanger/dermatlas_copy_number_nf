@@ -16,7 +16,7 @@ workflow DERMATLAS_METADATA {
     | set { indexed_bams } 
 
     pair_identities 
-    | splitCsv(sep:"\t",header:['normal', 'tumor']) 
+    | splitCsv(sep:"\t", header:['tumor', 'normal']) 
     | map{ meta -> 
         [meta + [pair_id: meta.normal+ "_" + meta.tumor]]
         }
