@@ -1,6 +1,6 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.OUTDIR}/ASCAT/${meta.tumor}-${meta.normal}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:7cd29335'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:d84fa3ad'
     input: 
     tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
     path(outdir)
@@ -23,16 +23,16 @@ process RUN_ASCAT_EXOMES {
     tuple val(meta), path("*segments.txt"),                emit: segments
 
     script:
-    def tum = "$meta.tumor"
     def norm = "$meta.normal"
+    def tum = "$meta.tumor"
     def sexchr = "$meta.sexchr"
 
     """
     /opt/repo/run_ascat_exome.R \
     --tum_bam $tumbam \
     --norm_bam $normbam \
-    --tum_name $tum \
     --norm_name $norm \
+    --tum_name $tum \
     --sex $sexchr \
     --outdir $tum-$norm \
     --ref_file $genome \
@@ -75,7 +75,7 @@ process RUN_ASCAT_EXOMES {
 process SUMMARISE_ASCAT_ESTIMATES {
     label 'process_medium'
     publishDir "${params.OUTDIR}/ASCAT", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:7cd29335'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:d84fa3ad'
     input: 
     path(collected_files)
 
@@ -103,7 +103,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
 process CREATE_FREQUENCY_PLOTS {
     label 'process_medium'
     publishDir "${params.OUTDIR}/ASCAT", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:7cd29335'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:d84fa3ad'
     input:
     path(segfiles_list)
     path(purity_ploidy)
