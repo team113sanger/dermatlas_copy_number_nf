@@ -9,6 +9,8 @@ process RUN_GISTIC2 {
 
     output:
     path("all_lesions.conf_95.txt"), emit: lesions
+    path("broad_significance_results.txt"), emit: broad
+    path("broad_values_by_arm.txt"), emit: arms
     path("*.png"), emit: plots
     path("*.pdf"), emit: pdfs
     path("*.mat"), emit: mats

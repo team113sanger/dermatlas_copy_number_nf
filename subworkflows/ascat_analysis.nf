@@ -34,10 +34,9 @@ workflow ASCAT_ANALYSIS {
     | join(quality_ch)
     | filter{ meta, file, gof -> gof.toDouble() > 95}
     | map { meta, file, gof -> file }
-    | collectFile(name: 'one_patient_per_tumor.txt', 
+    | collectFile(name: 'combined_segment_file.txt', 
                  keepHeader: true, 
-                 skip: 1,
-                 storeDir: output_dir)
+                 skip: 1)
     | set { segment_summary }
 
 
@@ -57,7 +56,7 @@ workflow ASCAT_ANALYSIS {
                            cohort_prefix)
 
     emit: 
-    segments      =   segment_summary
+    segments      =   CREATE_FREQUENCY_PLOTS.out.processed_segments
     estimates     =   RUN_ASCAT_EXOMES.out.estimates
     gistic_inputs =   gistic_inputs
     purity        =   SUMMARISE_ASCAT_ESTIMATES.out.purity

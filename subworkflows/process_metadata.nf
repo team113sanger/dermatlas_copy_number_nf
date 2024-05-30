@@ -73,7 +73,7 @@ workflow DERMATLAS_METADATA {
     combined_metadata 
     | collectFile(name: "sex2chr.txt", storeDir: outdir){
         meta, nf, ni, tf, ti ->
-        ["sex2chr.txt", "${meta["pair_id"]}\t${meta["sexchr"]}\n"]
+        ["sex2chr.txt", "${meta["Sanger DNA ID"]}\t${meta["sexchr"]}\n"]
     }
     | set {sex2chr_ch}
 
