@@ -3,10 +3,28 @@
         "content": [
             {
                 "0": [
-                    [
-                        "test_cn-loh.pdf:md5,f60aa26a8370d27127864538cab5f43a",
-                        "test_cn-loh.tsv:md5,c135ad2a5df82e3b39d40fc08fb11fad"
-                    ]
+                    "test_cn-loh.tsv:md5,c135ad2a5df82e3b39d40fc08fb11fad"
+                ],
+                "1": [
+                    "test_cn-loh.pdf:md5,6534a89bc3f9a1b806eaa29886184a9d"
+                ],
+                "2": [
+                    "test_CNfreq.tsv:md5,45a47bd8980fda24828bf107f5add8a4"
+                ],
+                "3": [
+                    "test_segments.tsv:md5,c01f9dc6d3e5fd633245949e3d4bb8b8"
+                ],
+                "cn_freqs": [
+                    "test_CNfreq.tsv:md5,45a47bd8980fda24828bf107f5add8a4"
+                ],
+                "plot": [
+                    "test_cn-loh.pdf:md5,6534a89bc3f9a1b806eaa29886184a9d"
+                ],
+                "processed_segments": [
+                    "test_segments.tsv:md5,c01f9dc6d3e5fd633245949e3d4bb8b8"
+                ],
+                "table": [
+                    "test_cn-loh.tsv:md5,c135ad2a5df82e3b39d40fc08fb11fad"
                 ]
             }
         ],
@@ -14,6 +32,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-05-21T06:54:38.474173"
+        "timestamp": "2024-05-30T11:46:52.852833"
     }
 }

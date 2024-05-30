@@ -11,9 +11,6 @@
                 "2": [
                     "sample_purity_ploidy.tsv:md5,80485b1f3983333638273f56d98f317f"
                 ],
-                "3": [
-                    "samples2sex.tsv:md5,997d89f5485abb845dffaa1c75983aa2"
-                ],
                 "ascat_sstats": [
                     "ascat_stats.tsv:md5,a102df90ee75b4a9473c27aa75767c50"
                 ],
@@ -22,9 +19,6 @@
                 ],
                 "purity": [
                     "sample_purity_ploidy.tsv:md5,80485b1f3983333638273f56d98f317f"
-                ],
-                "sex_stats": [
-                    "samples2sex.tsv:md5,997d89f5485abb845dffaa1c75983aa2"
                 ]
             }
         ],
@@ -32,6 +26,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-05-21T13:35:04.595771"
+        "timestamp": "2024-05-29T14:55:24.315469"
     }
 }
