@@ -12,7 +12,7 @@ workflow {
     pair_ids    = Channel.fromPath(params.tumor_normal_pairs, checkIfExists: true)
     patient_md  = Channel.fromPath(params.metadata_manifest, checkIfExists: true)
 
-    // Reference files
+    // Reference files 
     reference_genome = file(params.reference_genome, checkIfExists: true)
     bait_set = file(params.bait_set, checkIfExists: true)
     per_chrom_files = file(params.resource_files, checkIfExists: true)
@@ -20,12 +20,14 @@ workflow {
     rt_file = file(params.rt_file, checkIfExists: true)
     giab_regions = file(params.difficult_regions_file, checkIfExists: true)
 
-
+    // Combine and pivot the metadata so that TN pair bams and meta are a single
+    // data structure
     DERMATLAS_METADATA(bamfiles, 
                        pair_ids, 
                        patient_md, 
                        params.OUTDIR)
-
+    
+    // Run Ascat, summarise estimates and plot 
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
                    DERMATLAS_METADATA.out.sex2chr_ch,
                    params.OUTDIR,  
@@ -42,13 +44,14 @@ workflow {
                     giab_regions,
                     params.cohort_prefix)
     
-    ASCAT_ANALYSIS.out.freq_tab
-    | concat(ASCAT_ANALYSIS.out.purity)
-    | concat(ASCAT_ANALYSIS.out.summary_stats) 
-    | concat(GISTIC2_ANALYSIS.out.gistic_tabs)
-    | concat(GISTIC2_ANALYSIS.out.sample_summary)
-    | concat(GISTIC2_ANALYSIS.out.cohort_summary)
-    | set { tabular_ch }
+    // Convert all tab files to tsv. TODO 
+    // ASCAT_ANALYSIS.out.freq_tab
+    // | concat(ASCAT_ANALYSIS.out.purity)
+    // | concat(ASCAT_ANALYSIS.out.summary_stats) 
+    // | concat(GISTIC2_ANALYSIS.out.gistic_tabs)
+    // | concat(GISTIC2_ANALYSIS.out.sample_summary)
+    // | concat(GISTIC2_ANALYSIS.out.cohort_summary)
+    // | set { tabular_ch }
     
     // REFORMAT_TSV( tabular_ch )
 
