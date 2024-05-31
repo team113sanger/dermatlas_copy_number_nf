@@ -3,3 +3,4 @@ work
 .nextflow*
 .nf-test/*
 results
+.nf-test.*
