@@ -37,6 +37,15 @@ workflow DERMATLAS_METADATA {
 
     
 
+    patient_metadata_ch
+    | filter { id, meta -> id != "-"}
+    | collectFile(name: "sex2chr.txt", storeDir: outdir){
+        id, meta ->
+        ["sex2chr.txt", "${id}\t${meta["sexchr"][0]}\n"]
+    }
+    | set {sex2chr_ch}
+
+
  
     indexed_bams
     | join(pair_id_ch)
@@ -70,12 +79,6 @@ workflow DERMATLAS_METADATA {
                         meta["tumor_index"])}
     | set { combined_metadata }
 
-    combined_metadata 
-    | collectFile(name: "sex2chr.txt", storeDir: outdir){
-        meta, nf, ni, tf, ti ->
-        ["sex2chr.txt", "${meta["Sanger DNA ID"]}\t${meta["sexchr"]}\n"]
-    }
-    | set {sex2chr_ch}
 
 
     emit:
