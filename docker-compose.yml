@@ -13,8 +13,11 @@ services:
     command: sleep infinity
     volumes:
       - type: bind
+        source: ./
+        target: /opt/repo/
+      - type: bind
         source: /lustre/scratch124/jb63/data
-        target: /opt/data
+        target: /lustre/scratch124/jb63/data
     networks:
       - local-default
 

@@ -1,0 +1,25 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    "6509_2707_Leiomyoma_gistic_sample_summary.tsv:md5,7dd3f6b5d8c33a26b112d75ad8e3deb6"
+                ],
+                "1": [
+                    "6509_2707_Leiomyoma_gistic_cohort_summary.tsv:md5,3484929d572979d94f7c493f465c27dc"
+                ],
+                "cs": [
+                    "6509_2707_Leiomyoma_gistic_sample_summary.tsv:md5,7dd3f6b5d8c33a26b112d75ad8e3deb6"
+                ],
+                "ss": [
+                    "6509_2707_Leiomyoma_gistic_cohort_summary.tsv:md5,3484929d572979d94f7c493f465c27dc"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-05-31T08:39:12.175822"
+    }
+}

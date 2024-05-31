@@ -7,15 +7,15 @@ nextflow_workflow {
     test("Should run without failures") {
 
         when {
-            params {
-                    PROJECTDIR = "/workspaces/ascat"
-                    OUTDIR = "/workspaces/ascat/results"
-            }
+        params {
+            load("$baseDir/tests/testdata/test_params.json")
+        }
             workflow {
                 """
                 input[0] = Channel.fromPath("$baseDir/tests/testdata/PD57536a.sample.dupmarked.bam")
                 input[1] = Channel.fromPath("$baseDir/tests/testdata/pair_ids.tsv")
                 input[2] = Channel.fromPath("$baseDir/tests/testdata/metadata_tab.tsv")
+                input[3] = "${params.OUTDIR}"
                 """
             }
         }

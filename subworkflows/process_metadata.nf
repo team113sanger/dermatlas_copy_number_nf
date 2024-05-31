@@ -3,66 +3,86 @@ workflow DERMATLAS_METADATA {
     bamfile_ch
     pair_identities
     patient_metadata
+    outdir
 
     main:
 
-    bams = bamfile_ch
-    .map { file ->
-        tuple(file.baseName.replace(".sample.dupmarked", ""), file)
-    }
+    bamfile_ch
+    | map { file -> 
+            index = file + ".bai"
+            tuple(file, index)}
+    | map { file, index ->
+        tuple(file.baseName.replace(".sample.dupmarked", ""), file, index)}
+    | set { indexed_bams } 
 
-    pids = pair_identities 
-    .splitCsv(sep:"\t",header:['normal', 'tumor']) 
-    .map{ meta -> 
+    pair_identities 
+    | splitCsv(sep:"\t", header:['tumor', 'normal']) 
+    | map{ meta -> 
         [meta + [pair_id: meta.normal+ "_" + meta.tumor]]
         }
-    .flatMap { meta -> 
+    | flatMap { meta -> 
     [
         [meta["normal"][0], meta],
         [meta["tumor"][0],  meta]
-    ]
-    }
+    ]}
+    | set { pair_id_ch }
     
 
-    pmdata = patient_metadata
-    .splitCsv(sep:"\t",header : true)
-    .map {meta -> meta.subMap("Sex", "Sanger DNA ID", "OK_to_analyse_DNA?", "Phenotype")} 
-    .map {meta -> 
-            tuple(meta["Sanger DNA ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])
+    patient_metadata
+    | splitCsv(sep:"\t",header : true)
+    | map {meta -> meta.subMap("Sex", "Sanger DNA ID", "OK_to_analyse_DNA?", "Phenotype")} 
+    | map {meta -> 
+            tuple(meta["Sanger DNA ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])}
+    | set{ patient_metadata_ch }
+
+    
+
+    patient_metadata_ch
+    | filter { id, meta -> id =~ "PD"}
+    | collectFile(name: "samples2sex.txt", storeDir: outdir){
+        id, meta ->
+        ["samples2sex.txt", "${id}\t${meta["sexchr"][0]}\n"]
     }
-    // .filter{meta -> 
-    //         meta["OK_to_analyse_DNA?"] == Yes
-    // }
+    | set {sex2chr_ch}
+
 
  
-    combined_metadata = bams
-    .join(pids)
-    .join(pmdata)
-    .map{
-         id, file, meta, patients -> 
-         def combinedMap = meta[0] + [file: file] + patients[0]
-        // Check if the 'Sanger DNA ID' matches the 'normal',
-        // rename 'file' key accordingly
+    indexed_bams
+    | join(pair_id_ch)
+    | join(patient_metadata_ch)
+    | map{
+         id, file, index, meta, patients -> 
+         def combinedMap = meta[0] + [file: file, index: index] + patients[0]
+        // Check if the 'Sanger DNA ID' matches the 'normal',rename 'file' key accordingly
         if (combinedMap["Sanger DNA ID"] == combinedMap.normal) {
             combinedMap['normal_file'] = combinedMap.remove('file')
+            combinedMap['normal_index'] = combinedMap.remove('index')
         } else {
             combinedMap['tumor_file'] = combinedMap.remove('file')
+            combinedMap['tumor_index'] = combinedMap.remove('index')
         }
-        [id,combinedMap]
+        [id, combinedMap]
          }
-    .map{
-        id, meta -> key = groupKey(meta.subMap("pair_id"),2)
+    | map{
+        id, meta -> key = groupKey(meta.subMap("pair_id") ,2)
         [key, meta]
     }
-    .groupTuple()
-    .map{
+    | groupTuple()
+    | map{
         pair_id, meta -> 
-        [pair_id, meta[0] + meta[1]]
+        pair_id + meta[0] + meta[1]
     }
-    .map{ meta -> tuple(meta, meta[1]["normal_file"], meta[1]["tumor_file"])
-    }
-    
+    | map{ meta -> tuple(meta, 
+                        meta["normal_file"], 
+                        meta["normal_index"], 
+                        meta["tumor_file"],  
+                        meta["tumor_index"])}
+    | set { combined_metadata }
+
+
+
     emit:
         combined_metadata
+        sex2chr_ch
 
 }

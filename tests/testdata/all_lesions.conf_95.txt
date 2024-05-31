@@ -1,0 +1,3 @@
+Unique Name	Descriptor	Wide Peak Limits	Peak Limits	Region Limits	q values	Residual q values after removing segments shared with higher peaks	Broad or Focal	Amplitude Threshold	PD54402a	PD54403a	
+Deletion Peak 1	19q13.41	chr19:50950366-51155603(probes 261607:261628)	chr19:50960365-51155603(probes 261608:261628)	chr19:50980365-50999757(probes 261610:261611)	0.14784	 0.14987		0: t>-0.25; 1: -0.25>t> -1.3; 2: t< -1.3	0	1	
+Deletion Peak 1 - CN values	19q13.41	chr19:50950366-51155603(probes 261607:261628)	chr19:50960365-51155603(probes 261608:261628)	chr19:50980365-50999757(probes 261610:261611)	0.14784	 0.14987		Actual Copy Change Given	-0.0080185	-0.84404	

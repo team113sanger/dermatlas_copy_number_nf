@@ -1,12 +1,14 @@
 process RUN_ASCAT_EXOMES {
-    publishDir "${params.OUTDIR}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:0ee0535c'
-    
+    publishDir "${params.OUTDIR}/ASCAT/${meta.tumor}-${meta.normal}", mode: 'copy'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:a2a3d2b2'
     input: 
-    tuple val(meta), path(normbam), path(tumbam)
+    tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
     path(outdir)
-    val(project_dir)
-    tuple path(genome), path(baits)
+    path(genome)
+    path(baits) 
+    path(per_chrom_dir)
+    path(gc_file)
+    path(rt_file)
 
     
     output:
@@ -14,35 +16,35 @@ process RUN_ASCAT_EXOMES {
     tuple val(meta), path("ASCAT_estimates_*.tsv"),        emit: estimates
     tuple val(meta), path("gistic2_segs_*.tsv"),           emit: gistic_inputs
     tuple val(meta), path("*.png"),                        emit: plots
-    tuple val(meta), path("ASCAT_objects.Rdata"),          emit:rdata
+    tuple val(meta), path("ASCAT_objects.Rdata"),          emit: rdata
     tuple val(meta), path("*alleleFrequencies_chr*.txt"),  emit: allelefreqs
     tuple val(meta), path("*BAF.txt"),                     emit: bafs
-    tuple val(meta), path("*cnvs.txt"),                    emit: cnvs
     tuple val(meta), path("*LogR.txt"),                    emit: logrs
-    tuple val(meta), path("*metrics.txt"),                 emit: metrics
-    tuple val(meta), path("*purityploidy.txt"),            emit: purityploidy
     tuple val(meta), path("*segments.txt"),                emit: segments
 
     script:
-    def tum = "${meta[1].tumor}"
-    def norm = "${meta[1].normal}"
-    def sexchr = "${meta[1].sexchr}"
+    def norm = "$meta.normal"
+    def tum = "$meta.tumor"
+    def sexchr = "$meta.sexchr"
+
     """
-    run_ascat_exome.R \
+    /opt/repo/run_ascat_exome.R \
     --tum_bam $tumbam \
     --norm_bam $normbam \
-    --tum_name $tum \
     --norm_name $norm \
+    --tum_name $tum \
     --sex $sexchr \
     --outdir $tum-$norm \
     --ref_file $genome \
     --bed_file $baits \
-    --project_dir $project_dir
+    --per_chrom $per_chrom_dir \
+    --gc_file $gc_file \
+    --rt_file $rt_file 
     """
     
     stub:
-    def prefix = "${meta[1].tumor}"
-    def pair = "${meta[1].pair_id}"
+    def prefix = "${meta.tumor}"
+    def pair = "${meta.pair_id}"
     """
     echo stub > ASCAT_estimates_${pair}.tsv
     echo stub > QC_${pair}.tsv
@@ -71,21 +73,22 @@ process RUN_ASCAT_EXOMES {
 
 
 process SUMMARISE_ASCAT_ESTIMATES {
-    publishDir "${params.OUTDIR}", mode: 'copy'
-        container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:0ee0535c'
-
+    label 'process_medium'
+    publishDir "${params.OUTDIR}/ASCAT", mode: 'copy'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:a2a3d2b2'
     input: 
     path(collected_files)
 
     output:
-    tuple path("ascat_stats.tsv"), path("ascat_low_qual.list"), path("sample_purity_ploidy.tsv"), emit: ascat_sstats
+    path("ascat_stats.tsv"),                        emit: ascat_sstats
+    path("ascat_low_qual.list"),                    emit: low_quality
+    path("sample_purity_ploidy.tsv"),               emit: purity
 
     script:
     """
-    summarise_ascat_estimate.R
-    awk '{print \$1"\t"\$5"\t"\$3}' ascat_stats.tsv  | sed 's/-/\t/' |cut -f 1,3,4 | grep PD | xargs -i basename {} > sample_purity_ploidy.tsv
-    awk '\$2<90' ascat_stats.tsv | cut -f 1 -d "-" | cut -f 3 -d "/" >  ascat_low_qual.list
+    /opt/repo/summarise_ascat_estimate.R
     """
+    
     stub:
     """
     echo stub > samples2sex.tsv
@@ -98,25 +101,30 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
 
 process CREATE_FREQUENCY_PLOTS {
-    publishDir "${params.OUTDIR}", mode: 'copy'
-        container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/import-dockerisation:92593e3a'
-
+    label 'process_medium'
+    publishDir "${params.OUTDIR}/ASCAT", mode: 'copy'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:a2a3d2b2'
     input:
     path(segfiles_list)
-    tuple path(stats), path(ascat_low_qual), path(purity_ploidy)
+    path(purity_ploidy)
     path(sample_sex)
+    val(cohort_prefix)
 
     output:
-    tuple path("*_cn-loh.pdf"), path("*_cn-loh.tsv")
+    path("*_cn-loh.tsv"), emit: table
+    path("*_cn-loh.pdf"), emit: plot
+    path("*_CNfreq.tsv"), emit: cn_freqs
+    path("*_segments.tsv"), emit: processed_segments
+    
     script:
-    def prefix="TBC"
     """
-    plot_ascat_cna_and_loh.R \
+    /opt/repo/plot_ascat_cna_and_loh.R \
     $segfiles_list \
     $purity_ploidy \
     $sample_sex \
-    $prefix
+    $cohort_prefix
     """
+    
     stub:
     """
     echo stub > x_cn-loh.pdf
@@ -124,4 +132,20 @@ process CREATE_FREQUENCY_PLOTS {
     """
 
 
+}
+
+process EXTRACT_GOODNESS_OF_FIT {
+    
+    input:
+    tuple val(meta), path(txtFile)
+
+    output:
+    tuple val(meta), env(goodnessOfFit)
+
+    script:
+    // Extract the "Goodness-of-fit" value using grep and cut
+    """
+    goodnessOfFit=\$(grep 'Goodness-of-fit' ${txtFile} | cut -f2)
+    echo "\$goodnessOfFit"
+    """
 }

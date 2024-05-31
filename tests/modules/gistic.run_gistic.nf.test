@@ -1,8 +1,8 @@
 nextflow_process {
 
-    name "Test Process SUMMARISE_ASCAT_ESTIMATES"
-    script "modules/ascat.nf"
-    process "SUMMARISE_ASCAT_ESTIMATES"
+    name "Test Process RUN_GISTIC2"
+    script "modules/gistic2.nf"
+    process "RUN_GISTIC2"
 
     test("Should run without failures") {
 
@@ -11,10 +11,9 @@ nextflow_process {
                 load("$baseDir/tests/testdata/test_params.json")
             }
             process {
-            
                 """
-                input[0] = ['$baseDir/tests/testdata/ASCAT_estimates_PD62468a_PD62468b.tsv',
-                            '$baseDir/tests/testdata/ASCAT_estimates_PD54403a_PD54403b.tsv']
+                input[0] = file("$baseDir/tests/testdata/one_tumor_per_patient.tsv")
+                input[1] = file("${params.gistic_refgene_file}")
                 """
             }
         }
@@ -27,4 +26,3 @@ nextflow_process {
     }
 
 }
-
