@@ -38,10 +38,10 @@ workflow DERMATLAS_METADATA {
     
 
     patient_metadata_ch
-    | filter { id, meta -> id != "-"}
-    | collectFile(name: "sex2chr.txt", storeDir: outdir){
+    | filter { id, meta -> id =~ "PD"}
+    | collectFile(name: "samples2sex.txt", storeDir: outdir){
         id, meta ->
-        ["sex2chr.txt", "${id}\t${meta["sexchr"][0]}\n"]
+        ["samples2sex.txt", "${id}\t${meta["sexchr"][0]}\n"]
     }
     | set {sex2chr_ch}
 
