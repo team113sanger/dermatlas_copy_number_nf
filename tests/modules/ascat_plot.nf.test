@@ -15,7 +15,7 @@ nextflow_process {
                 """
                 input[0] = file('$baseDir/tests/testdata/one_tumor_per_patient.tsv')
                 input[1] = file('$baseDir/tests/testdata/sample_purity_ploidy.tsv')
-                input[2] = file('$baseDir/tests/testdata/sex2chr.txt')
+                input[2] = file('$baseDir/tests/testdata/samples2sex.txt')
                 input[3] = "test"
                 """
             }

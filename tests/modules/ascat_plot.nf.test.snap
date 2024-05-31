@@ -6,22 +6,22 @@
                     "test_cn-loh.tsv:md5,c135ad2a5df82e3b39d40fc08fb11fad"
                 ],
                 "1": [
-                    "test_cn-loh.pdf:md5,6534a89bc3f9a1b806eaa29886184a9d"
+                    "test_cn-loh.pdf:md5,580e60a51b9aa405a253e73328172cd8"
                 ],
                 "2": [
                     "test_CNfreq.tsv:md5,45a47bd8980fda24828bf107f5add8a4"
                 ],
                 "3": [
-                    "test_segments.tsv:md5,c01f9dc6d3e5fd633245949e3d4bb8b8"
+                    "test_segments.tsv:md5,624b2569ae6799e0d6f1e10619fec083"
                 ],
                 "cn_freqs": [
                     "test_CNfreq.tsv:md5,45a47bd8980fda24828bf107f5add8a4"
                 ],
                 "plot": [
-                    "test_cn-loh.pdf:md5,6534a89bc3f9a1b806eaa29886184a9d"
+                    "test_cn-loh.pdf:md5,580e60a51b9aa405a253e73328172cd8"
                 ],
                 "processed_segments": [
-                    "test_segments.tsv:md5,c01f9dc6d3e5fd633245949e3d4bb8b8"
+                    "test_segments.tsv:md5,624b2569ae6799e0d6f1e10619fec083"
                 ],
                 "table": [
                     "test_cn-loh.tsv:md5,c135ad2a5df82e3b39d40fc08fb11fad"
@@ -32,6 +32,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-05-30T11:46:52.852833"
+        "timestamp": "2024-05-31T08:49:02.893915"
     }
 }
