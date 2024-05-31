@@ -38,6 +38,7 @@ workflow {
                    rt_file,
                    params.cohort_prefix)
     
+    // Given Ascat segments, run Gistic2 and filter regions 
     GISTIC2_ANALYSIS(ASCAT_ANALYSIS.out.gistic_inputs,
                     ASCAT_ANALYSIS.out.segments, 
                     params.gistic_refgene_file, 
