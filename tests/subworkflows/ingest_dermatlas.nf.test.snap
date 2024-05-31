@@ -6,13 +6,13 @@
                     
                 ],
                 "1": [
-                    
+                    "samples2sex.txt:md5,18eda5f110c7c6265971e9d56cd73e07"
                 ],
                 "combined_metadata": [
                     
                 ],
                 "sex2chr_ch": [
-                    
+                    "samples2sex.txt:md5,18eda5f110c7c6265971e9d56cd73e07"
                 ]
             }
         ],
@@ -20,6 +20,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-05-30T12:31:46.622135"
+        "timestamp": "2024-05-31T08:46:54.908616"
     }
 }
