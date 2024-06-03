@@ -11,9 +11,9 @@ dermatlas_copy_number_nf is a bioinfromatics pipeline written in [Nextflow](http
 ## Pipeline summary
 
 In brief, the pipeline takes a set samples that have been pre-processed by the Dermatlas ingestion pipeline and then:
-- Links each sample bamfile to it's assocaited metadata and then links pairs of tumor/normals.
+- Links each sample bamfile to it's assocaited metadata and then links tumor-normal pairs.
 - Runs ASCAT on each tumor-normal pair, outputting segment calls and diagnostic plots. 
-- Collates summary statistics for all ASCAT runs and filters out samples that fall below a threshold Goodness-of-Fit level (GOF >95%).
+- Collates summary statistics for all ASCAT runs and filters out samples that fall below a threshold Goodness-of-Fit level (GOF <95%).
 - Merges the segment calls from ASCAT that pass filtering.
 - Runs GISTIC2 to identify regions with significant copy-number alterations in the cohort (CNAs).
 - Filters those GISTIC2 calls to identify those that overlap with ASCAT.
@@ -21,12 +21,12 @@ In brief, the pipeline takes a set samples that have been pre-processed by the D
 ## Inputs 
 
 ### Cohort-dependent variables
-- `bam_files`: a path to a set of `.bam` files in a project directory. Note: the pipeline assumes that corresponding `.bam.bai` index files have been pre-generated and are co-located with bams and a `**` glob match should be used to recursively collect all bamfiles in the directory.
+- `bam_files`: a path to a set of `.bam` files in a project directory. Note: the pipeline assumes that corresponding `.bam.bai` index files have been pre-generated and are co-located with bams and you should use a `**` glob match to recursively collect all bamfiles in the directory.
 - `metadata_manifest`: path to a tab-delimited manifest containing sample PD IDs and information about sample phenotype/preparation.
-- `tumor_normal_pairs`: path to a file containing a tab-delimited list of matched tumour and normal pairs.
+- `tumor_normal_pairs`: path to a file containing a tab-delimited list of matched tumour-normal pairs.
 
 ### Cohort-independent variables
-Reference files that are reused across pipeline executions have been placed within the pipeline's default `nextflow.config` file to simplify configuration. The following reference files are required for a run: 
+Reference files that are reused across pipeline executions have been placed within the pipeline's default `nextflow.config` file to simplify configuration and can be ommited from setup. Behind the scences though, the following reference files are required for a run: 
 - `reference_genome`: path to a reference genome file (ASCAT).
 - `bait_set`: path to a `.bed` file describing the analysed genomic regions  (ASCAT).
 - `resource_files`: path to a directory containing ASCAT loci and allele files.
