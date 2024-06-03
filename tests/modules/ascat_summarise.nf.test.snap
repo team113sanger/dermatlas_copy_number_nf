@@ -1,0 +1,31 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    "ascat_stats.tsv:md5,90d62cde99bfb269462d2e08cbeba7bc"
+                ],
+                "1": [
+                    "ascat_low_qual.list:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ],
+                "2": [
+                    "sample_purity_ploidy.tsv:md5,e2db4d15ea35a29525e84b1c4ed52ea3"
+                ],
+                "ascat_sstats": [
+                    "ascat_stats.tsv:md5,90d62cde99bfb269462d2e08cbeba7bc"
+                ],
+                "low_quality": [
+                    "ascat_low_qual.list:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ],
+                "purity": [
+                    "sample_purity_ploidy.tsv:md5,e2db4d15ea35a29525e84b1c4ed52ea3"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-05-31T09:09:19.413383"
+    }
+}

@@ -1,93 +1,196 @@
 # dermatlas_copy_number_nf
 
+[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A522.04.5-23aa62.svg?labelColor=000000)](https://www.nextflow.io/)
+[![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
+[![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
+
+## Introduction
+
+dermatlas_copy_number_nf is a bioinfromatics pipeline written in [Nextflow](http://www.nextflow.io) for performing copy number alteration (CNA) analysis on cohorts of tumors within the Dermatlas project. 
+
+## Pipeline summary
+
+In brief, the pipeline takes a set samples that have been pre-processed by the Dermatlas ingestion pipeline and then:
+- Links each sample bamfile to it's assocaited metadata and then links tumor-normal pairs.
+- Runs ASCAT on each tumor-normal pair, outputting segment calls and diagnostic plots. 
+- Collates summary statistics for all ASCAT runs and filters out samples that fall below a threshold Goodness-of-Fit level (GOF <95%).
+- Merges the segment calls from ASCAT that pass filtering.
+- Runs GISTIC2 to identify regions with significant copy-number alterations in the cohort (CNAs).
+- Filters those GISTIC2 calls to identify those that overlap with ASCAT.
+
+## Inputs 
+
+### Cohort-dependent variables
+- `bam_files`: a path to a set of `.bam` files in a project directory. Note: the pipeline assumes that corresponding `.bam.bai` index files have been pre-generated and are co-located with bams and you should use a `**` glob match to recursively collect all bamfiles in the directory.
+- `metadata_manifest`: path to a tab-delimited manifest containing sample PD IDs and information about sample phenotype/preparation.
+- `tumor_normal_pairs`: path to a file containing a tab-delimited list of matched tumour-normal pairs.
+
+### Cohort-independent variables
+Reference files that are reused across pipeline executions have been placed within the pipeline's default `nextflow.config` file to simplify configuration and can be ommited from setup. Behind the scences though, the following reference files are required for a run: 
+- `reference_genome`: path to a reference genome file (ASCAT).
+- `bait_set`: path to a `.bed` file describing the analysed genomic regions  (ASCAT).
+- `resource_files`: path to a directory containing ASCAT loci and allele files.
+- `gc_file`: path to the ASCAT GC correction file.
+- `rt_file`: path to the ASCAT replication timing correction file.
+- `difficult_regions_file`: genomic regions considered to be 
+problematic for analyses such as variant calling by Genome In A Bottle (GIAB), used by GISTIC2 for masking regions.
+
+Default reference file values supplied within the `nextflow.config` file can be overided by adding them to the params `.json` file. An example complete params file `example_params.json` is supplied within this repo for demonstation.
+
+## Usage 
+
+The recommended way to launch this pipeline is using a wrapper script (e.g. `bsub < my_wrapper.sh`) that submits nextflow as a job and records the version (**e.g.** `-r 0.1.0`)  and the `.json` parameter file supplied for a run.
+
+An example wrapper script:
+```
+#!/bin/bash
+#BSUB -q normal
+#BSUB -G team113
+#BSUB -R "select[mem>8000] rusage[mem=8000] span[hosts=1]"
+#BSUB -M 8000
+#BSUB -oo nf_out.o
+#BSUB -eo nf_out.e
+
+PARAMS_FILE="/lustre/scratch125/casm/team113da/users/jb63/nf_cna_testing/params.json"
+
+# Load module dependencies
+module load nextflow-23.10.0
+module load singularity
+module load /software/team113/modules/modulefiles/tw/0.6.2
+
+# Create a nextflow job that will spawn other jobs
+
+nextflow run 'https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf' \
+-r 0.1.0 \
+-params-file $PARAMS_FILE \
+-c nextflow.config \
+-profile farm22 
+```
 
 
-## Getting started
+When running the pipeline for the first time on the farm you will need to provide credentials to pull singularity containers from the team113 sanger gitlab. These should be provided as environment variables:
+`SINGULARITY_DOCKER_USERNAME`=userid@sanger.ac.uk
+`SINGULARITY_DOCKER_PASSWORD`=YOUR_GITLAB_LOGIN_PASSWORD
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+You can fix these variables to load by default by adding the following lines to your `~/.bashrc` file
+```
+export SINGULARITY_DOCKER_USERNAME=userid@sanger.ac.uk
+export SINGULARITY_DOCKER_PASSWORD=YOUR_GITLAB_LOGIN_PASSWORD
+```
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+The pipeline can configured to run on either Sanger OpenStack secure-lustre instances or farm22 by changing the profile speicified:
+`-profile secure_lustre` or `-profile farm22`. 
 
-## Add your files
+## Pipeline visualisation 
+Created using nextflow's in-built visualitation features.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+```mermaid
+flowchart TB
+    subgraph " "
+    v0["Channel.fromPath"]
+    v1["Channel.fromPath"]
+    v2["Channel.fromPath"]
+    v18["outdir"]
+    v19["genome"]
+    v20["baits"]
+    v21["per_chrom_dir"]
+    v22["gc_file"]
+    v23["rt_file"]
+    v43["cohort_prefix"]
+    v46["refgenefile"]
+    v52["difficult_regions"]
+    v53["prefix"]
+    end
+    subgraph ASCAT_ANALYSIS
+    v24([RUN_ASCAT_EXOMES])
+    v32([EXTRACT_GOODNESS_OF_FIT])
+    v34([SUMMARISE_ASCAT_ESTIMATES])
+    v44([CREATE_FREQUENCY_PLOTS])
+    v3(( ))
+    v33(( ))
+    v37(( ))
+    end
+    subgraph " "
+    v25[" "]
+    v26[" "]
+    v27[" "]
+    v28[" "]
+    v29[" "]
+    v30[" "]
+    v31[" "]
+    v35[" "]
+    v36[" "]
+    v42[" "]
+    v45[" "]
+    v48[" "]
+    v49[" "]
+    v50[" "]
+    v51[" "]
+    v55[" "]
+    end
+    subgraph GISTIC2_ANALYSIS
+    v47([RUN_GISTIC2])
+    v54([FILTER_GISTIC2_CALLS])
+    end
+    v0 --> v3
+    v1 --> v3
+    v2 --> v3
+    v18 --> v24
+    v19 --> v24
+    v20 --> v24
+    v21 --> v24
+    v22 --> v24
+    v23 --> v24
+    v3 --> v24
+    v24 --> v31
+    v24 --> v32
+    v24 --> v30
+    v24 --> v29
+    v24 --> v28
+    v24 --> v27
+    v24 --> v26
+    v24 --> v25
+    v24 --> v33
+    v24 --> v37
+    v32 --> v37
+    v33 --> v34
+    v34 --> v36
+    v34 --> v35
+    v34 --> v44
+    v37 --> v42
+    v43 --> v44
+    v37 --> v44
+    v44 --> v45
+    v46 --> v47
+    v37 --> v47
+    v47 --> v54
+    v47 --> v51
+    v47 --> v50
+    v47 --> v49
+    v47 --> v48
+    v52 --> v54
+    v53 --> v54
+    v54 --> v55
+```
+
+## Testing
+
+This pipeline has been developed with the [nf-test](http://nf-test.com) testing framework. Unit tests and small test data are provided within the pipeline `test` subdirectory. A snapshot has been taken of the outputs of most steps in the pipeline to help detect regressions when editing. You can run all tests on openstack with:
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf.git
-git branch -M main
-git push -uf origin main
+nf-test test 
+```
+and individual tests with:
+```
+nf-test test tests/modules/ascat_exomes.nf.test
 ```
 
-## Integrate with your tools
+For faster testing of the flow of data through the pipeline **without running any of the tools involved**, stubs have been provided to mock the results of each succesful step.
+```
+nextflow run main.nf \
+-params-file params.json \
+-c tests/nextflow.config \
+--stub-run
+```
 
-- [ ] [Set up project integrations](https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/-/settings/integrations)
 
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.

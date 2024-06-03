@@ -1,0 +1,30 @@
+nextflow_process {
+
+    name "Test Process FILTER_GISTIC2_CALLS"
+    script "modules/gistic2.nf"
+    process "FILTER_GISTIC2_CALLS"
+
+    test("Should run without failures") {
+
+        when {
+        params {
+            load("$baseDir/tests/testdata/test_params.json")
+        }
+            process {
+                """
+                input[0] = file("$baseDir/tests/testdata/leioma_segments.tsv")
+                input[1] = file("$baseDir/tests/testdata/all_lesions.conf_95.txt")
+                input[2] = file("${params.difficult_regions_file}")
+                input[3] = "${params.cohort_prefix}"
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert snapshot(process.out).match()
+        }
+
+    }
+
+}
