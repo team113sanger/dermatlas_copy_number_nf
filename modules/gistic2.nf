@@ -1,7 +1,7 @@
 process RUN_GISTIC2 {
     label 'process_high'
     publishDir "${params.OUTDIR}/GISTIC2", mode: params.publish_dir_mode
-    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic2/feature/import_dockerisation:842c9515"
+    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.5.0"
     
     input: 
     path(segment_file)
@@ -47,7 +47,7 @@ process RUN_GISTIC2 {
 process FILTER_GISTIC2_CALLS{
     label 'process_medium'
     publishDir "${params.OUTDIR}/GISTIC2_ASSESS", mode: params.publish_dir_mode
-    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess/feature/nf_image:fe793813"
+    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.5.0"
     input:
     path(segments)
     path(lesions)
