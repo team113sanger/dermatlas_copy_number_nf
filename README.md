@@ -56,7 +56,7 @@ module load singularity
 module load /software/team113/modules/modulefiles/tw/0.6.2
 
 nextflow run 'https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf' \
--r feature/config_dmemo \
+-r 0.1.0 \
 -params-file $PARAMS_FILE \
 -c /lustre/scratch125/casm/team113da/users/jb63/nf_cna_testing/nextflow.config \
 -profile farm22 
