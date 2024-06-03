@@ -45,8 +45,6 @@ workflow ASCAT_ANALYSIS {
     | filter{ meta, file, gof -> gof.toDouble() > 95}
     | map { meta, file, gof -> file }
     | collectFile(name: 'one_tumor_per_patient_segs.tsv', 
-                 keepHeader: true, 
-                 skip: 1,
                  storeDir: output_dir)
     | set { gistic_inputs }
 
