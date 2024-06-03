@@ -6,40 +6,40 @@
 
 ## Introduction
 
-dermatlas_copy_number_nf is a bioinfromatics pipeline written in [Nextflow](http://www.nextflow.io) for performing copy-number alteration (CNA) analysis on cohorts of tumors within the Dermatlas project. 
+dermatlas_copy_number_nf is a bioinfromatics pipeline written in [Nextflow](http://www.nextflow.io) for performing copy number alteration (CNA) analysis on cohorts of tumors within the Dermatlas project. 
 
 ## Pipeline summary
 
-In brief, the pipeline takes a cohort of samples that have been pre-processed by the Dermatlas ingestion pipeline and then:
-- Links a sample's metadata to it's associated bamfile and then links pairs of tumor/normals.
+In brief, the pipeline takes a set samples that have been pre-processed by the Dermatlas ingestion pipeline and then:
+- Links each sample bamfile to it's assocaited metadata and then links pairs of tumor/normals.
 - Runs ASCAT on each tumor-normal pair, outputting segment calls and diagnostic plots. 
-- Collates summary statistics for the ASCAT runs and filters out samples that fall below a threshold Goodness-of-Fit level (GOF >95%).
+- Collates summary statistics for all ASCAT runs and filters out samples that fall below a threshold Goodness-of-Fit level (GOF >95%).
 - Merges the segment calls from ASCAT that pass filtering.
-- Runs GISTIC2 to identify regions with significant copy-number alterations (CNAs).
+- Runs GISTIC2 to identify regions with significant copy-number alterations in the cohort (CNAs).
 - Filters those GISTIC2 calls to identify those that overlap with ASCAT.
 
 ## Inputs 
 
 ### Cohort-dependent variables
-- `bam_files`: wildcard capturing the path to a set of `.bam` files in a project directory and their corresponding `.bam.bai` index files. Note: the pipeline assumes that index files have been pre-generated and are co-located with bams.
-- `metadata_manifest`: path to a tab-delimited manifest containing sample PDIDs and information about sample phenotype/preparation.
+- `bam_files`: a path to a set of `.bam` files in a project directory. Note: the pipeline assumes that corresponding `.bam.bai` index files have been pre-generated and are co-located with bams and a `**` glob match should be used to recursively collect all bamfiles in the directory.
+- `metadata_manifest`: path to a tab-delimited manifest containing sample PD IDs and information about sample phenotype/preparation.
 - `tumor_normal_pairs`: path to a file containing a tab-delimited list of matched tumour and normal pairs.
 
 ### Cohort-independent variables
 Reference files that are reused across pipeline executions have been placed within the pipeline's default `nextflow.config` file to simplify configuration. The following reference files are required for a run: 
 - `reference_genome`: path to a reference genome file (ASCAT).
 - `bait_set`: path to a `.bed` file describing the analysed genomic regions  (ASCAT).
-- `resource_files`: path to a directory containing ASCAT loci and allele 
+- `resource_files`: path to a directory containing ASCAT loci and allele files.
 - `gc_file`: path to the ASCAT GC correction file.
 - `rt_file`: path to the ASCAT replication timing correction file.
 - `difficult_regions_file`: genomic regions considered to be 
 problematic for analyses such as variant calling by Genome In A Bottle (GIAB), used by GISTIC2 for masking regions.
 
-Default values supplied within can be overided by adding them to the params `.json` file. 
+Default reference file values supplied within the `nextflow.config` file can be overided by adding them to the params `.json` file. An example complete params file `example_params.json` is supplied within this repo for demonstation.
 
 ## Usage 
 
-The recommended way to launch this pipeline is using a wrapper script (e.g. `bsub < my_wrapper.sh`) that records the version (**e.g.** `-r 0.1.0`)  and the `.json` parameter file supplied for a run.
+The recommended way to launch this pipeline is using a wrapper script (e.g. `bsub < my_wrapper.sh`) that submits nextflow as a job and records the version (**e.g.** `-r 0.1.0`)  and the `.json` parameter file supplied for a run.
 
 An example wrapper script:
 ```
@@ -58,7 +58,7 @@ module load nextflow-23.10.0
 module load singularity
 module load /software/team113/modules/modulefiles/tw/0.6.2
 
-# Create a nextflow job that will spawn other processes
+# Create a nextflow job that will spawn other jobs
 
 nextflow run 'https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf' \
 -r 0.1.0 \
@@ -67,22 +67,22 @@ nextflow run 'https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/de
 -profile farm22 
 ```
 
-The pipeline can configured to run on Sanger OpenStack secure-lustre instances or farm22 by launcing with the following profiles specified:
-`-profile secure_lustre` or `-profile farm22`. 
 
-When running the pipeline for the first time on the farm you will need to provide credentials to pull singularity containers from the team113 sanger gitlab. These should be provided as two environment variables:
+When running the pipeline for the first time on the farm you will need to provide credentials to pull singularity containers from the team113 sanger gitlab. These should be provided as environment variables:
 `SINGULARITY_DOCKER_USERNAME`=userid@sanger.ac.uk
 `SINGULARITY_DOCKER_PASSWORD`=YOUR_GITLAB_LOGIN_PASSWORD
-You can fix these variables to load by default by adding the following lines to your `~/.bashrc` file
 
+You can fix these variables to load by default by adding the following lines to your `~/.bashrc` file
 ```
 export SINGULARITY_DOCKER_USERNAME=userid@sanger.ac.uk
 export SINGULARITY_DOCKER_PASSWORD=YOUR_GITLAB_LOGIN_PASSWORD
 ```
 
+The pipeline can configured to run on either Sanger OpenStack secure-lustre instances or farm22 by changing the profile speicified:
+`-profile secure_lustre` or `-profile farm22`. 
 
 ## Pipeline visualisation 
-Created using nextflow's inbuilt visualitation features.
+Created using nextflow's in-built visualitation features.
 
 ```mermaid
 flowchart TB
@@ -185,7 +185,7 @@ and individual tests with:
 nf-test test tests/modules/ascat_exomes.nf.test
 ```
 
-For faster testing of the flow of data through the pipeline **without running any of the tools involved**, stubs have been provided to mock the results of a succesful step.
+For faster testing of the flow of data through the pipeline **without running any of the tools involved**, stubs have been provided to mock the results of each succesful step.
 ```
 nextflow run main.nf \
 -params-file params.json \
