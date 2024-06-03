@@ -1,0 +1,63 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "https://raw.githubusercontent.com/YOUR_PIPELINE/devlop/nextflow_schema.json",
+    "title": "Dermatlas copy number calling pipeline parameters",
+    "description": "This pipeline uses Nextflow to generate CNA calls for dermatlas. The JSON Schema was built using the nf-core pipeline schema builder.",
+    "type": "object",
+    "definitions": {
+        "input_output_options": {
+            "title": "Input/output options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define where the pipeline should find input data and save output data.",
+            "required": [
+                "input"
+            ],
+    "properties": {
+        "OUTDIR": {
+            "type": "string"
+        },
+        "cohort_prefix": {
+            "type": "string"
+        },
+        "bam_files": {
+            "type": "string", 
+            "format": "file-path"
+        },
+        "tumor_normal_pairs": {
+            "type": "string"
+        },
+        "metadata_manifest": {
+            "type": "string"
+        },
+        "reference_genome": {
+            "type": "string",
+            "format": "file-path"
+        }, 
+        "bait_set": {
+            "type": "string",
+            "format": "file-path"
+        },
+        "resource_files": {
+            "type": "string",
+            "format": "file-path"
+        },
+        "gc_file": {
+            "type": "string",
+            "format": "file-path"
+        },
+        "rt_file": {
+            "type": "string",
+            "format": "file-path"
+        },
+        "gistic_refgene_file": {
+            "type": "string",
+            "format": "file-path"
+        },
+        "difficult_regions_file": {
+            "type": "string",
+            "format": "file-path"
+        }
+    }}
+
+}}

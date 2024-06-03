@@ -1,0 +1,31 @@
+
+nextflow_process {
+
+    name "Test Process CREATE_FREQUENCY_PLOTS"
+    script "modules/ascat.nf"
+    process "CREATE_FREQUENCY_PLOTS"
+
+    test("Should run without failures") {
+
+        when {
+        params {
+            load("$baseDir/tests/testdata/test_params.json")
+        }
+            process {
+                """
+                input[0] = file('$baseDir/tests/testdata/one_tumor_per_patient.tsv')
+                input[1] = file('$baseDir/tests/testdata/sample_purity_ploidy.tsv')
+                input[2] = file('$baseDir/tests/testdata/samples2sex.txt')
+                input[3] = "test"
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert snapshot(process.out).match()
+        }
+
+    }
+
+}

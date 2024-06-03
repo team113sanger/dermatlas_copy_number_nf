@@ -1,0 +1,28 @@
+nextflow_process {
+
+    name "Test Process RUN_GISTIC2"
+    script "modules/gistic2.nf"
+    process "RUN_GISTIC2"
+
+    test("Should run without failures") {
+
+        when {
+            params {
+                load("$baseDir/tests/testdata/test_params.json")
+            }
+            process {
+                """
+                input[0] = file("$baseDir/tests/testdata/one_tumor_per_patient.tsv")
+                input[1] = file("${params.gistic_refgene_file}")
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert snapshot(process.out).match()
+        }
+
+    }
+
+}

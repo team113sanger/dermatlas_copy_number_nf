@@ -1,0 +1,119 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    "all_lesions.conf_95.txt:md5,d6daa279803dbab424206ef368cfcce4"
+                ],
+                "1": [
+                    "broad_significance_results.txt:md5,83f958621857bdadb3e5342cf901603b"
+                ],
+                "2": [
+                    "broad_values_by_arm.txt:md5,6e9b7c18d0afe85ad661b1431b6bfad0"
+                ],
+                "3": [
+                    [
+                        "amp_qplot.png:md5,8f6d1757de62b456ae9075984e98b8e1",
+                        "del_qplot.png:md5,1ae3f37fd969f79484ed371ab8e03fb5",
+                        "raw_copy_number.png:md5,040f9eb9fc1c83ddc7b15aae4d2d0846"
+                    ]
+                ],
+                "4": [
+                    [
+                        "amp_qplot.pdf:md5,356b56834c483c1a811a6675b11bc442",
+                        "del_qplot.pdf:md5,98f2c697846e9fcc7e7b8e435fc26783",
+                        "freqarms_vs_ngenes.pdf:md5,e3ac0077d860340e22c37306e3dcf7e7",
+                        "raw_copy_number.pdf:md5,fb64871afa13d735c575aa62de50c893"
+                    ]
+                ],
+                "5": [
+                    [
+                        "D.cap1.5.mat:md5,444cb6983be1a622820f6dcfa324aded",
+                        "focal_dat.0.75.mat:md5,e72744073f909d38380d2a3d25b1afb9",
+                        "gistic_inputs.mat:md5,c97d98421dd8bfb4880e108fd4da460f",
+                        "peak_regs.mat:md5,e6f6102f743c227324c76999eb47514e",
+                        "perm_ads.mat:md5,4b5bc886de9a8117ddc2f32eeb45ff9d",
+                        "scores.0.75.mat:md5,66cb72ba3f0689137a58549f0bc141ff",
+                        "wide_peak_regs.mat:md5,c971d704d4fcfd9e77348f748cfdcf67"
+                    ]
+                ],
+                "6": [
+                    [
+                        "all_data_by_genes.txt:md5,aa5aad89a3f601625e4fdce49a9c50ae",
+                        "all_lesions.conf_95.txt:md5,d6daa279803dbab424206ef368cfcce4",
+                        "all_thresholded.by_genes.txt:md5,7fe62433dcb0223c7a59df70f34698c2",
+                        "amp_genes.conf_95.txt:md5,0c49b78aaa59073cfd945b7ebb40fa76",
+                        "broad_data_by_genes.txt:md5,2681e643256231f1908b9dff377c98a6",
+                        "broad_significance_results.txt:md5,83f958621857bdadb3e5342cf901603b",
+                        "broad_values_by_arm.txt:md5,6e9b7c18d0afe85ad661b1431b6bfad0",
+                        "del_genes.conf_95.txt:md5,0c49b78aaa59073cfd945b7ebb40fa76",
+                        "focal_data_by_genes.txt:md5,aa5aad89a3f601625e4fdce49a9c50ae",
+                        "sample_cutoffs.txt:md5,59d17e450346895c65cae229071c43b2",
+                        "sample_seg_counts.txt:md5,7fa47860f36d335c57698eefe30d35a4"
+                    ]
+                ],
+                "7": [
+                    "one_tumor_per_patient.tsv:md5,bc33d66f2a73810755dbc689a3cbb455"
+                ],
+                "arms": [
+                    "broad_values_by_arm.txt:md5,6e9b7c18d0afe85ad661b1431b6bfad0"
+                ],
+                "broad": [
+                    "broad_significance_results.txt:md5,83f958621857bdadb3e5342cf901603b"
+                ],
+                "lesions": [
+                    "all_lesions.conf_95.txt:md5,d6daa279803dbab424206ef368cfcce4"
+                ],
+                "mats": [
+                    [
+                        "D.cap1.5.mat:md5,444cb6983be1a622820f6dcfa324aded",
+                        "focal_dat.0.75.mat:md5,e72744073f909d38380d2a3d25b1afb9",
+                        "gistic_inputs.mat:md5,c97d98421dd8bfb4880e108fd4da460f",
+                        "peak_regs.mat:md5,e6f6102f743c227324c76999eb47514e",
+                        "perm_ads.mat:md5,4b5bc886de9a8117ddc2f32eeb45ff9d",
+                        "scores.0.75.mat:md5,66cb72ba3f0689137a58549f0bc141ff",
+                        "wide_peak_regs.mat:md5,c971d704d4fcfd9e77348f748cfdcf67"
+                    ]
+                ],
+                "pdfs": [
+                    [
+                        "amp_qplot.pdf:md5,356b56834c483c1a811a6675b11bc442",
+                        "del_qplot.pdf:md5,98f2c697846e9fcc7e7b8e435fc26783",
+                        "freqarms_vs_ngenes.pdf:md5,e3ac0077d860340e22c37306e3dcf7e7",
+                        "raw_copy_number.pdf:md5,fb64871afa13d735c575aa62de50c893"
+                    ]
+                ],
+                "plots": [
+                    [
+                        "amp_qplot.png:md5,8f6d1757de62b456ae9075984e98b8e1",
+                        "del_qplot.png:md5,1ae3f37fd969f79484ed371ab8e03fb5",
+                        "raw_copy_number.png:md5,040f9eb9fc1c83ddc7b15aae4d2d0846"
+                    ]
+                ],
+                "segment_file": [
+                    "one_tumor_per_patient.tsv:md5,bc33d66f2a73810755dbc689a3cbb455"
+                ],
+                "tables": [
+                    [
+                        "all_data_by_genes.txt:md5,aa5aad89a3f601625e4fdce49a9c50ae",
+                        "all_lesions.conf_95.txt:md5,d6daa279803dbab424206ef368cfcce4",
+                        "all_thresholded.by_genes.txt:md5,7fe62433dcb0223c7a59df70f34698c2",
+                        "amp_genes.conf_95.txt:md5,0c49b78aaa59073cfd945b7ebb40fa76",
+                        "broad_data_by_genes.txt:md5,2681e643256231f1908b9dff377c98a6",
+                        "broad_significance_results.txt:md5,83f958621857bdadb3e5342cf901603b",
+                        "broad_values_by_arm.txt:md5,6e9b7c18d0afe85ad661b1431b6bfad0",
+                        "del_genes.conf_95.txt:md5,0c49b78aaa59073cfd945b7ebb40fa76",
+                        "focal_data_by_genes.txt:md5,aa5aad89a3f601625e4fdce49a9c50ae",
+                        "sample_cutoffs.txt:md5,59d17e450346895c65cae229071c43b2",
+                        "sample_seg_counts.txt:md5,7fa47860f36d335c57698eefe30d35a4"
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-05-31T09:23:45.517851"
+    }
+}
