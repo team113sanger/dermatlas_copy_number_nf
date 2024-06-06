@@ -13,9 +13,16 @@ workflow GISTIC2_ANALYSIS {
                         RUN_GISTIC2.out.lesions,
                         difficult_regions_file,
                         cohort_prefix)
+    FILTER_BROAD_CALLS(ascat_segments,
+                       RUN_GISTIC2.out.broad,
+                       RUN_GISTIC2.out.arms,
+                       difficult_regions_file,
+                       cohort_prefix)
     emit: 
     gistic_tabs    = RUN_GISTIC2.out.tables
     sample_summary = FILTER_GISTIC2_CALLS.out.ss
     cohort_summary = FILTER_GISTIC2_CALLS.out.cs
+    x_summary = FILTER_BROAD_CALLS.out.ss
+    x_summary = FILTER_BROAD_CALLS.out.y
 
 }

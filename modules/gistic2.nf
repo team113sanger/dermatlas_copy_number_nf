@@ -76,3 +76,36 @@ process FILTER_GISTIC2_CALLS{
     """
 
 }
+
+process FILTER_BROAD_CALLS {
+    label 'process_medium'
+    publishDir "${params.OUTDIR}/GISTIC2_ASSESS", mode: params.publish_dir_mode
+    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.5.0"
+    input:
+    path(segments)
+    path(broad_sig)
+    path(by_arms)
+    path(difficult_regions)
+    val(cutoff)
+
+    output:
+    path("*_gistic_sample_summary.tsv"), emit: cs
+    path("*_gistic_cohort_summary.tsv"), emit: ss
+
+    script:
+    """
+    /opt/repo/gistic2_check_broad.R \
+    $broad_sig \
+    $by_arms \
+    $segments \
+    $arms_file \
+    $cutoff \
+    $outfile
+    """
+    stub: 
+    """
+    echo stub > QC_gistic_sample_summary.tsv
+    echo stub > QC_gistic_cohort_summary.tsv
+    """
+
+}
