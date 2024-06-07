@@ -19,6 +19,7 @@ workflow {
     gc_file = file(params.gc_file, checkIfExists: true)
     rt_file = file(params.rt_file, checkIfExists: true)
     giab_regions = file(params.difficult_regions_file, checkIfExists: true)
+    chrom_arms = file(params.chrom_arms, checkIfExists: true)
 
     // Combine and pivot the metadata so that TN pair bams and meta are a single
     // data structure
@@ -43,7 +44,9 @@ workflow {
                     ASCAT_ANALYSIS.out.segments, 
                     params.gistic_refgene_file, 
                     giab_regions,
-                    params.cohort_prefix)
+                    params.cohort_prefix,
+                    params.broad_cutoff
+                    chrom_arms)
     
     // Convert all tab files to tsv. TODO 
     // ASCAT_ANALYSIS.out.freq_tab

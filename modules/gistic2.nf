@@ -1,6 +1,6 @@
 process RUN_GISTIC2 {
     label 'process_high'
-    publishDir "${params.OUTDIR}/GISTIC2", mode: params.publish_dir_mode
+    publishDir "${params.OUTDIR}/GISTIC2/${params.release_version}/${params.analysis_type}", mode: params.publish_dir_mode
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic2:0.5.0"
     
     input: 
@@ -77,20 +77,20 @@ process FILTER_GISTIC2_CALLS{
 
 }
 
-process FILTER_BROAD_CALLS {
+process FILTER_BROAD_GISTIC2_CALLS {
     label 'process_medium'
     publishDir "${params.OUTDIR}/GISTIC2_ASSESS", mode: params.publish_dir_mode
-    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.5.0"
+    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess/feature/broad_sig:579cb2d4"
     input:
     path(segments)
     path(broad_sig)
     path(by_arms)
-    path(difficult_regions)
+    path(arms_file)
     val(cutoff)
-
+    val(prefix)
+    
     output:
-    path("*_gistic_sample_summary.tsv"), emit: cs
-    path("*_gistic_cohort_summary.tsv"), emit: ss
+    path(outfile), emit: cs
 
     script:
     """
@@ -100,12 +100,11 @@ process FILTER_BROAD_CALLS {
     $segments \
     $arms_file \
     $cutoff \
-    $outfile
+    ${cohort_prefix}_gistic_broad_QCcheck.tsv
     """
     stub: 
     """
-    echo stub > QC_gistic_sample_summary.tsv
-    echo stub > QC_gistic_cohort_summary.tsv
+    echo stub > outfile.tsv
     """
 
 }

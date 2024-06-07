@@ -1,4 +1,4 @@
-include { RUN_GISTIC2; FILTER_GISTIC2_CALLS} from "../modules/gistic2.nf"
+include { RUN_GISTIC2; FILTER_GISTIC2_CALLS; FILTER_BROAD_GISTIC2_CALLS } from "../modules/gistic2.nf"
 workflow GISTIC2_ANALYSIS {
     take:
     gistic_inputs 
@@ -6,6 +6,8 @@ workflow GISTIC2_ANALYSIS {
     gistic_refgene
     difficult_regions_file
     cohort_prefix
+    chrom_arms
+    cutoff
 
     main:
     RUN_GISTIC2(gistic_inputs, gistic_refgene)
@@ -13,10 +15,11 @@ workflow GISTIC2_ANALYSIS {
                         RUN_GISTIC2.out.lesions,
                         difficult_regions_file,
                         cohort_prefix)
-    FILTER_BROAD_CALLS(ascat_segments,
+    FILTER_BROAD_GISTIC2_CALLS(ascat_segments,
                        RUN_GISTIC2.out.broad,
                        RUN_GISTIC2.out.arms,
-                       difficult_regions_file,
+                       chrom_arms,
+                       cutoff, 
                        cohort_prefix)
     emit: 
     gistic_tabs    = RUN_GISTIC2.out.tables
