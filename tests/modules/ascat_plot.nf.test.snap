@@ -6,25 +6,31 @@
                     "test_cn-loh.tsv:md5,340475db7aea3af3d5173d5e9390b904"
                 ],
                 "1": [
-                    "test_cn-loh.pdf:md5,4e1f9bbbd8693a52d8819b767f4186d1"
+                    "test_cn-loh.pdf:md5,2dcc04e02e4d68a60bd5c38749563081"
                 ],
                 "2": [
                     "test_CNfreq.tsv:md5,89fdaa4849518f14f10fb30b7ead7d9b"
                 ],
                 "3": [
-                    "test_CNfreq.pdf:md5,6a5334438e04b59035a380c4133781b9"
+                    "test_CNfreq.pdf:md5,290787e59e44416be47e4177f9eeee56"
                 ],
                 "4": [
                     "test_segments.tsv:md5,f4b548e21ed6a3a1e50b1cd33ff8bfa6"
+                ],
+                "5": [
+                    "test_cn-loh_segments.tsv:md5,218645f4ab0686d694bb21261073345b"
                 ],
                 "cn_freqs": [
                     "test_CNfreq.tsv:md5,89fdaa4849518f14f10fb30b7ead7d9b"
                 ],
                 "cn_pdf": [
-                    "test_CNfreq.pdf:md5,6a5334438e04b59035a380c4133781b9"
+                    "test_CNfreq.pdf:md5,290787e59e44416be47e4177f9eeee56"
+                ],
+                "loh_segs": [
+                    "test_cn-loh_segments.tsv:md5,218645f4ab0686d694bb21261073345b"
                 ],
                 "plot": [
-                    "test_cn-loh.pdf:md5,4e1f9bbbd8693a52d8819b767f4186d1"
+                    "test_cn-loh.pdf:md5,2dcc04e02e4d68a60bd5c38749563081"
                 ],
                 "processed_segments": [
                     "test_segments.tsv:md5,f4b548e21ed6a3a1e50b1cd33ff8bfa6"
@@ -38,6 +44,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-06-07T09:09:02.338222"
+        "timestamp": "2024-06-07T10:29:08.223828"
     }
 }
