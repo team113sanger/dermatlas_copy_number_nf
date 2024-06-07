@@ -3,7 +3,6 @@ workflow DERMATLAS_METADATA {
     bamfile_ch
     pair_identities
     patient_metadata
-    outdir
 
     main:
 
@@ -39,7 +38,8 @@ workflow DERMATLAS_METADATA {
 
     patient_metadata_ch
     | filter { id, meta -> id =~ "PD"}
-    | collectFile(name: "samples2sex.txt", storeDir: outdir){
+    | collectFile(name: "samples2sex.txt", 
+      storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}/${params.analysis_type}"){
         id, meta ->
         ["samples2sex.txt", "${id}\t${meta["sexchr"][0]}\n"]
     }

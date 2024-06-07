@@ -20,21 +20,21 @@
                 ],
                 "4": [
                     [
-                        "amp_qplot.pdf:md5,356b56834c483c1a811a6675b11bc442",
-                        "del_qplot.pdf:md5,98f2c697846e9fcc7e7b8e435fc26783",
-                        "freqarms_vs_ngenes.pdf:md5,e3ac0077d860340e22c37306e3dcf7e7",
-                        "raw_copy_number.pdf:md5,fb64871afa13d735c575aa62de50c893"
+                        "amp_qplot.pdf:md5,d5fab321d918f169f4065714e4a61779",
+                        "del_qplot.pdf:md5,a347c3b94ce41e520ffeba055f5c177d",
+                        "freqarms_vs_ngenes.pdf:md5,d41f86e9bb2e375ebc146e4b1ebad909",
+                        "raw_copy_number.pdf:md5,458b8ed5fe71cef355c94c5b28ef5120"
                     ]
                 ],
                 "5": [
                     [
-                        "D.cap1.5.mat:md5,444cb6983be1a622820f6dcfa324aded",
-                        "focal_dat.0.75.mat:md5,e72744073f909d38380d2a3d25b1afb9",
-                        "gistic_inputs.mat:md5,c97d98421dd8bfb4880e108fd4da460f",
-                        "peak_regs.mat:md5,e6f6102f743c227324c76999eb47514e",
-                        "perm_ads.mat:md5,4b5bc886de9a8117ddc2f32eeb45ff9d",
-                        "scores.0.75.mat:md5,66cb72ba3f0689137a58549f0bc141ff",
-                        "wide_peak_regs.mat:md5,c971d704d4fcfd9e77348f748cfdcf67"
+                        "D.cap1.5.mat:md5,cc7650a9aa7c22b579576db3fee616b2",
+                        "focal_dat.0.75.mat:md5,8db64cc10dd3fef8dc54e03eb225f5bd",
+                        "gistic_inputs.mat:md5,e9aee1a526e9b4abf55e2c127dfcc96a",
+                        "peak_regs.mat:md5,950c9a21963cd80ea271d1f44841d037",
+                        "perm_ads.mat:md5,54b0b2c61f5742d3f093331e148ee65c",
+                        "scores.0.75.mat:md5,a6ad40918c510524a052ce9a8c78e363",
+                        "wide_peak_regs.mat:md5,3c281a6e5dcd9281b0aad3a3a01a76e5"
                     ]
                 ],
                 "6": [
@@ -66,21 +66,21 @@
                 ],
                 "mats": [
                     [
-                        "D.cap1.5.mat:md5,444cb6983be1a622820f6dcfa324aded",
-                        "focal_dat.0.75.mat:md5,e72744073f909d38380d2a3d25b1afb9",
-                        "gistic_inputs.mat:md5,c97d98421dd8bfb4880e108fd4da460f",
-                        "peak_regs.mat:md5,e6f6102f743c227324c76999eb47514e",
-                        "perm_ads.mat:md5,4b5bc886de9a8117ddc2f32eeb45ff9d",
-                        "scores.0.75.mat:md5,66cb72ba3f0689137a58549f0bc141ff",
-                        "wide_peak_regs.mat:md5,c971d704d4fcfd9e77348f748cfdcf67"
+                        "D.cap1.5.mat:md5,cc7650a9aa7c22b579576db3fee616b2",
+                        "focal_dat.0.75.mat:md5,8db64cc10dd3fef8dc54e03eb225f5bd",
+                        "gistic_inputs.mat:md5,e9aee1a526e9b4abf55e2c127dfcc96a",
+                        "peak_regs.mat:md5,950c9a21963cd80ea271d1f44841d037",
+                        "perm_ads.mat:md5,54b0b2c61f5742d3f093331e148ee65c",
+                        "scores.0.75.mat:md5,a6ad40918c510524a052ce9a8c78e363",
+                        "wide_peak_regs.mat:md5,3c281a6e5dcd9281b0aad3a3a01a76e5"
                     ]
                 ],
                 "pdfs": [
                     [
-                        "amp_qplot.pdf:md5,356b56834c483c1a811a6675b11bc442",
-                        "del_qplot.pdf:md5,98f2c697846e9fcc7e7b8e435fc26783",
-                        "freqarms_vs_ngenes.pdf:md5,e3ac0077d860340e22c37306e3dcf7e7",
-                        "raw_copy_number.pdf:md5,fb64871afa13d735c575aa62de50c893"
+                        "amp_qplot.pdf:md5,d5fab321d918f169f4065714e4a61779",
+                        "del_qplot.pdf:md5,a347c3b94ce41e520ffeba055f5c177d",
+                        "freqarms_vs_ngenes.pdf:md5,d41f86e9bb2e375ebc146e4b1ebad909",
+                        "raw_copy_number.pdf:md5,458b8ed5fe71cef355c94c5b28ef5120"
                     ]
                 ],
                 "plots": [
@@ -114,6 +114,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-05-31T09:23:45.517851"
+        "timestamp": "2024-06-07T09:22:36.065927"
     }
 }

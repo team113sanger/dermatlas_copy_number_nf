@@ -25,8 +25,7 @@ workflow {
     // data structure
     DERMATLAS_METADATA(bamfiles, 
                        pair_ids, 
-                       patient_md, 
-                       params.OUTDIR)
+                       patient_md)
     
     // Run Ascat, summarise estimates and plot 
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
