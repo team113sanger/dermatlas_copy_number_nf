@@ -1,5 +1,9 @@
 {   
     "OUTDIR": "/home/ubuntu/projects/dermatlas_copy_number_nf/results",
+    "release_version": "release_v1", 
+    "analysis_type": "independent",
+    "plotting_dir": "PLOTS_ONE_PER_PATIENT",
+    "chrom_arms":  "tests/testdata/pair_ids.tsv",
     "cohort_prefix": "6509_2707_Leiomyoma",
     "bam_files": "/lustre/scratch124/jb63/ascat/bams/**.bam",
     "tumor_normal_pairs": "tests/testdata/pair_ids.tsv",
