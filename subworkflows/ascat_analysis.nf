@@ -21,6 +21,7 @@ workflow ASCAT_ANALYSIS {
                      gc_file,
                      rt_file)
     
+    
     EXTRACT_GOODNESS_OF_FIT(RUN_ASCAT_EXOMES.out.estimates)
     | set { quality_ch }
 
@@ -36,8 +37,11 @@ workflow ASCAT_ANALYSIS {
     | map { meta, file, gof -> file }
     | set { filtered_gistic }
 
+    filtered_outs = filtered_segments.join(filtered_gistic)
+
     emit: 
-    estimates     =   filtered_segments
-    gistic_inputs =   filtered_gistic
+    filtered_outs
+    estimates = RUN_ASCAT_EXOMES.out.estimates
+
 }
 

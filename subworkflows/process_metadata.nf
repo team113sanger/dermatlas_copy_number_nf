@@ -38,12 +38,11 @@ workflow DERMATLAS_METADATA {
 
     patient_metadata_ch
     | filter { id, meta -> id =~ "PD"}
-    | collectFile(name: "samples2sex.txt", 
-      storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}/${params.analysis_type}"){
+    | collectFile(name: "allsamples2sex.txt", 
+      storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}"){
         id, meta ->
-        ["samples2sex.txt", "${id}\t${meta["sexchr"][0]}\n"]
+        ["allsamples2sex.txt", "${id}\t${meta["sexchr"][0]}\n"]
     }
-    | set {sex2chr_ch}
 
 
  
@@ -83,6 +82,5 @@ workflow DERMATLAS_METADATA {
 
     emit:
         combined_metadata
-        sex2chr_ch
 
 }
