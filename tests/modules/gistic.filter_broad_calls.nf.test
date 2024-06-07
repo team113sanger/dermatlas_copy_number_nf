@@ -17,6 +17,7 @@ nextflow_process {
                 input[2] = file("$baseDir/tests/testdata/broad_values_by_arm.txt")
                 input[3] = file("$baseDir/tests/testdata/ucsc_chrom_arms.txt")
                 input[4] = 0.1
+                input[5] = "test"
                 """
             }
         }
