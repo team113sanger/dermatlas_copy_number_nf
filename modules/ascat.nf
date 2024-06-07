@@ -154,4 +154,9 @@ process EXTRACT_GOODNESS_OF_FIT {
     goodnessOfFit=\$(grep 'Goodness-of-fit' ${txtFile} | cut -f2)
     echo "\$goodnessOfFit"
     """
+    stub:
+    """
+    goodnessOfFit=97
+    echo "\$goodnessOfFit"
+    """
 }
