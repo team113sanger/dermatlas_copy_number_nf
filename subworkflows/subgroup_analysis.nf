@@ -1,39 +1,55 @@
 include { RUN_ASCAT_EXOMES; SUMMARISE_ASCAT_ESTIMATES; CREATE_FREQUENCY_PLOTS; EXTRACT_GOODNESS_OF_FIT } from '../modules/ascat.nf'
+include { GISTIC2_ANALYSIS } from '../subworkflows/gistic2_analysis.nf'
 
-workflow ANALYSE_ASCAT_COHORT {
+workflow ANALYSE_COHORT {
     take: 
     ascat_subgroup
-    gistic_inputs
-    quality_ch
+    estimates_list
     analysis_type
-    sex2chr_ch
+    output_dir
+    cohort_prefix
+    gistic_refgene_file
+    giab_regions
+    cutoff
+    chrom_arms
     
     main:
+        
+    SUMMARISE_ASCAT_ESTIMATES(estimates_list, analysis_type)
     
-    ascat_subgroup.collect{meta, file -> file}
-    | set { estimates_list }
-    
-    SUMMARISE_ASCAT_ESTIMATES(estimates_list)
-    
-    ascat_subgroup.map { meta, file, gof -> file }
+    ascat_subgroup.map { meta, segments, gistic -> segments }
     | collectFile(name: 'combined_segment_file.txt', 
                  keepHeader: true, 
                  skip: 1)
     | set { segment_summary }
 
-    gistic_inputs.collectFile(name: 'one_tumor_per_patient_segs.tsv', 
-                 storeDir: output_dir)
+    ascat_subgroup.map { meta, segments, gistic -> gistic }
+    | collectFile(name: "${analysis_type}_segs.tsv", 
+                 storeDir: "${params.release_version}/${analysis_type}")
     | set { gistic_ch }
+    
+    ascat_subgroup
+    | collectFile(name: "samples2sex.txt", 
+      storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}/${analysis_type}"){
+           meta, segments, gistic ->
+        ["samples2sex.txt", "${meta["tumor"]}\t${meta["sexchr"][0]}\n"]
+    }
+    | set { sex2chr_ch }
+  
 
     CREATE_FREQUENCY_PLOTS(segment_summary,
                            SUMMARISE_ASCAT_ESTIMATES.out.purity,
                            sex2chr_ch, 
-                           cohort_prefix)
+                           cohort_prefix,
+                           analysis_type)
+    
 
-    emit: 
-    segments      =   CREATE_FREQUENCY_PLOTS.out.processed_segments
-    gistic_inputs =   gistic_ch
-    purity        =   SUMMARISE_ASCAT_ESTIMATES.out.purity
-    summary_stats =   SUMMARISE_ASCAT_ESTIMATES.out.ascat_sstats
-    freq_tab      =   CREATE_FREQUENCY_PLOTS.out.table
+    GISTIC2_ANALYSIS(gistic_ch,
+                    CREATE_FREQUENCY_PLOTS.out.processed_segments, 
+                    gistic_refgene_file, 
+                    giab_regions,
+                    cohort_prefix,
+                    cutoff,
+                    chrom_arms)
+    
 }

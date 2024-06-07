@@ -74,10 +74,11 @@ process RUN_ASCAT_EXOMES {
 
 process SUMMARISE_ASCAT_ESTIMATES {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${params.analysis_type}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${analysis_type}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
     input: 
     path(collected_files)
+    val(analysis_type)
 
     output:
     path("ascat_stats.tsv"),                        emit: ascat_sstats
@@ -103,7 +104,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
 process CREATE_FREQUENCY_PLOTS {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${params.analysis_type}/${params.plotting_dir}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${analysis_type}/${params.plotting_dir}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
 
     input:
@@ -111,6 +112,7 @@ process CREATE_FREQUENCY_PLOTS {
     path(purity_ploidy)
     path(sample_sex)
     val(cohort_prefix)
+    val(analysis_type)
 
     output:
     path("*_cn-loh.tsv"), emit: table

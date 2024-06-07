@@ -4,7 +4,7 @@ include { DERMATLAS_METADATA } from './subworkflows/process_metadata.nf'
 include { DERMATLAS_METADATA as ONE_PATIENT_PER_TUMOUR } from './subworkflows/process_metadata.nf'
 include { DERMATLAS_METADATA as INDEPENDENT } from './subworkflows/process_metadata.nf'
 include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
-include { ANALYSE_ASCAT_COHORT } from './subworkflows/subgroup_analysis.nf'
+include { ANALYSE_COHORT } from './subworkflows/subgroup_analysis.nf'
 include { GISTIC2_ANALYSIS } from './subworkflows/gistic2_analysis.nf'
 include { REFORMAT_TSV } from './modules/publish.nf'
 
@@ -16,7 +16,7 @@ workflow {
     patient_md  = Channel.fromPath(params.metadata_manifest, checkIfExists: true)
     unique_pairs = Channel.fromPath(params.one_per_patient, checkIfExists: true)
     independent_tumors = Channel.fromPath(params.independent, checkIfExists: true)
-
+    broad_cutoff = Channel.of("0.1")
     // Reference files 
     reference_genome = file(params.reference_genome, checkIfExists: true)
     bait_set = file(params.bait_set, checkIfExists: true)
@@ -35,11 +35,12 @@ workflow {
     ONE_PATIENT_PER_TUMOUR(bamfiles, 
                            unique_pairs,
                            patient_md)
-    
+
     INDEPENDENT(bamfiles, 
                 independent_tumors,
                 patient_md)
-                
+    // Perform Ascat analysis on both the independent tumors and 
+    // one-per-patient datasets.
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
                    params.OUTDIR,  
                    reference_genome,
@@ -48,30 +49,39 @@ workflow {
                    gc_file,
                    rt_file,
                    params.cohort_prefix)
-    
-    ONE_PATIENT_PER_TUMOUR.out.combined_metadata 
-    | join(ASCAT_ANALYSIS.out.filtered_outs)
+    ASCAT_ANALYSIS.out.estimates.view()
+    ONE_PATIENT_PER_TUMOUR.out.combined_metadata
+    | map { meta, nf,ni, tf, ti -> meta}
+    | join(ASCAT_ANALYSIS.out.filtered_outs) 
     | set { one_per_patient_cohort }
 
-    INDEPENDENT.out.combined_metadata 
+    INDEPENDENT.out.combined_metadata
+    | map { meta, nf,ni, tf, ti -> meta}
     | join(ASCAT_ANALYSIS.out.filtered_outs)
     | set { independent_cohort }
-    
+
+    // ASCAT_ANALYSIS.out.filtered_outs.view()
+    INDEPENDENT.out.combined_metadata 
+    | map { meta, nf, ni, tf, ti -> meta}
+    | join(ASCAT_ANALYSIS.out.estimates)
+    // | view()
+    | set { estimates_list }
+    // estimates_list.collect{ meta, file -> file}.view()
+
     analysis_type = Channel.of("independent")
-    ANALYSE_ASCAT_COHORT(independent_cohort,
-                        ASCAT_ANALYSIS.out.estimates,
-                        analysis_type,
-                        params.OUTDIR,
-                        params.cohort_prefix)
+    
+    ANALYSE_COHORT(independent_cohort,
+                   estimates_list,
+                   analysis_type,
+                   params.OUTDIR,
+                   params.cohort_prefix,
+                   params.gistic_refgene_file,
+                   giab_regions,
+                   broad_cutoff,
+                   chrom_arms)
     
     // // Given Ascat segments, run Gistic2 and filter regions 
-    // GISTIC2_ANALYSIS(ASCAT_ANALYSIS.out.gistic_inputs,
-    //                 ANALYSE_ASCAT_COHORT.out.segments, 
-    //                 params.gistic_refgene_file, 
-    //                 giab_regions,
-    //                 params.cohort_prefix,
-    //                 params.broad_cutoff
-    //                 chrom_arms)
+    
     
     // Convert all tab files to tsv. TODO 
     // ASCAT_ANALYSIS.out.freq_tab

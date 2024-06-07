@@ -21,27 +21,26 @@ workflow ASCAT_ANALYSIS {
                      gc_file,
                      rt_file)
     
-    
     EXTRACT_GOODNESS_OF_FIT(RUN_ASCAT_EXOMES.out.estimates)
     | set { quality_ch }
 
     RUN_ASCAT_EXOMES.out.segments
     | join(quality_ch)
     | filter{ meta, file, gof -> gof.toDouble() > 95}
+    | map { meta, file, gof -> [meta, file] }
+    | view()
     | set { filtered_segments }
 
+    filtered_segments
+    | join(RUN_ASCAT_EXOMES.out.gistic_inputs)
+    | set { filtered_outs }
 
-    RUN_ASCAT_EXOMES.out.gistic_inputs
-    | join(quality_ch)
-    | filter{ meta, file, gof -> gof.toDouble() > 95}
-    | map { meta, file, gof -> file }
-    | set { filtered_gistic }
-
-    filtered_outs = filtered_segments.join(filtered_gistic)
-
+    RUN_ASCAT_EXOMES.out.estimates
+    | set { estimates }
+    
     emit: 
     filtered_outs
-    estimates = RUN_ASCAT_EXOMES.out.estimates
+    estimates
 
 }
 
