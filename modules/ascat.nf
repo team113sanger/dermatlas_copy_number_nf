@@ -1,6 +1,6 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.OUTDIR}/ASCAT/${meta.tumor}-${meta.normal}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:f8f31f93'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
     input: 
     tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
     path(outdir)
@@ -75,7 +75,7 @@ process RUN_ASCAT_EXOMES {
 process SUMMARISE_ASCAT_ESTIMATES {
     label 'process_medium'
     publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${params.analysis_type}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:f8f31f93'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
     input: 
     path(collected_files)
 
@@ -104,7 +104,8 @@ process SUMMARISE_ASCAT_ESTIMATES {
 process CREATE_FREQUENCY_PLOTS {
     label 'process_medium'
     publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${params.analysis_type}/${params.plotting_dir}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:f8f31f93'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
+
     input:
     path(segfiles_list)
     path(purity_ploidy)
@@ -116,8 +117,8 @@ process CREATE_FREQUENCY_PLOTS {
     path("*_cn-loh.pdf"), emit: plot
     path("*_CNfreq.tsv"), emit: cn_freqs
     path("*_CNfreq.pdf"), emit: cn_pdf
-    path("*_segments.tsv"), emit: processed_segments
-    // TOFIX LOH Segments
+    path("${cohort_prefix}_segments.tsv"), emit: processed_segments
+    path("*cn-loh_segments.tsv"), emit: loh_segs
 
     script:
     """

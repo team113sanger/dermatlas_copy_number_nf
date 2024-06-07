@@ -27,7 +27,7 @@ workflow {
                        pair_ids, 
                        patient_md)
     
-    // Run Ascat, summarise estimates and plot 
+    // Run ASCAT, summarise estimates and plot 
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
                    DERMATLAS_METADATA.out.sex2chr_ch,
                    params.OUTDIR,  
