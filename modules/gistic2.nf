@@ -1,6 +1,6 @@
 process RUN_GISTIC2 {
     label 'process_high'
-    publishDir "${params.OUTDIR}/GISTIC2/${params.release_version}/${params.analysis_type}", mode: params.publish_dir_mode
+    publishDir "${params.OUTDIR}/gistic2/${params.release_version}/${params.analysis_type}", mode: params.publish_dir_mode
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic2:0.5.0"
     
     input: 
@@ -16,6 +16,7 @@ process RUN_GISTIC2 {
     path("*.mat"), emit: mats
     path("*.txt"), emit: tables
     path(segment_file), emit: segment_file
+    stdout
     
     script:
     """
@@ -46,7 +47,7 @@ process RUN_GISTIC2 {
 
 process FILTER_GISTIC2_CALLS{
     label 'process_medium'
-    publishDir "${params.OUTDIR}/GISTIC2_ASSESS", mode: params.publish_dir_mode
+    publishDir "${params.OUTDIR}/gistic2/${params.release_version}/${params.analysis_type}/MIN_0", mode: params.publish_dir_mode
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.5.0"
     input:
     path(segments)
@@ -79,7 +80,7 @@ process FILTER_GISTIC2_CALLS{
 
 process FILTER_BROAD_GISTIC2_CALLS {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/GISTIC2_ASSESS", mode: params.publish_dir_mode
+    publishDir "${params.OUTDIR}/gistic2/${params.release_version}/${params.analysis_type}/MIN_0", mode: params.publish_dir_mode
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess/feature/broad_sig:579cb2d4"
     input:
     path(segments)
@@ -90,7 +91,7 @@ process FILTER_BROAD_GISTIC2_CALLS {
     val(prefix)
     
     output:
-    path(outfile), emit: cs
+    path(outfile), emit: cs, optional:true
 
     script:
     """

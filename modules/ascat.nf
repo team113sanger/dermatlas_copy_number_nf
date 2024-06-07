@@ -74,7 +74,7 @@ process RUN_ASCAT_EXOMES {
 
 process SUMMARISE_ASCAT_ESTIMATES {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/ASCAT/${params.release}/${params.analysis_type}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${params.analysis_type}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:f8f31f93'
     input: 
     path(collected_files)
@@ -103,7 +103,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
 process CREATE_FREQUENCY_PLOTS {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/ASCAT/${params.release}/${params.analysis_type}/${params.plotting_dir}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${params.analysis_type}/${params.plotting_dir}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:f8f31f93'
     input:
     path(segfiles_list)
@@ -117,7 +117,8 @@ process CREATE_FREQUENCY_PLOTS {
     path("*_CNfreq.tsv"), emit: cn_freqs
     path("*_CNfreq.pdf"), emit: cn_pdf
     path("*_segments.tsv"), emit: processed_segments
-    
+    // TOFIX LOH Segments
+
     script:
     """
     /opt/repo/plot_ascat_cna_and_loh.R \
