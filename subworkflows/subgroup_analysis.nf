@@ -19,13 +19,15 @@ workflow ANALYSE_COHORT {
     
     ascat_subgroup.map { meta, segments, gistic -> segments }
     | collectFile(name: 'combined_segment_file.txt', 
-                 keepHeader: true, 
+                 keepHeader: true,
+                 storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}/${analysis_type}", 
                  skip: 1)
     | set { segment_summary }
 
+
     ascat_subgroup.map { meta, segments, gistic -> gistic }
-    | collectFile(name: "${analysis_type}_segs.tsv", 
-                 storeDir: "${params.release_version}/${analysis_type}")
+    | collectFile(name: "${params.analysis_type}_segs.tsv", 
+       storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}/${analysis_type}")
     | set { gistic_ch }
     
     ascat_subgroup
@@ -42,7 +44,6 @@ workflow ANALYSE_COHORT {
                            sex2chr_ch, 
                            cohort_prefix,
                            analysis_type)
-    
 
     GISTIC2_ANALYSIS(gistic_ch,
                     CREATE_FREQUENCY_PLOTS.out.processed_segments, 
