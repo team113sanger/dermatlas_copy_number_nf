@@ -16,7 +16,8 @@ workflow ANALYSE_COHORT {
     main:
         
     SUMMARISE_ASCAT_ESTIMATES(estimates_list, 
-                              analysis_type)
+                              Channel.of(analysis_type))
+    
     
     ascat_subgroup
     | map { meta, segments, gistic -> segments }
@@ -26,10 +27,9 @@ workflow ANALYSE_COHORT {
                  skip: 1)
     | set { segment_summary }
 
-
     ascat_subgroup
     | map { meta, segments, gistic -> gistic }
-    | collectFile(name: "${params.analysis_type}_segs.tsv", 
+    | collectFile(name: "${analysis_type}_segs.tsv", 
        storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}/${analysis_type}")
     | set { gistic_ch }
     
