@@ -15,9 +15,11 @@ workflow ANALYSE_COHORT {
     
     main:
         
-    SUMMARISE_ASCAT_ESTIMATES(estimates_list, analysis_type)
+    SUMMARISE_ASCAT_ESTIMATES(estimates_list, 
+                              analysis_type)
     
-    ascat_subgroup.map { meta, segments, gistic -> segments }
+    ascat_subgroup
+    | map { meta, segments, gistic -> segments }
     | collectFile(name: 'combined_segment_file.txt', 
                  keepHeader: true,
                  storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}/${analysis_type}", 
@@ -25,7 +27,8 @@ workflow ANALYSE_COHORT {
     | set { segment_summary }
 
 
-    ascat_subgroup.map { meta, segments, gistic -> gistic }
+    ascat_subgroup
+    | map { meta, segments, gistic -> gistic }
     | collectFile(name: "${params.analysis_type}_segs.tsv", 
        storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}/${analysis_type}")
     | set { gistic_ch }
