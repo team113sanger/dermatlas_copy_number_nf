@@ -119,7 +119,7 @@ process CREATE_FREQUENCY_PLOTS {
     path("*_cn-loh.pdf"), emit: plot
     path("*_CNfreq.tsv"), emit: cn_freqs
     path("*_CNfreq.pdf"), emit: cn_pdf
-    path("${cohort_prefix}_segments.tsv"), emit: processed_segments
+    path("${append_prefix}_segments.tsv"), emit: processed_segments
     path("*cn-loh_segments.tsv"), emit: loh_segs
 
 
