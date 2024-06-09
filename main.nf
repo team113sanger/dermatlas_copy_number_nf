@@ -6,7 +6,8 @@ include { DERMATLAS_METADATA as ONE_PATIENT_PER_TUMOUR } from './subworkflows/pr
 include { DERMATLAS_METADATA as INDEPENDENT } from './subworkflows/process_metadata.nf'
 
 include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
-// Repeated cohort analysis forsubgroups of samples
+
+// Repeated cohort analysis for sub-groups of samples
 include { ANALYSE_COHORT as ONE_PATIENT_PER_TUMOUR_COHORT } from './subworkflows/subgroup_analysis.nf'
 include { ANALYSE_COHORT as INDEPENDENT_COHORT } from './subworkflows/subgroup_analysis.nf'
 
@@ -55,6 +56,8 @@ workflow {
                    rt_file,
                    params.cohort_prefix)
     // Filter 
+
+
     ONE_PATIENT_PER_TUMOUR.out.combined_metadata
     | map { meta, nf, ni, tf, ti -> meta} 
     | join(ASCAT_ANALYSIS.out.filtered_outs)
@@ -65,16 +68,18 @@ workflow {
     | join(ASCAT_ANALYSIS.out.filtered_outs)
     | set { independent_cohort }
 
-    ONE_PATIENT_PER_TUMOUR.out.combined_metadata
+
+
+    estimate_file = ONE_PATIENT_PER_TUMOUR.out.combined_metadata
     | map { meta, nf, ni, tf, ti -> [meta]}
     | join(ASCAT_ANALYSIS.out.estimates)
     | map{ meta, file -> file} 
-    | set { estimate_file }
     
     estimate_file.collect()
     | set { estimates_list }
 
-    ONE_PATIENT_PER_TUMOUR_COHORT(one_per_patient_cohort,
+    ONE_PATIENT_PER_TUMOUR_COHORT(
+                   one_per_patient_cohort,
                    estimates_list,
                    Channel.of("one_tumour_per_patient"),
                    params.OUTDIR,
@@ -84,7 +89,8 @@ workflow {
                    broad_cutoff,
                    chrom_arms)
         
-        INDEPENDENT_COHORT(independent_cohort,
+        INDEPENDENT_COHORT(
+                   independent_cohort,
                    estimates_list,
                    Channel.of("independent_tumors"),
                    params.OUTDIR,
