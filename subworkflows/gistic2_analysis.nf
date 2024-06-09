@@ -10,12 +10,15 @@ workflow GISTIC2_ANALYSIS {
     cutoff
 
     main:
-    RUN_GISTIC2(gistic_inputs, gistic_refgene)
+    RUN_GISTIC2(gistic_inputs, 
+                gistic_refgene)
+
     FILTER_GISTIC2_CALLS(
                         ascat_segments,
                         RUN_GISTIC2.out.lesions,
                         difficult_regions_file,
                         cohort_prefix)
+                        
     // FILTER_BROAD_GISTIC2_CALLS(
     //                    ascat_segments,
     //                    RUN_GISTIC2.out.broad,
