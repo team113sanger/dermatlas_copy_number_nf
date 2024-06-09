@@ -20,6 +20,7 @@ workflow {
     unique_pairs       = Channel.fromPath(params.one_per_patient, checkIfExists: true)
     independent_tumors = Channel.fromPath(params.independent, checkIfExists: true)
     patient_md         = Channel.fromPath(params.metadata_manifest, checkIfExists: true)
+    
     // Reference files 
     reference_genome   = file(params.reference_genome, checkIfExists: true)
     bait_set           = file(params.bait_set, checkIfExists: true)
@@ -27,8 +28,8 @@ workflow {
     gc_file            = file(params.gc_file, checkIfExists: true)
     rt_file            = file(params.rt_file, checkIfExists: true)
     giab_regions       = file(params.difficult_regions_file, checkIfExists: true)
-    chrom_arms         = file(params.chrom_arms, checkIfExists: true)
-    broad_cutoff       = Channel.of("0.1")
+    chrom_arms         = file(params.chrom_arms_file, checkIfExists: true)
+    broad_cutoff       = Channel.of(params.gistic_broad_peak_q_cutoff)
 
     // Combine and pivot the metadata so that T/N pair 
     // bams and metadata are a single channel
@@ -53,7 +54,7 @@ workflow {
                    gc_file,
                    rt_file,
                    params.cohort_prefix)
-    // FIlter 
+    // Filter 
     ONE_PATIENT_PER_TUMOUR.out.combined_metadata
     | map { meta, nf, ni, tf, ti -> meta} 
     | join(ASCAT_ANALYSIS.out.filtered_outs)
