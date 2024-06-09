@@ -57,7 +57,6 @@ workflow {
                    params.cohort_prefix)
     // Filter 
 
-
     ONE_PATIENT_PER_TUMOUR.out.combined_metadata
     | map { meta, nf, ni, tf, ti -> meta} 
     | join(ASCAT_ANALYSIS.out.filtered_outs)
