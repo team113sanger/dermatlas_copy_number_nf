@@ -104,7 +104,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
 process CREATE_FREQUENCY_PLOTS {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${analysis_type}/${params.plotting_dir}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${analysis_type}/${plotting_dir}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
 
     input:
@@ -122,13 +122,17 @@ process CREATE_FREQUENCY_PLOTS {
     path("${cohort_prefix}_segments.tsv"), emit: processed_segments
     path("*cn-loh_segments.tsv"), emit: loh_segs
 
+
     script:
+    def plotting_dir = analysis_type == "one_tumour_per_patient" ? "PLOTS_ONE_PER_PATIENT" : "PLOTS_INDEPENDENT"
+    def append_prefix = analysis_type == "one_tumour_per_patient" ? cohort_prefix : cohort_prefix + "-indep"
+    
     """
     /opt/repo/plot_ascat_cna_and_loh.R \
     $segfiles_list \
     $purity_ploidy \
     $sample_sex \
-    $cohort_prefix
+    $append_prefix
     """
     
     stub:
