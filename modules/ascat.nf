@@ -74,18 +74,19 @@ process RUN_ASCAT_EXOMES {
 
 process SUMMARISE_ASCAT_ESTIMATES {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${analysis_type}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${meta.analysis_type}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
+    
     input: 
-    path(collected_files)
-    val(analysis_type)
-
+    tuple val(meta), path(collected_files)
+    
     output:
     path("ascat_stats.tsv"),                        emit: ascat_sstats
     path("ascat_low_qual.list"),                    emit: low_quality
     path("sample_purity_ploidy.tsv"),               emit: purity
 
     script:
+    def analysis_type = "$meta.analysis_type"
     """
     /opt/repo/summarise_ascat_estimate.R \
     --estimates_path .
@@ -104,29 +105,27 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
 process CREATE_FREQUENCY_PLOTS {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${analysis_type}/${plotting_dir}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${meta.analysis_type}/${plot_dir}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
 
     input:
-    path(segfiles_list)
+    tuple val(meta), path(segfiles_list)
     path(purity_ploidy)
     path(sample_sex)
     val(cohort_prefix)
-    val(analysis_type)
 
     output:
-    path("*_cn-loh.tsv"), emit: table
-    path("*_cn-loh.pdf"), emit: plot
-    path("*_CNfreq.tsv"), emit: cn_freqs
-    path("*_CNfreq.pdf"), emit: cn_pdf
-    path("${append_prefix}_segments.tsv"), emit: processed_segments
-    path("*cn-loh_segments.tsv"), emit: loh_segs
+    tuple val(meta), path("*_cn-loh.tsv"), emit: table
+    tuple val(meta), path("*_cn-loh.pdf"), emit: plot
+    tuple val(meta), path("*_CNfreq.tsv"), emit: cn_freqs
+    tuple val(meta), path("*_CNfreq.pdf"), emit: cn_pdf
+    tuple val(meta), path("${cohort_prefix}*_segments.tsv"), emit: processed_segments
+    tuple val(meta), path("*cn-loh_segments.tsv"), emit: loh_segs
 
 
     script:
-    def plotting_dir = analysis_type == "one_tumour_per_patient" ? "PLOTS_ONE_PER_PATIENT" : "PLOTS_INDEPENDENT"
-    def append_prefix = analysis_type == "one_tumour_per_patient" ? cohort_prefix : cohort_prefix + "-indep"
-    
+    def plot_dir = "$meta.analysis_type" == "one_tumour_per_patient" ? "PLOTS_ONE_PER_PATIENT" : "PLOTS_INDEPENDENT"
+    def append_prefix = "$meta.analysis_type" == "one_tumour_per_patient" ? cohort_prefix : cohort_prefix + "-indep"
     """
     /opt/repo/plot_ascat_cna_and_loh.R \
     $segfiles_list \
@@ -134,11 +133,16 @@ process CREATE_FREQUENCY_PLOTS {
     $sample_sex \
     $append_prefix
     """
-    
     stub:
+    def plotting_dir  = "$meta.analysis_type" == "one_tumour_per_patient" ? "PLOTS_ONE_PER_PATIENT" : "PLOTS_INDEPENDENT"
+    def append_prefix = "$meta.analysis_type" == "one_tumour_per_patient" ? cohort_prefix : cohort_prefix + "-indep"
     """
     echo stub > x_cn-loh.pdf
     echo stub > x_cn-loh.tsv
+    echo stub > x_CNfreq.tsv
+    echo stub > x_CNfreq.pdf
+    echo stub > xcn-loh_segments.tsv
+    echo stub > null_segments.tsv
     """
 
 

@@ -37,7 +37,29 @@ workflow {
     DERMATLAS_METADATA(bamfiles, 
                        all_pairs,
                        patient_md)
+    
+    DERMATLAS_METADATA.out.combined_metadata 
+    | map { meta, nf, ni, tf, ti -> meta }
+    | branch { 
+            female: it["Sex"] == "F"
+            male: true }
+    | set { sex_split }
+    
+    sex_split.male
+    | collectFile(name: "ascat_pairs_male.tsv", 
+      storeDir: "${params.OUTDIR}/ASCAT"){
+        meta ->
+        ["ascat_pairs_male.tsv", "${meta["tumor"]}\t${meta["normal"]}\n"]
+    }
 
+   sex_split.female
+    | collectFile(name: "ascat_pairs_female.tsv", 
+      storeDir: "${params.OUTDIR}/ASCAT"){
+        meta ->
+        ["ascat_pairs_female.tsv", "${meta["tumor"]}\t${meta["normal"]}\n"]
+    }
+    
+    
     ONE_PATIENT_PER_TUMOUR(bamfiles, 
                            unique_pairs,
                            patient_md)
@@ -55,32 +77,35 @@ workflow {
                    gc_file,
                    rt_file,
                    params.cohort_prefix)
-    // Filter 
 
     ONE_PATIENT_PER_TUMOUR.out.combined_metadata
-    | map { meta, nf, ni, tf, ti -> meta} 
+    | map { meta, nf, ni, tf, ti -> meta }
     | join(ASCAT_ANALYSIS.out.filtered_outs)
+    | map{ meta, file, file2 -> tuple(meta + [analysis_type: 'one_tumor_per_patient'], file, file2) }
+    | view()
     | set { one_per_patient_cohort }
 
     INDEPENDENT.out.combined_metadata
-    | map { meta, nf,ni, tf, ti -> meta}
+    | map { meta, nf, ni, tf, ti -> meta }
     | join(ASCAT_ANALYSIS.out.filtered_outs)
+    | map{ meta, file, file2 -> tuple(meta + [analysis_type: 'independent_tumors'], file, file2) }
+    | view()
     | set { independent_cohort }
-
 
 
     estimate_file = ONE_PATIENT_PER_TUMOUR.out.combined_metadata
     | map { meta, nf, ni, tf, ti -> [meta]}
     | join(ASCAT_ANALYSIS.out.estimates)
+    | view()
     | map{ meta, file -> file} 
     
     estimate_file.collect()
+    | map { file_list -> tuple([analysis_type: 'one_patient_per_tumor'], file_list) }
     | set { estimates_list }
 
     ONE_PATIENT_PER_TUMOUR_COHORT(
                    one_per_patient_cohort,
                    estimates_list,
-                   Channel.of("one_tumour_per_patient"),
                    params.OUTDIR,
                    params.cohort_prefix,
                    params.gistic_refgene_file,
@@ -91,7 +116,6 @@ workflow {
         INDEPENDENT_COHORT(
                    independent_cohort,
                    estimates_list,
-                   Channel.of("independent_tumors"),
                    params.OUTDIR,
                    params.cohort_prefix,
                    params.gistic_refgene_file,

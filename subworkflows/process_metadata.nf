@@ -34,8 +34,6 @@ workflow DERMATLAS_METADATA {
             tuple(meta["Sanger DNA ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])}
     | set{ patient_metadata_ch }
 
-    
-
     patient_metadata_ch
     | filter { id, meta -> id =~ "PD"}
     | collectFile(name: "allsamples2sex.txt", 
@@ -44,8 +42,6 @@ workflow DERMATLAS_METADATA {
         ["allsamples2sex.txt", "${id}\t${meta["sexchr"][0]}\n"]
     }
 
-
- 
     indexed_bams
     | join(pair_id_ch)
     | join(patient_metadata_ch)
@@ -77,28 +73,6 @@ workflow DERMATLAS_METADATA {
                         meta["tumor_file"],  
                         meta["tumor_index"])}
     | set { combined_metadata }
-
-
-    combined_metadata 
-    | map { meta, nf, ni, tf, ti -> meta }
-    | branch { 
-            female: it["Sex"] == "F"
-            male: true }
-    | set { sex_split }
-    
-    sex_split.male
-    | collectFile(name: "ascat_pairs_male.tsv", 
-      storeDir: "${params.OUTDIR}/ASCAT"){
-        meta ->
-        ["ascat_pairs_male.tsv", "${meta["tumor"]}\t${meta["normal"]}\n"]
-    }
-
-   sex_split.female
-    | collectFile(name: "ascat_pairs_female.tsv", 
-      storeDir: "${params.OUTDIR}/ASCAT"){
-        meta ->
-        ["ascat_pairs_female.tsv", "${meta["tumor"]}\t${meta["normal"]}\n"]
-    }
 
     emit:
         combined_metadata
