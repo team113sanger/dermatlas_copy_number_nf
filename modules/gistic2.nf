@@ -19,7 +19,6 @@ process RUN_GISTIC2 {
 
     
     script:
-    analysis_type = "$meta.analysis_type"
     """
     /opt/repo/gp_gistic2_from_seg \
     -b . \
@@ -56,6 +55,7 @@ process FILTER_GISTIC2_CALLS{
     label 'process_medium'
     publishDir "${params.OUTDIR}/gistic2/${params.release_version}/${meta.analysis_type}/MIN_0", mode: params.publish_dir_mode
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.5.0"
+    
     input:
     tuple val(meta), path(segments)
     tuple val(meta), path(lesions)
@@ -87,8 +87,9 @@ process FILTER_GISTIC2_CALLS{
 
 process FILTER_BROAD_GISTIC2_CALLS {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/gistic2/${params.release_version}/${params.analysis_type}/MIN_0", mode: params.publish_dir_mode
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess/feature/broad_sig:579cb2d4"
+    publishDir "${params.OUTDIR}/gistic2/${params.release_version}/${meta.analysis_type}/MIN_0", mode: params.publish_dir_mode
+    
     input:
     tupple val(meta), path(segments)
     tupple val(meta), path(broad_sig)

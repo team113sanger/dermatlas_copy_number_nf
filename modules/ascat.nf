@@ -86,7 +86,6 @@ process SUMMARISE_ASCAT_ESTIMATES {
     path("sample_purity_ploidy.tsv"),               emit: purity
 
     script:
-    def analysis_type = "$meta.analysis_type"
     """
     /opt/repo/summarise_ascat_estimate.R \
     --estimates_path .

@@ -100,8 +100,9 @@ workflow {
     | join(ASCAT_ANALYSIS.out.estimates)
     | map{ meta, file -> file} 
     
+    // TODO Generalise this for both
     estimate_file.collect()
-    | map { file_list -> tuple([analysis_type: 'one_patient_per_tumor'], file_list) }
+    | map { file_list -> tuple([analysis_type: 'one_tumor_per_patient'], file_list) }
     | set { estimates_list }
 
     ONE_PATIENT_PER_TUMOUR_COHORT(
