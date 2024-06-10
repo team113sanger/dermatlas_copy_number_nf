@@ -16,7 +16,7 @@ workflow ANALYSE_COHORT {
     SUMMARISE_ASCAT_ESTIMATES(estimates_list)
     
     analysis_type = ascat_subgroup
-    | map{ meta, file, seg -> [analysis_type: meta.analysis_type]}
+    | map{ meta, file, seg -> [analysis_type: meta.analysis_type, plot_dir: meta.plot_dir]}
     
     ascat_subgroup
     | collectFile(keepHeader: true,
@@ -35,7 +35,6 @@ workflow ANALYSE_COHORT {
     | collectFile(
        storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}"){
        meta, segments, gistic ->
-        // new File("${params.release_version}/${meta.analysis_type}").mkdirs()
         def filename = "${params.OUTDIR}/ASCAT/${params.release_version}/${meta.analysis_type}/${meta.analysis_type}_segments.txt"
         return [filename, gistic]}
     | merge(analysis_type)

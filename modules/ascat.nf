@@ -105,7 +105,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
 process CREATE_FREQUENCY_PLOTS {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${meta.analysis_type}/${plot_dir}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${meta.analysis_type}/${meta.plot_dir}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
 
     input:
@@ -124,7 +124,6 @@ process CREATE_FREQUENCY_PLOTS {
 
 
     script:
-    def plot_dir = "$meta.analysis_type" == "one_tumour_per_patient" ? "PLOTS_ONE_PER_PATIENT" : "PLOTS_INDEPENDENT"
     def append_prefix = "$meta.analysis_type" == "one_tumour_per_patient" ? cohort_prefix : cohort_prefix + "-indep"
     """
     /opt/repo/plot_ascat_cna_and_loh.R \
@@ -133,8 +132,8 @@ process CREATE_FREQUENCY_PLOTS {
     $sample_sex \
     $append_prefix
     """
+    
     stub:
-    def plotting_dir  = "$meta.analysis_type" == "one_tumour_per_patient" ? "PLOTS_ONE_PER_PATIENT" : "PLOTS_INDEPENDENT"
     def append_prefix = "$meta.analysis_type" == "one_tumour_per_patient" ? cohort_prefix : cohort_prefix + "-indep"
     """
     echo stub > x_cn-loh.pdf
@@ -142,7 +141,7 @@ process CREATE_FREQUENCY_PLOTS {
     echo stub > x_CNfreq.tsv
     echo stub > x_CNfreq.pdf
     echo stub > xcn-loh_segments.tsv
-    echo stub > null_segments.tsv
+    echo stub > "${append_prefix}_segments.tsv"
     """
 
 

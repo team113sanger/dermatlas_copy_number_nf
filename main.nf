@@ -81,13 +81,13 @@ workflow {
     ONE_PATIENT_PER_TUMOUR.out.combined_metadata
     | map { meta, nf, ni, tf, ti -> meta }
     | join(ASCAT_ANALYSIS.out.filtered_outs)
-    | map{ meta, file, file2 -> tuple(meta + [analysis_type: 'one_tumor_per_patient'], file, file2) }
+    | map{ meta, file, file2 -> tuple(meta + [analysis_type: 'one_tumor_per_patient', plot_dir: "PLOTS_ONE_PER_PATIENT"], file, file2) }
     | set { one_per_patient_cohort }
 
     INDEPENDENT.out.combined_metadata
     | map { meta, nf, ni, tf, ti -> meta }
     | join(ASCAT_ANALYSIS.out.filtered_outs)
-    | map{ meta, file, file2 -> tuple(meta + [analysis_type: 'independent_tumors'], file, file2) }
+    | map{ meta, file, file2 -> tuple(meta + [analysis_type: 'independent_tumors', plot_dir: "PLOTS_INDEPENDENT"], file, file2) }
     | set { independent_cohort }
 
 
