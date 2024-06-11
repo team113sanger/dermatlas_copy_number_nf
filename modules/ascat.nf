@@ -74,11 +74,12 @@ process RUN_ASCAT_EXOMES {
 
 process SUMMARISE_ASCAT_ESTIMATES {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${params.analysis_type}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${meta.analysis_type}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
+    
     input: 
-    path(collected_files)
-
+    tuple val(meta), path(collected_files)
+    
     output:
     path("ascat_stats.tsv"),                        emit: ascat_sstats
     path("ascat_low_qual.list"),                    emit: low_quality
@@ -103,36 +104,43 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
 process CREATE_FREQUENCY_PLOTS {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${params.analysis_type}/${params.plotting_dir}", mode: 'copy'
+    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${meta.analysis_type}/${meta.plot_dir}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
 
     input:
-    path(segfiles_list)
+    tuple val(meta), path(segfiles_list)
     path(purity_ploidy)
     path(sample_sex)
     val(cohort_prefix)
 
     output:
-    path("*_cn-loh.tsv"), emit: table
-    path("*_cn-loh.pdf"), emit: plot
-    path("*_CNfreq.tsv"), emit: cn_freqs
-    path("*_CNfreq.pdf"), emit: cn_pdf
-    path("${cohort_prefix}_segments.tsv"), emit: processed_segments
-    path("*cn-loh_segments.tsv"), emit: loh_segs
+    tuple val(meta), path("*_cn-loh.tsv"), emit: table
+    tuple val(meta), path("*_cn-loh.pdf"), emit: plot
+    tuple val(meta), path("*_CNfreq.tsv"), emit: cn_freqs
+    tuple val(meta), path("*_CNfreq.pdf"), emit: cn_pdf
+    tuple val(meta), path("*cn-loh_segments.tsv"), emit: loh_segs
+    tuple val(meta), path("${cohort_prefix}{,-indep}_segments.tsv"), emit: processed_segments
+
 
     script:
+    def append_prefix = "$meta.analysis_type" == "one_tumor_per_patient" ? cohort_prefix : cohort_prefix + "-indep"
     """
     /opt/repo/plot_ascat_cna_and_loh.R \
     $segfiles_list \
     $purity_ploidy \
     $sample_sex \
-    $cohort_prefix
+    $append_prefix
     """
     
     stub:
+    def append_prefix = "$meta.analysis_type" == "one_tumour_per_patient" ? cohort_prefix : cohort_prefix + "-indep"
     """
     echo stub > x_cn-loh.pdf
     echo stub > x_cn-loh.tsv
+    echo stub > x_CNfreq.tsv
+    echo stub > x_CNfreq.pdf
+    echo stub > xcn-loh_segments.tsv
+    echo stub > "${append_prefix}_segments.tsv"
     """
 
 
@@ -150,6 +158,11 @@ process EXTRACT_GOODNESS_OF_FIT {
     // Extract the "Goodness-of-fit" value using grep and cut
     """
     goodnessOfFit=\$(grep 'Goodness-of-fit' ${txtFile} | cut -f2)
+    echo "\$goodnessOfFit"
+    """
+    stub:
+    """
+    goodnessOfFit=97
     echo "\$goodnessOfFit"
     """
 }

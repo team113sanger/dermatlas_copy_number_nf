@@ -1,35 +1,53 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl = 2
+// Repeated data ingestion for whole and subgroups of samples
+
 include { DERMATLAS_METADATA } from './subworkflows/process_metadata.nf'
+include { DERMATLAS_METADATA as ONE_PATIENT_PER_TUMOUR } from './subworkflows/process_metadata.nf'
+include { DERMATLAS_METADATA as INDEPENDENT } from './subworkflows/process_metadata.nf'
+include { SPLIT_COHORT_SEXES } from './subworkflows/split_sample_cohort.nf'
+
 include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
-include { GISTIC2_ANALYSIS } from './subworkflows/gistic2_analysis.nf'
+include { SUBSET_DATASET as SUBSET_ONE_PER_PATIENT_DATASET } from './subworkflows/subset_data.nf'
+include { SUBSET_DATASET as SUBSET_INDEPENDENT_DATASET } from './subworkflows/subset_data.nf'
+
+
+// Repeated cohort analysis for sub-groups of samples
+include { ANALYSE_COHORT as ONE_PATIENT_PER_TUMOUR_COHORT } from './subworkflows/subgroup_analysis.nf'
+include { ANALYSE_COHORT as INDEPENDENT_COHORT } from './subworkflows/subgroup_analysis.nf'
+
 include { REFORMAT_TSV } from './modules/publish.nf'
 
 workflow {
 
     // Cohort files 
-    bamfiles    = Channel.fromPath(params.bam_files, checkIfExists: true)
-    pair_ids    = Channel.fromPath(params.tumor_normal_pairs, checkIfExists: true)
-    patient_md  = Channel.fromPath(params.metadata_manifest, checkIfExists: true)
-
+    bamfiles           = Channel.fromPath(params.bam_files, checkIfExists: true)
+    all_pairs          = Channel.fromPath(params.tumor_normal_pairs, checkIfExists: true)
+    unique_pairs       = Channel.fromPath(params.one_per_patient, checkIfExists: true)
+    independent_tumors = Channel.fromPath(params.independent, checkIfExists: true)
+    patient_md         = Channel.fromPath(params.metadata_manifest, checkIfExists: true)
+    
     // Reference files 
-    reference_genome = file(params.reference_genome, checkIfExists: true)
-    bait_set = file(params.bait_set, checkIfExists: true)
-    per_chrom_files = file(params.resource_files, checkIfExists: true)
-    gc_file = file(params.gc_file, checkIfExists: true)
-    rt_file = file(params.rt_file, checkIfExists: true)
-    giab_regions = file(params.difficult_regions_file, checkIfExists: true)
-    chrom_arms = file(params.chrom_arms, checkIfExists: true)
+    reference_genome   = file(params.reference_genome, checkIfExists: true)
+    bait_set           = file(params.bait_set, checkIfExists: true)
+    per_chrom_files    = file(params.resource_files, checkIfExists: true)
+    gc_file            = file(params.gc_file, checkIfExists: true)
+    rt_file            = file(params.rt_file, checkIfExists: true)
+    giab_regions       = file(params.difficult_regions_file, checkIfExists: true)
+    chrom_arms         = file(params.chrom_arms_file, checkIfExists: true)
+    broad_cutoff       = Channel.of(params.gistic_broad_peak_q_cutoff)
 
-    // Combine and pivot the metadata so that TN pair bams and meta are a single
-    // data structure
+    // Combine and pivot the metadata so that T/N pair 
+    // bams and metadata are a single channel
     DERMATLAS_METADATA(bamfiles, 
-                       pair_ids, 
+                       all_pairs,
                        patient_md)
     
-    // Run ASCAT, summarise estimates and plot 
+    // Output the Male and female datasets as sepeate files
+    SPLIT_COHORT_SEXES(DERMATLAS_METADATA.out.combined_metadata)
+    
+    // Perform ASCAT analysis on the entire dataset
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
-                   DERMATLAS_METADATA.out.sex2chr_ch,
                    params.OUTDIR,  
                    reference_genome,
                    bait_set,
@@ -38,14 +56,46 @@ workflow {
                    rt_file,
                    params.cohort_prefix)
     
-    // Given Ascat segments, run Gistic2 and filter regions 
-    GISTIC2_ANALYSIS(ASCAT_ANALYSIS.out.gistic_inputs,
-                    ASCAT_ANALYSIS.out.segments, 
-                    params.gistic_refgene_file, 
-                    giab_regions,
-                    params.cohort_prefix,
-                    params.broad_cutoff
-                    chrom_arms)
+    ONE_PATIENT_PER_TUMOUR(bamfiles, 
+                           unique_pairs,
+                           patient_md)
+
+
+    SUBSET_ONE_PER_PATIENT_DATASET(
+                          ONE_PATIENT_PER_TUMOUR.out.combined_metadata,
+                          ASCAT_ANALYSIS.out.filtered_outs, 
+                          ASCAT_ANALYSIS.out.estimates,
+                          'one_tumor_per_patient',
+                          "PLOTS_ONE_PER_PATIENT")
+    INDEPENDENT(bamfiles, 
+                independent_tumors,
+                patient_md)
+
+    SUBSET_INDEPENDENT_DATASET(INDEPENDENT.out.combined_metadata,
+                          ASCAT_ANALYSIS.out.filtered_outs, 
+                          ASCAT_ANALYSIS.out.estimates,
+                          'independent_tumors',
+                          "PLOTS_INDEPENDENT")
+
+    ONE_PATIENT_PER_TUMOUR_COHORT(
+                   SUBSET_ONE_PER_PATIENT_DATASET.out.subset_files,
+                   SUBSET_ONE_PER_PATIENT_DATASET.out.estimates_list,
+                   params.OUTDIR,
+                   params.cohort_prefix,
+                   params.gistic_refgene_file,
+                   giab_regions,
+                   broad_cutoff,
+                   chrom_arms)
+        
+        INDEPENDENT_COHORT(
+                   SUBSET_INDEPENDENT_DATASET.out.subset_files,
+                   SUBSET_INDEPENDENT_DATASET.out.estimates_list,
+                   params.OUTDIR,
+                   params.cohort_prefix,
+                   params.gistic_refgene_file,
+                   giab_regions,
+                   broad_cutoff,
+                   chrom_arms)
     
     // Convert all tab files to tsv. TODO 
     // ASCAT_ANALYSIS.out.freq_tab
