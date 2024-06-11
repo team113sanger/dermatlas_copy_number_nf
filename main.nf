@@ -8,6 +8,9 @@ include { DERMATLAS_METADATA as INDEPENDENT } from './subworkflows/process_metad
 include { SPLIT_COHORT_SEXES } from './subworkflows/split_sample_cohort.nf'
 
 include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
+include { SUBSET_DATASET as SUBSET_ONE_PER_PATIENT_DATASET } from './subworkflows/subset_data.nf'
+include { SUBSET_DATASET as SUBSET_INDEPENDENT_DATASET } from './subworkflows/subset_data.nf'
+
 
 // Repeated cohort analysis for sub-groups of samples
 include { ANALYSE_COHORT as ONE_PATIENT_PER_TUMOUR_COHORT } from './subworkflows/subgroup_analysis.nf'
@@ -43,7 +46,6 @@ workflow {
     // Output the Male and female datasets as sepeate files
     SPLIT_COHORT_SEXES(DERMATLAS_METADATA.out.combined_metadata)
     
-    
     // Perform ASCAT analysis on the entire dataset
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
                    params.OUTDIR,  
@@ -58,48 +60,26 @@ workflow {
                            unique_pairs,
                            patient_md)
 
+
+    SUBSET_ONE_PER_PATIENT_DATASET(
+                          ONE_PATIENT_PER_TUMOUR.out.combined_metadata,
+                          ASCAT_ANALYSIS.out.filtered_outs, 
+                          ASCAT_ANALYSIS.out.estimates,
+                          'one_tumor_per_patient',
+                          "PLOTS_ONE_PER_PATIENT")
     INDEPENDENT(bamfiles, 
                 independent_tumors,
                 patient_md)
 
-    ONE_PATIENT_PER_TUMOUR.out.combined_metadata
-    | map { meta, nf, ni, tf, ti -> meta }
-    | join(ASCAT_ANALYSIS.out.filtered_outs)
-    | map{ meta, ascat_segments, gistic_segments -> 
-        tuple(meta + [analysis_type: 'one_tumor_per_patient', plot_dir: "PLOTS_ONE_PER_PATIENT"], 
-              ascat_segments, gistic_segments) }
-    | set { one_per_patient_cohort }
-
-    INDEPENDENT.out.combined_metadata
-    | map { meta, nf, ni, tf, ti -> meta }
-    | join(ASCAT_ANALYSIS.out.filtered_outs)
-    | map{ meta, ascat_segments, gistic_segments -> 
-        tuple(meta + [analysis_type: 'independent_tumors', plot_dir: "PLOTS_INDEPENDENT"], 
-              ascat_segments, gistic_segments) }
-    | set { independent_cohort }
-
-    one_patient_estimate_file = ONE_PATIENT_PER_TUMOUR.out.combined_metadata
-    | map { meta, nf, ni, tf, ti -> [meta]}
-    | join(ASCAT_ANALYSIS.out.estimates)
-    | map{ meta, file -> file} 
-    
-    // TODO Generalise this for both
-    one_patient_estimate_file.collect()
-    | map { file_list -> tuple([analysis_type: 'one_tumor_per_patient'], file_list) }
-    | set { one_patient_estimates_list }
-
-    indep_estimate_file = INDEPENDENT.out.combined_metadata
-    | map { meta, nf, ni, tf, ti -> [meta]}
-    | join(ASCAT_ANALYSIS.out.estimates)
-    | map{ meta, file -> file} 
-    
-    indep_estimate_file.collect()
-    | map { file_list -> tuple([analysis_type: 'independent_tumors'], file_list) }
-    | set { indep_estimates_list }
+    SUBSET_INDEPENDENT_DATASET(INDEPENDENT.out.combined_metadata,
+                          ASCAT_ANALYSIS.out.filtered_outs, 
+                          ASCAT_ANALYSIS.out.estimates,
+                          'independent_tumors',
+                          "PLOTS_INDEPENDENT")
 
     ONE_PATIENT_PER_TUMOUR_COHORT(
-                   one_per_patient_cohort,
-                   one_patient_estimates_list,
+                   SUBSET_ONE_PER_PATIENT_DATASET.out.subset_files,
+                   SUBSET_ONE_PER_PATIENT_DATASET.out.estimates_list,
                    params.OUTDIR,
                    params.cohort_prefix,
                    params.gistic_refgene_file,
@@ -108,8 +88,8 @@ workflow {
                    chrom_arms)
         
         INDEPENDENT_COHORT(
-                   independent_cohort,
-                   indep_estimates_list,
+                   SUBSET_INDEPENDENT_DATASET.out.subset_files,
+                   SUBSET_INDEPENDENT_DATASET.out.estimates_list,
                    params.OUTDIR,
                    params.cohort_prefix,
                    params.gistic_refgene_file,
