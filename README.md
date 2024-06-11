@@ -23,7 +23,9 @@ In brief, the pipeline takes a set samples that have been pre-processed by the D
 ### Cohort-dependent variables
 - `bam_files`: a path to a set of `.bam` files in a project directory. Note: the pipeline assumes that corresponding `.bam.bai` index files have been pre-generated and are co-located with bams and you should use a `**` glob match to recursively collect all bamfiles in the directory.
 - `metadata_manifest`: path to a tab-delimited manifest containing sample PD IDs and information about sample phenotype/preparation.
-- `tumor_normal_pairs`: path to a file containing a tab-delimited list of matched tumour-normal pairs.
+- `tumor_normal_pairs`: path to a file containing a tab-delimited list of all matched tumour-normal pairs in a cohort
+- `one_per_patient`: path to a file containing a tab-delimited list of matched tumour-normal pairs with one patient selected per-tumor
+- `independent`: path to a file containing a tab-delimited list of matched tumour-normal pairs with all independent comparisons to perform.
 
 ### Cohort-independent variables
 Reference files that are reused across pipeline executions have been placed within the pipeline's default `nextflow.config` file to simplify configuration and can be ommited from setup. Behind the scences though, the following reference files are required for a run: 
@@ -34,6 +36,8 @@ Reference files that are reused across pipeline executions have been placed with
 - `rt_file`: path to the ASCAT replication timing correction file.
 - `difficult_regions_file`: genomic regions considered to be 
 problematic for analyses such as variant calling by Genome In A Bottle (GIAB), used by GISTIC2 for masking regions.
+- `chrom_arms_file`: path to the file containing chromosome arm lengths.
+- `gistic_broad_peak_q_cutoff`: a Q-value cutoff to be used when fitlering Gistic broad peak outputs (default 0.1).
 
 Default reference file values supplied within the `nextflow.config` file can be overided by adding them to the params `.json` file. An example complete params file `example_params.json` is supplied within this repo for demonstation.
 
@@ -61,7 +65,7 @@ module load /software/team113/modules/modulefiles/tw/0.6.2
 # Create a nextflow job that will spawn other jobs
 
 nextflow run 'https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf' \
--r 0.1.1 \
+-r 0.2.0 \
 -params-file $PARAMS_FILE \
 -c nextflow.config \
 -profile farm22 

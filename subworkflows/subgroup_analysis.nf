@@ -61,8 +61,8 @@ workflow ANALYSE_COHORT {
                     CREATE_FREQUENCY_PLOTS.out.processed_segments, 
                     gistic_refgene_file, 
                     giab_regions,
-                    cohort_prefix,
+                    chrom_arms,
                     cutoff,
-                    chrom_arms)
+                    cohort_prefix)
     
 }

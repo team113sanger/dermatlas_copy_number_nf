@@ -91,15 +91,15 @@ process FILTER_BROAD_GISTIC2_CALLS {
     publishDir "${params.OUTDIR}/gistic2/${params.release_version}/${meta.analysis_type}/MIN_0", mode: params.publish_dir_mode
     
     input:
-    tupple val(meta), path(segments)
-    tupple val(meta), path(broad_sig)
-    path(by_arms)
+    tuple val(meta), path(segments)
+    tuple val(meta), path(broad_sig)
+    tuple val(meta), path(by_arms)
     path(arms_file)
     val(cutoff)
-    val(prefix)
+    val(cohort_prefix)
     
     output:
-    path(outfile), emit: cs, optional:true
+    path("${cohort_prefix}_gistic_broad_QCcheck.tsv"), emit: cs, optional:true
 
     script:
     """
@@ -113,7 +113,7 @@ process FILTER_BROAD_GISTIC2_CALLS {
     """
     stub: 
     """
-    echo stub > outfile.tsv
+    echo stub > ${cohort_prefix}_gistic_broad_QCcheck.tsv
     """
 
 }

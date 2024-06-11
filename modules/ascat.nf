@@ -119,7 +119,7 @@ process CREATE_FREQUENCY_PLOTS {
     tuple val(meta), path("*_CNfreq.tsv"), emit: cn_freqs
     tuple val(meta), path("*_CNfreq.pdf"), emit: cn_pdf
     tuple val(meta), path("*cn-loh_segments.tsv"), emit: loh_segs
-    tuple val(meta), path("${append_prefix}_segments.tsv"), emit: processed_segments
+    tuple val(meta), path("${cohort_prefix}{,-indep}_segments.tsv"), emit: processed_segments
 
 
     script:

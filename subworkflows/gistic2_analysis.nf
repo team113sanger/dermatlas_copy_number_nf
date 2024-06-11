@@ -5,9 +5,9 @@ workflow GISTIC2_ANALYSIS {
     ascat_segments
     gistic_refgene
     difficult_regions_file
-    cohort_prefix
     chrom_arms
     cutoff
+    cohort_prefix
 
     main:
     RUN_GISTIC2(gistic_inputs, 
@@ -19,13 +19,13 @@ workflow GISTIC2_ANALYSIS {
                         difficult_regions_file,
                         cohort_prefix)
                         
-    // FILTER_BROAD_GISTIC2_CALLS(
-    //                    ascat_segments,
-    //                    RUN_GISTIC2.out.broad,
-    //                    RUN_GISTIC2.out.arms,
-    //                    chrom_arms,
-    //                    cutoff, 
-    //                    cohort_prefix)
+    FILTER_BROAD_GISTIC2_CALLS(
+                       ascat_segments,
+                       RUN_GISTIC2.out.broad,
+                       RUN_GISTIC2.out.arms,
+                       chrom_arms,
+                       cutoff, 
+                       cohort_prefix)
     emit: 
     gistic_tabs    = RUN_GISTIC2.out.tables
     sample_summary = FILTER_GISTIC2_CALLS.out.ss
