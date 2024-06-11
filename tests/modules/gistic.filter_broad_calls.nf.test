@@ -1,8 +1,8 @@
 nextflow_process {
 
-    name "Test Process FILTER_GISTIC2_CALLS"
+    name "Test Process FILTER_BROAD_GISTIC2_CALLS"
     script "modules/gistic2.nf"
-    process "FILTER_GISTIC2_CALLS"
+    process "FILTER_BROAD_GISTIC2_CALLS"
 
     test("Should run without failures") {
 
@@ -13,9 +13,11 @@ nextflow_process {
             process {
                 """
                 input[0] = file("$baseDir/tests/testdata/ascat_segments.tsv")
-                input[1] = file("$baseDir/tests/testdata/all_lesions.conf_95.txt")
-                input[2] = file("${params.difficult_regions_file}")
-                input[3] = "${params.cohort_prefix}"
+                input[1] = file("$baseDir/tests/testdata/broad_significance_results.txt")
+                input[2] = file("$baseDir/tests/testdata/broad_values_by_arm.txt")
+                input[3] = file("$baseDir/tests/testdata/ucsc_chrom_arms.txt")
+                input[4] = 0.1
+                input[5] = "test"
                 """
             }
         }

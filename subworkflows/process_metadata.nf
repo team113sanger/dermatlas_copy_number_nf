@@ -3,7 +3,6 @@ workflow DERMATLAS_METADATA {
     bamfile_ch
     pair_identities
     patient_metadata
-    outdir
 
     main:
 
@@ -35,18 +34,14 @@ workflow DERMATLAS_METADATA {
             tuple(meta["Sanger DNA ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])}
     | set{ patient_metadata_ch }
 
-    
-
     patient_metadata_ch
     | filter { id, meta -> id =~ "PD"}
-    | collectFile(name: "samples2sex.txt", storeDir: outdir){
+    | collectFile(name: "allsamples2sex.txt", 
+      storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}"){
         id, meta ->
-        ["samples2sex.txt", "${id}\t${meta["sexchr"][0]}\n"]
+        ["allsamples2sex.txt", "${id}\t${meta["sexchr"][0]}\n"]
     }
-    | set {sex2chr_ch}
 
-
- 
     indexed_bams
     | join(pair_id_ch)
     | join(patient_metadata_ch)
@@ -79,10 +74,7 @@ workflow DERMATLAS_METADATA {
                         meta["tumor_index"])}
     | set { combined_metadata }
 
-
-
     emit:
         combined_metadata
-        sex2chr_ch
 
 }
