@@ -3,13 +3,11 @@ nextflow.enable.dsl = 2
 // Repeated data ingestion for whole and subgroups of samples
 
 include { DERMATLAS_METADATA } from './subworkflows/process_metadata.nf'
-include { DERMATLAS_METADATA as ONE_PATIENT_PER_TUMOUR } from './subworkflows/process_metadata.nf'
-include { DERMATLAS_METADATA as INDEPENDENT } from './subworkflows/process_metadata.nf'
 include { SPLIT_COHORT_SEXES } from './subworkflows/split_sample_cohort.nf'
 
 include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
-include { ANALYSE_COHORT as ANALYSE_ONE_PER_PATIENT_DATASET } from './subworkflows/subset_data.nf'
-include { ANALYSE_COHORT as ANALYSE_INDEPENDENT_DATASET } from './subworkflows/subset_data.nf'
+include { ANALYSE_COHORT as ANALYSE_ONE_PER_PATIENT_DATASET } from './subworkflows/analyse_subcohort.nf'
+include { ANALYSE_COHORT as ANALYSE_INDEPENDENT_DATASET } from './subworkflows/analyse_subcohort.nf'
 
 include { REFORMAT_TSV } from './modules/publish.nf'
 
