@@ -8,13 +8,8 @@ include { DERMATLAS_METADATA as INDEPENDENT } from './subworkflows/process_metad
 include { SPLIT_COHORT_SEXES } from './subworkflows/split_sample_cohort.nf'
 
 include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
-include { SUBSET_DATASET as SUBSET_ONE_PER_PATIENT_DATASET } from './subworkflows/subset_data.nf'
-include { SUBSET_DATASET as SUBSET_INDEPENDENT_DATASET } from './subworkflows/subset_data.nf'
-
-
-// Repeated cohort analysis for sub-groups of samples
-include { ANALYSE_COHORT as ONE_PATIENT_PER_TUMOUR_COHORT } from './subworkflows/subgroup_analysis.nf'
-include { ANALYSE_COHORT as INDEPENDENT_COHORT } from './subworkflows/subgroup_analysis.nf'
+include { ANALYSE_COHORT as ANALYSE_ONE_PER_PATIENT_DATASET } from './subworkflows/subset_data.nf'
+include { ANALYSE_COHORT as ANALYSE_INDEPENDENT_DATASET } from './subworkflows/subset_data.nf'
 
 include { REFORMAT_TSV } from './modules/publish.nf'
 
@@ -46,7 +41,7 @@ workflow {
     // Output the Male and female datasets as sepeate files
     SPLIT_COHORT_SEXES(DERMATLAS_METADATA.out.combined_metadata)
     
-    // Perform ASCAT analysis on the entire dataset
+    // Perform ASCAT analysis on the entire cohort
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
                    params.OUTDIR,  
                    reference_genome,
@@ -56,47 +51,34 @@ workflow {
                    rt_file,
                    params.cohort_prefix)
     
-    ONE_PATIENT_PER_TUMOUR(bamfiles, 
-                           unique_pairs,
-                           patient_md)
-
-
-    SUBSET_ONE_PER_PATIENT_DATASET(
-                          ONE_PATIENT_PER_TUMOUR.out.combined_metadata,
+    ANALYSE_ONE_PER_PATIENT_DATASET(
+                          DERMATLAS_METADATA.out.combined_metadata,
+                          unique_pairs,
                           ASCAT_ANALYSIS.out.filtered_outs, 
                           ASCAT_ANALYSIS.out.estimates,
                           'one_tumor_per_patient',
-                          "PLOTS_ONE_PER_PATIENT")
-    INDEPENDENT(bamfiles, 
-                independent_tumors,
-                patient_md)
+                          "PLOTS_ONE_PER_PATIENT",
+                           params.OUTDIR,
+                           params.cohort_prefix,
+                           params.gistic_refgene_file,
+                           giab_regions,
+                           broad_cutoff,
+                           chrom_arms)
 
-    SUBSET_INDEPENDENT_DATASET(INDEPENDENT.out.combined_metadata,
+    ANALYSE_INDEPENDENT_DATASET(
+                          DERMATLAS_METADATA.out.combined_metadata,
+                          independent_pairs,
                           ASCAT_ANALYSIS.out.filtered_outs, 
                           ASCAT_ANALYSIS.out.estimates,
                           'independent_tumors',
-                          "PLOTS_INDEPENDENT")
+                          "PLOTS_INDEPENDENT",
+                           params.OUTDIR,
+                           params.cohort_prefix,
+                           params.gistic_refgene_file,
+                           giab_regions,
+                           broad_cutoff,
+                           chrom_arms)
 
-    ONE_PATIENT_PER_TUMOUR_COHORT(
-                   SUBSET_ONE_PER_PATIENT_DATASET.out.subset_files,
-                   SUBSET_ONE_PER_PATIENT_DATASET.out.estimates_list,
-                   params.OUTDIR,
-                   params.cohort_prefix,
-                   params.gistic_refgene_file,
-                   giab_regions,
-                   broad_cutoff,
-                   chrom_arms)
-        
-        INDEPENDENT_COHORT(
-                   SUBSET_INDEPENDENT_DATASET.out.subset_files,
-                   SUBSET_INDEPENDENT_DATASET.out.estimates_list,
-                   params.OUTDIR,
-                   params.cohort_prefix,
-                   params.gistic_refgene_file,
-                   giab_regions,
-                   broad_cutoff,
-                   chrom_arms)
-    
     // Convert all tab files to tsv. TODO 
     // ASCAT_ANALYSIS.out.freq_tab
     // | concat(ASCAT_ANALYSIS.out.purity)
