@@ -67,7 +67,7 @@ workflow {
 
     ANALYSE_INDEPENDENT_DATASET(
                           DERMATLAS_METADATA.out.combined_metadata,
-                          independent_pairs,
+                          independent_tumors,
                           ASCAT_ANALYSIS.out.filtered_outs, 
                           ASCAT_ANALYSIS.out.estimates,
                           'independent_tumors',
