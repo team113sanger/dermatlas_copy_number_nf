@@ -1,7 +1,7 @@
 include { RUN_ASCAT_EXOMES; SUMMARISE_ASCAT_ESTIMATES; CREATE_FREQUENCY_PLOTS; EXTRACT_GOODNESS_OF_FIT } from '../modules/ascat.nf'
 include { GISTIC2_ANALYSIS } from '../subworkflows/gistic2_analysis.nf'
 
-workflow ANALYSE_COHORT {
+workflow ANALYSE_SUBCOHORT {
     take:
     cohort_metadata
     subset_patients
