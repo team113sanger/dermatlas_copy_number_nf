@@ -6,60 +6,60 @@
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
-                        "QC_PD54403b_PD54403a.tsv:md5,ce09d2aa68cd61f0129d40966fdd787c"
+                        "QC_PD54403a_PD54403b.tsv:md5,0aebc173b7428cb48123bc62b63cc291"
                     ]
                 ],
                 "1": [
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
-                        "ASCAT_estimates_PD54403b_PD54403a.tsv:md5,a6a11dcbc68bf08b6d2129aa4f984786"
+                        "ASCAT_estimates_PD54403a_PD54403b.tsv:md5,9a8b0a0df1739f4f13488d6bd1bd49be"
                     ]
                 ],
                 "2": [
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
-                        "gistic2_segs_PD54403b_PD54403a.tsv:md5,57de32da04defbabd34b19dbba27d9ca"
+                        "gistic2_segs_PD54403a_PD54403b.tsv:md5,6f96da6ef460cb28c4ee842aa02c899f"
                     ]
                 ],
                 "3": [
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
                         [
-                            "After_correction_PD54403b.germline.png:md5,3a23a77b7da89dcb66060800ad87a7d9",
-                            "After_correction_PD54403b.tumour.png:md5,371a1a8094c4276ee36b23966d211ff6",
-                            "Before_correction_PD54403b.germline.png:md5,3a23a77b7da89dcb66060800ad87a7d9",
-                            "Before_correction_PD54403b.tumour.png:md5,692b4d1cdaa5dcc7df34154145ddd4bd",
-                            "PD54403b.ASCATprofile.png:md5,e6a910c92d1a1b71d8c8c6f7668fb971",
-                            "PD54403b.ASPCF.png:md5,21b1eda500fb8c39329952e7d2d3bef5",
-                            "PD54403b.rawprofile.png:md5,bc8794e8e67757a721950f75581b4e8d",
-                            "PD54403b.sunrise.png:md5,3550f9436dc8498dc55f29872035b42b"
+                            "After_correction_PD54403a.germline.png:md5,11c8e9eccace103e86e9873a4db150cb",
+                            "After_correction_PD54403a.tumour.png:md5,cf8afffe44869751d56393c8cb35e8ff",
+                            "Before_correction_PD54403a.germline.png:md5,11c8e9eccace103e86e9873a4db150cb",
+                            "Before_correction_PD54403a.tumour.png:md5,71999366be4297731643045aec0e9ddf",
+                            "PD54403a.ASCATprofile.png:md5,5fff35872c539abca86a9238dbfe0ec4",
+                            "PD54403a.ASPCF.png:md5,de445b23cdca6863832d736a2c5d8a0f",
+                            "PD54403a.rawprofile.png:md5,2dff0ec581a2444a49b55aacdd100217",
+                            "PD54403a.sunrise.png:md5,9928bd96851e932a4c0c5b9b3f909f47"
                         ]
                     ]
                 ],
@@ -67,21 +67,21 @@
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
-                        "ASCAT_objects.Rdata:md5,7e2ac5e2c05330b5b33d6beae168f7b5"
+                        "ASCAT_objects.Rdata:md5,fb2303acd99c521678b4d550500fc145"
                     ]
                 ],
                 "5": [
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
@@ -140,17 +140,17 @@
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
                         [
-                            "PD54403b_normalBAF.txt:md5,b7cc40c6cafba50e0c5f5508b6fa10ed",
-                            "PD54403b_normalBAF_rawBAF.txt:md5,c498015d99ca5bb44b99355da52ba5f6",
-                            "PD54403b_tumourBAF.txt:md5,a527e8db10b7521d51ee40f757ec9d4a",
-                            "PD54403b_tumourBAF_rawBAF.txt:md5,6211b75a830784e4ae58d3a0c85cf0fe"
+                            "PD54403a_normalBAF.txt:md5,3f220f36b79eb9aecb034154700b9478",
+                            "PD54403a_normalBAF_rawBAF.txt:md5,4a2cd525ea168ee159d86130d5e8f6e7",
+                            "PD54403a_tumourBAF.txt:md5,2b2920b02da3ece0eff652a069326fc9",
+                            "PD54403a_tumourBAF_rawBAF.txt:md5,379c7919384d982613ae24996e68e80f"
                         ]
                     ]
                 ],
@@ -158,15 +158,15 @@
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
                         [
-                            "PD54403b_normalLogR.txt:md5,dfeaf349869240fc3484eb31794990c8",
-                            "PD54403b_tumourLogR.txt:md5,6c288ee98f4deb49d5a0af2cc45b17e2"
+                            "PD54403a_normalLogR.txt:md5,a78f0c72e88d03684afaf8933f2082bc",
+                            "PD54403a_tumourLogR.txt:md5,d230b221294eeb27dd0c480a9440406c"
                         ]
                     ]
                 ],
@@ -174,21 +174,21 @@
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
-                        "PD54403b.segments.txt:md5,21397cd1b7cf37532c785939e6b18cc6"
+                        "PD54403a.segments.txt:md5,1546efce0b3709f3a600d6fdd0a58d03"
                     ]
                 ],
                 "allelefreqs": [
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
@@ -247,17 +247,17 @@
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
                         [
-                            "PD54403b_normalBAF.txt:md5,b7cc40c6cafba50e0c5f5508b6fa10ed",
-                            "PD54403b_normalBAF_rawBAF.txt:md5,c498015d99ca5bb44b99355da52ba5f6",
-                            "PD54403b_tumourBAF.txt:md5,a527e8db10b7521d51ee40f757ec9d4a",
-                            "PD54403b_tumourBAF_rawBAF.txt:md5,6211b75a830784e4ae58d3a0c85cf0fe"
+                            "PD54403a_normalBAF.txt:md5,3f220f36b79eb9aecb034154700b9478",
+                            "PD54403a_normalBAF_rawBAF.txt:md5,4a2cd525ea168ee159d86130d5e8f6e7",
+                            "PD54403a_tumourBAF.txt:md5,2b2920b02da3ece0eff652a069326fc9",
+                            "PD54403a_tumourBAF_rawBAF.txt:md5,379c7919384d982613ae24996e68e80f"
                         ]
                     ]
                 ],
@@ -265,41 +265,41 @@
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
-                        "ASCAT_estimates_PD54403b_PD54403a.tsv:md5,a6a11dcbc68bf08b6d2129aa4f984786"
+                        "ASCAT_estimates_PD54403a_PD54403b.tsv:md5,9a8b0a0df1739f4f13488d6bd1bd49be"
                     ]
                 ],
                 "gistic_inputs": [
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
-                        "gistic2_segs_PD54403b_PD54403a.tsv:md5,57de32da04defbabd34b19dbba27d9ca"
+                        "gistic2_segs_PD54403a_PD54403b.tsv:md5,6f96da6ef460cb28c4ee842aa02c899f"
                     ]
                 ],
                 "logrs": [
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
                         [
-                            "PD54403b_normalLogR.txt:md5,dfeaf349869240fc3484eb31794990c8",
-                            "PD54403b_tumourLogR.txt:md5,6c288ee98f4deb49d5a0af2cc45b17e2"
+                            "PD54403a_normalLogR.txt:md5,a78f0c72e88d03684afaf8933f2082bc",
+                            "PD54403a_tumourLogR.txt:md5,d230b221294eeb27dd0c480a9440406c"
                         ]
                     ]
                 ],
@@ -307,21 +307,21 @@
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
                         [
-                            "After_correction_PD54403b.germline.png:md5,3a23a77b7da89dcb66060800ad87a7d9",
-                            "After_correction_PD54403b.tumour.png:md5,371a1a8094c4276ee36b23966d211ff6",
-                            "Before_correction_PD54403b.germline.png:md5,3a23a77b7da89dcb66060800ad87a7d9",
-                            "Before_correction_PD54403b.tumour.png:md5,692b4d1cdaa5dcc7df34154145ddd4bd",
-                            "PD54403b.ASCATprofile.png:md5,e6a910c92d1a1b71d8c8c6f7668fb971",
-                            "PD54403b.ASPCF.png:md5,21b1eda500fb8c39329952e7d2d3bef5",
-                            "PD54403b.rawprofile.png:md5,bc8794e8e67757a721950f75581b4e8d",
-                            "PD54403b.sunrise.png:md5,3550f9436dc8498dc55f29872035b42b"
+                            "After_correction_PD54403a.germline.png:md5,11c8e9eccace103e86e9873a4db150cb",
+                            "After_correction_PD54403a.tumour.png:md5,cf8afffe44869751d56393c8cb35e8ff",
+                            "Before_correction_PD54403a.germline.png:md5,11c8e9eccace103e86e9873a4db150cb",
+                            "Before_correction_PD54403a.tumour.png:md5,71999366be4297731643045aec0e9ddf",
+                            "PD54403a.ASCATprofile.png:md5,5fff35872c539abca86a9238dbfe0ec4",
+                            "PD54403a.ASPCF.png:md5,de445b23cdca6863832d736a2c5d8a0f",
+                            "PD54403a.rawprofile.png:md5,2dff0ec581a2444a49b55aacdd100217",
+                            "PD54403a.sunrise.png:md5,9928bd96851e932a4c0c5b9b3f909f47"
                         ]
                     ]
                 ],
@@ -329,39 +329,39 @@
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
-                        "QC_PD54403b_PD54403a.tsv:md5,ce09d2aa68cd61f0129d40966fdd787c"
+                        "QC_PD54403a_PD54403b.tsv:md5,0aebc173b7428cb48123bc62b63cc291"
                     ]
                 ],
                 "rdata": [
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
-                        "ASCAT_objects.Rdata:md5,7e2ac5e2c05330b5b33d6beae168f7b5"
+                        "ASCAT_objects.Rdata:md5,fb2303acd99c521678b4d550500fc145"
                     ]
                 ],
                 "segments": [
                     [
                         {
                             "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403a",
-                            "tumor": "PD54403b",
+                            "normal": "PD54403b",
+                            "tumor": "PD54403a",
                             "Sex": "M",
                             "Phenotype": "N",
                             "sexchr": "XY"
                         },
-                        "PD54403b.segments.txt:md5,21397cd1b7cf37532c785939e6b18cc6"
+                        "PD54403a.segments.txt:md5,1546efce0b3709f3a600d6fdd0a58d03"
                     ]
                 ]
             }
@@ -370,6 +370,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-05-28T14:17:44.867181"
+        "timestamp": "2024-06-19T09:24:00.308156"
     }
 }

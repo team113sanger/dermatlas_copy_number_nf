@@ -12,9 +12,9 @@ nextflow_process {
         }
             process {
                 """
-                input[0] = file("$baseDir/tests/testdata/ascat_segments.tsv")
-                input[1] = file("$baseDir/tests/testdata/broad_significance_results.txt")
-                input[2] = file("$baseDir/tests/testdata/broad_values_by_arm.txt")
+                input[0] = tuple([analysis_type: "test", plot_dir: "test"], file("$baseDir/tests/testdata/ascat_segments.tsv"))
+                input[1] = tuple([analysis_type: "test", plot_dir: "test"], file("$baseDir/tests/testdata/broad_significance_results.txt"))
+                input[2] = tuple([analysis_type: "test", plot_dir: "test"], file("$baseDir/tests/testdata/broad_values_by_arm.txt"))
                 input[3] = file("$baseDir/tests/testdata/ucsc_chrom_arms.txt")
                 input[4] = 0.1
                 input[5] = "test"
