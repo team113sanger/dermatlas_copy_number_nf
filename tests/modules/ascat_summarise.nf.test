@@ -13,8 +13,9 @@ nextflow_process {
             process {
             
                 """
-                input[0] = ['$baseDir/tests/testdata/ASCAT_estimates_PD62468a_PD62468b.tsv',
-                            '$baseDir/tests/testdata/ASCAT_estimates_PD54403a_PD54403b.tsv']
+                input[0] = tuple([analysis_type: "test", plot_dir: "test"],
+                     ['$baseDir/tests/testdata/ASCAT_estimates_PD62468a_PD62468b.tsv',
+                     '$baseDir/tests/testdata/ASCAT_estimates_PD54403a_PD54403b.tsv'])
                 """
             }
         }

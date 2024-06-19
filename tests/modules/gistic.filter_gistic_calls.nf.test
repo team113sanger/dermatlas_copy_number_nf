@@ -12,8 +12,8 @@ nextflow_process {
         }
             process {
                 """
-                input[0] = file("$baseDir/tests/testdata/ascat_segments.tsv")
-                input[1] = file("$baseDir/tests/testdata/all_lesions.conf_95.txt")
+                input[0] = tuple([analysis_type: "test", plot_dir: "test"], file("$baseDir/tests/testdata/ascat_segments.tsv"))
+                input[1] = tuple([analysis_type: "test", plot_dir: "test"], file("$baseDir/tests/testdata/all_lesions.conf_95.txt"))
                 input[2] = file("${params.difficult_regions_file}")
                 input[3] = "${params.cohort_prefix}"
                 """

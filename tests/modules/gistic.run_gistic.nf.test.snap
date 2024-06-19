@@ -3,109 +3,205 @@
         "content": [
             {
                 "0": [
-                    "all_lesions.conf_95.txt:md5,d6daa279803dbab424206ef368cfcce4"
+                    [
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        "all_lesions.conf_95.txt:md5,d6daa279803dbab424206ef368cfcce4"
+                    ]
                 ],
                 "1": [
-                    "broad_significance_results.txt:md5,83f958621857bdadb3e5342cf901603b"
+                    [
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        "broad_significance_results.txt:md5,83f958621857bdadb3e5342cf901603b"
+                    ]
                 ],
                 "2": [
-                    "broad_values_by_arm.txt:md5,6e9b7c18d0afe85ad661b1431b6bfad0"
+                    [
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        "broad_values_by_arm.txt:md5,6e9b7c18d0afe85ad661b1431b6bfad0"
+                    ]
                 ],
                 "3": [
                     [
-                        "amp_qplot.png:md5,8f6d1757de62b456ae9075984e98b8e1",
-                        "del_qplot.png:md5,1ae3f37fd969f79484ed371ab8e03fb5",
-                        "raw_copy_number.png:md5,040f9eb9fc1c83ddc7b15aae4d2d0846"
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        [
+                            "amp_qplot.png:md5,8f6d1757de62b456ae9075984e98b8e1",
+                            "del_qplot.png:md5,1ae3f37fd969f79484ed371ab8e03fb5",
+                            "raw_copy_number.png:md5,040f9eb9fc1c83ddc7b15aae4d2d0846"
+                        ]
                     ]
                 ],
                 "4": [
                     [
-                        "amp_qplot.pdf:md5,d5fab321d918f169f4065714e4a61779",
-                        "del_qplot.pdf:md5,a347c3b94ce41e520ffeba055f5c177d",
-                        "freqarms_vs_ngenes.pdf:md5,d41f86e9bb2e375ebc146e4b1ebad909",
-                        "raw_copy_number.pdf:md5,458b8ed5fe71cef355c94c5b28ef5120"
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        [
+                            "amp_qplot.pdf:md5,7010d86beb3a1e52baba8376d956ef45",
+                            "del_qplot.pdf:md5,3fc633bf95f84d43223a0025dc6cd656",
+                            "freqarms_vs_ngenes.pdf:md5,e27d9f9074f7ec2c72ce21726470019a",
+                            "raw_copy_number.pdf:md5,e99c54a0d9a633237c309b9c1538b914"
+                        ]
                     ]
                 ],
                 "5": [
                     [
-                        "D.cap1.5.mat:md5,cc7650a9aa7c22b579576db3fee616b2",
-                        "focal_dat.0.75.mat:md5,8db64cc10dd3fef8dc54e03eb225f5bd",
-                        "gistic_inputs.mat:md5,e9aee1a526e9b4abf55e2c127dfcc96a",
-                        "peak_regs.mat:md5,950c9a21963cd80ea271d1f44841d037",
-                        "perm_ads.mat:md5,54b0b2c61f5742d3f093331e148ee65c",
-                        "scores.0.75.mat:md5,a6ad40918c510524a052ce9a8c78e363",
-                        "wide_peak_regs.mat:md5,3c281a6e5dcd9281b0aad3a3a01a76e5"
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        [
+                            "D.cap1.5.mat:md5,ef530905d779e8f771f52ebd828c3399",
+                            "focal_dat.0.75.mat:md5,3b4fa2b2905838e440b2c52a68dc6d1b",
+                            "gistic_inputs.mat:md5,5af6759e3196e9773cb1b9bf02ac7de4",
+                            "peak_regs.mat:md5,495eaf6627941dc05041a30b900fa51a",
+                            "perm_ads.mat:md5,2a16ee4907e8b70940ace35f1fa4f4e9",
+                            "scores.0.75.mat:md5,01cfc5203de0c21459fe887495f4f8dd",
+                            "wide_peak_regs.mat:md5,5cb904b11b4fbedec6f75ab5feccde9d"
+                        ]
                     ]
                 ],
                 "6": [
                     [
-                        "all_data_by_genes.txt:md5,aa5aad89a3f601625e4fdce49a9c50ae",
-                        "all_lesions.conf_95.txt:md5,d6daa279803dbab424206ef368cfcce4",
-                        "all_thresholded.by_genes.txt:md5,7fe62433dcb0223c7a59df70f34698c2",
-                        "amp_genes.conf_95.txt:md5,0c49b78aaa59073cfd945b7ebb40fa76",
-                        "broad_data_by_genes.txt:md5,2681e643256231f1908b9dff377c98a6",
-                        "broad_significance_results.txt:md5,83f958621857bdadb3e5342cf901603b",
-                        "broad_values_by_arm.txt:md5,6e9b7c18d0afe85ad661b1431b6bfad0",
-                        "del_genes.conf_95.txt:md5,0c49b78aaa59073cfd945b7ebb40fa76",
-                        "focal_data_by_genes.txt:md5,aa5aad89a3f601625e4fdce49a9c50ae",
-                        "sample_cutoffs.txt:md5,59d17e450346895c65cae229071c43b2",
-                        "sample_seg_counts.txt:md5,7fa47860f36d335c57698eefe30d35a4"
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        [
+                            "all_data_by_genes.txt:md5,aa5aad89a3f601625e4fdce49a9c50ae",
+                            "all_lesions.conf_95.txt:md5,d6daa279803dbab424206ef368cfcce4",
+                            "all_thresholded.by_genes.txt:md5,7fe62433dcb0223c7a59df70f34698c2",
+                            "amp_genes.conf_95.txt:md5,0c49b78aaa59073cfd945b7ebb40fa76",
+                            "broad_data_by_genes.txt:md5,2681e643256231f1908b9dff377c98a6",
+                            "broad_significance_results.txt:md5,83f958621857bdadb3e5342cf901603b",
+                            "broad_values_by_arm.txt:md5,6e9b7c18d0afe85ad661b1431b6bfad0",
+                            "del_genes.conf_95.txt:md5,0c49b78aaa59073cfd945b7ebb40fa76",
+                            "focal_data_by_genes.txt:md5,aa5aad89a3f601625e4fdce49a9c50ae",
+                            "sample_cutoffs.txt:md5,59d17e450346895c65cae229071c43b2",
+                            "sample_seg_counts.txt:md5,7fa47860f36d335c57698eefe30d35a4"
+                        ]
                     ]
                 ],
                 "7": [
-                    "one_tumor_per_patient.tsv:md5,bc33d66f2a73810755dbc689a3cbb455"
+                    [
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        "one_tumor_per_patient.tsv:md5,bc33d66f2a73810755dbc689a3cbb455"
+                    ]
                 ],
                 "arms": [
-                    "broad_values_by_arm.txt:md5,6e9b7c18d0afe85ad661b1431b6bfad0"
+                    [
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        "broad_values_by_arm.txt:md5,6e9b7c18d0afe85ad661b1431b6bfad0"
+                    ]
                 ],
                 "broad": [
-                    "broad_significance_results.txt:md5,83f958621857bdadb3e5342cf901603b"
+                    [
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        "broad_significance_results.txt:md5,83f958621857bdadb3e5342cf901603b"
+                    ]
                 ],
                 "lesions": [
-                    "all_lesions.conf_95.txt:md5,d6daa279803dbab424206ef368cfcce4"
+                    [
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        "all_lesions.conf_95.txt:md5,d6daa279803dbab424206ef368cfcce4"
+                    ]
                 ],
                 "mats": [
                     [
-                        "D.cap1.5.mat:md5,cc7650a9aa7c22b579576db3fee616b2",
-                        "focal_dat.0.75.mat:md5,8db64cc10dd3fef8dc54e03eb225f5bd",
-                        "gistic_inputs.mat:md5,e9aee1a526e9b4abf55e2c127dfcc96a",
-                        "peak_regs.mat:md5,950c9a21963cd80ea271d1f44841d037",
-                        "perm_ads.mat:md5,54b0b2c61f5742d3f093331e148ee65c",
-                        "scores.0.75.mat:md5,a6ad40918c510524a052ce9a8c78e363",
-                        "wide_peak_regs.mat:md5,3c281a6e5dcd9281b0aad3a3a01a76e5"
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        [
+                            "D.cap1.5.mat:md5,ef530905d779e8f771f52ebd828c3399",
+                            "focal_dat.0.75.mat:md5,3b4fa2b2905838e440b2c52a68dc6d1b",
+                            "gistic_inputs.mat:md5,5af6759e3196e9773cb1b9bf02ac7de4",
+                            "peak_regs.mat:md5,495eaf6627941dc05041a30b900fa51a",
+                            "perm_ads.mat:md5,2a16ee4907e8b70940ace35f1fa4f4e9",
+                            "scores.0.75.mat:md5,01cfc5203de0c21459fe887495f4f8dd",
+                            "wide_peak_regs.mat:md5,5cb904b11b4fbedec6f75ab5feccde9d"
+                        ]
                     ]
                 ],
                 "pdfs": [
                     [
-                        "amp_qplot.pdf:md5,d5fab321d918f169f4065714e4a61779",
-                        "del_qplot.pdf:md5,a347c3b94ce41e520ffeba055f5c177d",
-                        "freqarms_vs_ngenes.pdf:md5,d41f86e9bb2e375ebc146e4b1ebad909",
-                        "raw_copy_number.pdf:md5,458b8ed5fe71cef355c94c5b28ef5120"
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        [
+                            "amp_qplot.pdf:md5,7010d86beb3a1e52baba8376d956ef45",
+                            "del_qplot.pdf:md5,3fc633bf95f84d43223a0025dc6cd656",
+                            "freqarms_vs_ngenes.pdf:md5,e27d9f9074f7ec2c72ce21726470019a",
+                            "raw_copy_number.pdf:md5,e99c54a0d9a633237c309b9c1538b914"
+                        ]
                     ]
                 ],
                 "plots": [
                     [
-                        "amp_qplot.png:md5,8f6d1757de62b456ae9075984e98b8e1",
-                        "del_qplot.png:md5,1ae3f37fd969f79484ed371ab8e03fb5",
-                        "raw_copy_number.png:md5,040f9eb9fc1c83ddc7b15aae4d2d0846"
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        [
+                            "amp_qplot.png:md5,8f6d1757de62b456ae9075984e98b8e1",
+                            "del_qplot.png:md5,1ae3f37fd969f79484ed371ab8e03fb5",
+                            "raw_copy_number.png:md5,040f9eb9fc1c83ddc7b15aae4d2d0846"
+                        ]
                     ]
                 ],
                 "segment_file": [
-                    "one_tumor_per_patient.tsv:md5,bc33d66f2a73810755dbc689a3cbb455"
+                    [
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        "one_tumor_per_patient.tsv:md5,bc33d66f2a73810755dbc689a3cbb455"
+                    ]
                 ],
                 "tables": [
                     [
-                        "all_data_by_genes.txt:md5,aa5aad89a3f601625e4fdce49a9c50ae",
-                        "all_lesions.conf_95.txt:md5,d6daa279803dbab424206ef368cfcce4",
-                        "all_thresholded.by_genes.txt:md5,7fe62433dcb0223c7a59df70f34698c2",
-                        "amp_genes.conf_95.txt:md5,0c49b78aaa59073cfd945b7ebb40fa76",
-                        "broad_data_by_genes.txt:md5,2681e643256231f1908b9dff377c98a6",
-                        "broad_significance_results.txt:md5,83f958621857bdadb3e5342cf901603b",
-                        "broad_values_by_arm.txt:md5,6e9b7c18d0afe85ad661b1431b6bfad0",
-                        "del_genes.conf_95.txt:md5,0c49b78aaa59073cfd945b7ebb40fa76",
-                        "focal_data_by_genes.txt:md5,aa5aad89a3f601625e4fdce49a9c50ae",
-                        "sample_cutoffs.txt:md5,59d17e450346895c65cae229071c43b2",
-                        "sample_seg_counts.txt:md5,7fa47860f36d335c57698eefe30d35a4"
+                        {
+                            "analysis_type": "test",
+                            "plot_dir": "test"
+                        },
+                        [
+                            "all_data_by_genes.txt:md5,aa5aad89a3f601625e4fdce49a9c50ae",
+                            "all_lesions.conf_95.txt:md5,d6daa279803dbab424206ef368cfcce4",
+                            "all_thresholded.by_genes.txt:md5,7fe62433dcb0223c7a59df70f34698c2",
+                            "amp_genes.conf_95.txt:md5,0c49b78aaa59073cfd945b7ebb40fa76",
+                            "broad_data_by_genes.txt:md5,2681e643256231f1908b9dff377c98a6",
+                            "broad_significance_results.txt:md5,83f958621857bdadb3e5342cf901603b",
+                            "broad_values_by_arm.txt:md5,6e9b7c18d0afe85ad661b1431b6bfad0",
+                            "del_genes.conf_95.txt:md5,0c49b78aaa59073cfd945b7ebb40fa76",
+                            "focal_data_by_genes.txt:md5,aa5aad89a3f601625e4fdce49a9c50ae",
+                            "sample_cutoffs.txt:md5,59d17e450346895c65cae229071c43b2",
+                            "sample_seg_counts.txt:md5,7fa47860f36d335c57698eefe30d35a4"
+                        ]
                     ]
                 ]
             }
@@ -114,6 +210,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-06-07T09:22:36.065927"
+        "timestamp": "2024-06-19T10:13:21.897455"
     }
 }
