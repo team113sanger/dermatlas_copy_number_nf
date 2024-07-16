@@ -59,13 +59,13 @@ PARAMS_FILE="/lustre/scratch125/casm/team113da/users/jb63/nf_cna_testing/params.
 
 # Load module dependencies
 module load nextflow-23.10.0
-module load singularity
+module load /software/modules/ISG/singularity/3.11.4
 module load /software/team113/modules/modulefiles/tw/0.6.2
 
 # Create a nextflow job that will spawn other jobs
 
 nextflow run 'https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf' \
--r 0.3.0 \
+-r 0.3.1 \
 -params-file $PARAMS_FILE \
 -c nextflow.config \
 -profile farm22 
