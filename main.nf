@@ -6,8 +6,8 @@ include { DERMATLAS_METADATA } from './subworkflows/process_metadata.nf'
 include { SPLIT_COHORT_SEXES } from './subworkflows/split_sample_cohort.nf'
 
 include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
-include { ANALYSE_SUBCOHORT as ANALYSE_ONE_PER_PATIENT_DATASET } from './subworkflows/analyse_subcohort.nf'
-include { ANALYSE_SUBCOHORT as ANALYSE_INDEPENDENT_DATASET } from './subworkflows/analyse_subcohort.nf'
+include { ANALYSE_SUBCOHORT as ONE_TUMOR_PER_PATIENT } from './subworkflows/analyse_subcohort.nf'
+include { ANALYSE_SUBCOHORT as INDEPENDENT_TUMORS } from './subworkflows/analyse_subcohort.nf'
 
 include { REFORMAT_TSV } from './modules/publish.nf'
 
@@ -16,8 +16,6 @@ workflow {
     // Cohort files 
     bamfiles           = Channel.fromPath(params.bam_files, checkIfExists: true)
     all_pairs          = Channel.fromPath(params.tumor_normal_pairs, checkIfExists: true)
-    unique_pairs       = Channel.fromPath(params.one_per_patient, checkIfExists: true)
-    independent_tumors = Channel.fromPath(params.independent, checkIfExists: true)
     patient_md         = Channel.fromPath(params.metadata_manifest, checkIfExists: true)
     
     // Reference files 
@@ -49,9 +47,12 @@ workflow {
                    rt_file,
                    params.cohort_prefix)
     
-    ANALYSE_ONE_PER_PATIENT_DATASET(
+
+    if (params.one_per_patient) {
+    one_tumor_per_patient = Channel.fromPath(params.one_per_patient, checkIfExists: true)
+    ONE_TUMOR_PER_PATIENT(
                           DERMATLAS_METADATA.out.combined_metadata,
-                          unique_pairs,
+                          one_tumor_per_patient,
                           ASCAT_ANALYSIS.out.filtered_outs, 
                           ASCAT_ANALYSIS.out.estimates,
                           'one_tumor_per_patient',
@@ -62,8 +63,11 @@ workflow {
                            giab_regions,
                            broad_cutoff,
                            chrom_arms)
+    }
 
-    ANALYSE_INDEPENDENT_DATASET(
+    if (params.independent) {
+    independent_tumors = Channel.fromPath(params.independent, checkIfExists: true)
+    INDEPENDENT_TUMORS(
                           DERMATLAS_METADATA.out.combined_metadata,
                           independent_tumors,
                           ASCAT_ANALYSIS.out.filtered_outs, 
@@ -76,6 +80,7 @@ workflow {
                            giab_regions,
                            broad_cutoff,
                            chrom_arms)
+    }
 
     // Convert all tab files to tsv. TODO 
     // ASCAT_ANALYSIS.out.freq_tab

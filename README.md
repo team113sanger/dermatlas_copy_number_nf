@@ -24,6 +24,8 @@ In brief, the pipeline takes a set samples that have been pre-processed by the D
 - `bam_files`: a path to a set of `.bam` files in a project directory. Note: the pipeline assumes that corresponding `.bam.bai` index files have been pre-generated and are co-located with bams and you should use a `**` glob match to recursively collect all bamfiles in the directory.
 - `metadata_manifest`: path to a tab-delimited manifest containing sample PD IDs and information about sample phenotype/preparation.
 - `tumor_normal_pairs`: path to a file containing a tab-delimited list of all matched tumour-normal pairs in a cohort.
+
+**Optional** 
 - `one_per_patient`: path to a file containing a tab-delimited list of matched tumour-normal pairs with one patient selected per-tumor.
 - `independent`: path to a file containing a tab-delimited list of matched tumour-normal pairs with all independent comparisons to perform.
 
@@ -43,7 +45,7 @@ Default reference file values supplied within the `nextflow.config` file can be 
 
 ## Usage 
 
-The recommended way to launch this pipeline is using a wrapper script (e.g. `bsub < my_wrapper.sh`) that submits nextflow as a job and records the version (**e.g.** `-r 0.1.0`)  and the `.json` parameter file supplied for a run.
+The recommended way to launch this pipeline is using a wrapper script (e.g. `bsub < my_wrapper.sh`) that submits nextflow as a job and records the version (**e.g.** `-r 0.4.0`)  and the `.json` parameter file supplied for a run.
 
 An example wrapper script:
 ```
@@ -65,7 +67,7 @@ module load /software/team113/modules/modulefiles/tw/0.6.2
 # Create a nextflow job that will spawn other jobs
 
 nextflow run 'https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf' \
--r 0.3.1 \
+-r 0.4.0 \
 -params-file $PARAMS_FILE \
 -c nextflow.config \
 -profile farm22 
