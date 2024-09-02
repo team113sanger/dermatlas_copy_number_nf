@@ -29,9 +29,9 @@ workflow DERMATLAS_METADATA {
 
     patient_metadata
     | splitCsv(sep:"\t",header : true)
-    | map {meta -> meta.subMap("Sex", "Sanger DNA ID", "OK_to_analyse_DNA?", "Phenotype")} 
+    | map {meta -> meta.subMap("Sex", "Sanger_DNA_ID", "OK_to_analyse_DNA?", "Phenotype")} 
     | map {meta -> 
-            tuple(meta["Sanger DNA ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])}
+            tuple(meta["Sanger_DNA_ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])}
     | set{ patient_metadata_ch }
 
     patient_metadata_ch
@@ -49,7 +49,7 @@ workflow DERMATLAS_METADATA {
          id, file, index, meta, patients -> 
          def combinedMap = meta[0] + [file: file, index: index] + patients[0]
         // Check if the 'Sanger DNA ID' matches the 'normal',rename 'file' key accordingly
-        if (combinedMap["Sanger DNA ID"] == combinedMap.normal) {
+        if (combinedMap["Sanger_DNA_ID"] == combinedMap.normal) {
             combinedMap['normal_file'] = combinedMap.remove('file')
             combinedMap['normal_index'] = combinedMap.remove('index')
         } else {
