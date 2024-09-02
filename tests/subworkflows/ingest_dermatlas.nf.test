@@ -4,7 +4,7 @@ nextflow_workflow {
     script "subworkflows/process_metadata.nf"
     workflow "DERMATLAS_METADATA"
 
-    test("Should run without failures") {
+    test("Should run without failures - no underscores in manifest") {
 
         when {
         params {
@@ -15,6 +15,26 @@ nextflow_workflow {
                 input[0] = Channel.fromPath("$baseDir/tests/testdata/PD57536a.sample.dupmarked.bam")
                 input[1] = Channel.fromPath("$baseDir/tests/testdata/pair_ids.tsv")
                 input[2] = Channel.fromPath("$baseDir/tests/testdata/metadata_tab.tsv")
+                """
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert snapshot(workflow.out).match()
+        }
+    }
+        test("Should run without failures - underscores in manifest") {
+
+        when {
+        params {
+            load("$baseDir/tests/testdata/test_params.json")
+        }
+            workflow {
+                """
+                input[0] = Channel.fromPath("$baseDir/tests/testdata/PD57536a.sample.dupmarked.bam")
+                input[1] = Channel.fromPath("$baseDir/tests/testdata/pair_ids.tsv")
+                input[2] = Channel.fromPath("$baseDir/tests/testdata/metadata_underscore.tsv")
                 """
             }
         }
