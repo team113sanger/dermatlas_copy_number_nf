@@ -1,9 +1,9 @@
 process RUN_ASCAT_EXOMES {
-    publishDir "${params.OUTDIR}/ASCAT/${meta.tumor}-${meta.normal}", mode: 'copy'
+    publishDir "${outdir}/ASCAT/${meta.tumor}-${meta.normal}", mode: 'copy'
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
     input: 
     tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
-    path(outdir)
+    val(outdir)
     path(genome)
     path(baits) 
     path(per_chrom_dir)
