@@ -1,6 +1,6 @@
 process REFORMAT_TSV {
     publishDir "${params.OUTDIR}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:d84fa3ad'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat:0.5.0'
     
     input: 
     path(infile)
