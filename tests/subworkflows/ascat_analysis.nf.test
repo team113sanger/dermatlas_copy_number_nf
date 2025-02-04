@@ -15,10 +15,10 @@ nextflow_workflow {
                 // define inputs of the workflow here. Example:
                 input[0] = tuple(
                 [pair_id: "PD54403a_PD54403b", normal: "PD54403a", tumor: "PD54403b", Sex: "M", Phenotype: "N", sexchr: "XY"], 
-                file("/lustre/scratch124/jb63/ascat/bams/PD54403a/PD54403a.sample.dupmarked.bam"), 
-                file("/lustre/scratch124/jb63/ascat/bams/PD54403a/PD54403a.sample.dupmarked.bam.bai"), 
-                file("/lustre/scratch124/jb63/ascat/bams/PD54403b/PD54403b.sample.dupmarked.bam"),
-                file("/lustre/scratch124/jb63/ascat/bams/PD54403b/PD54403b.sample.dupmarked.bam.bai"))
+                file("/lustre/scratch124/nf-test/copy_number/bams/PD54403a/PD54403a.sample.dupmarked.bam"), 
+                file("/lustre/scratch124/nf-test/copy_number/bams/PD54403a/PD54403a.sample.dupmarked.bam.bai"), 
+                file("/lustre/scratch124/nf-test/copy_number/bams/PD54403b/PD54403b.sample.dupmarked.bam"),
+                file("/lustre/scratch124/nf-test/copy_number/bams/PD54403b/PD54403b.sample.dupmarked.bam.bai"))
                 input[1] = "${params.OUTDIR}"
                 input[2] = file("${params.reference_genome}")
                 input[3] = file("${params.bait_set}") 
