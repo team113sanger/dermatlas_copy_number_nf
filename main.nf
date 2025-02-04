@@ -9,7 +9,7 @@ include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
 include { ANALYSE_SUBCOHORT as ONE_TUMOR_PER_PATIENT } from './subworkflows/analyse_subcohort.nf'
 include { ANALYSE_SUBCOHORT as INDEPENDENT_TUMORS } from './subworkflows/analyse_subcohort.nf'
 
-include { REFORMAT_TSV } from './modules/publish.nf'
+include { MAF_TO_EXCEL; GENERATE_README } from './modules/publish.nf'
 
 workflow {
 
@@ -91,7 +91,8 @@ workflow {
     // | concat(GISTIC2_ANALYSIS.out.cohort_summary)
     // | set { tabular_ch }
     
-    // REFORMAT_TSV( tabular_ch )
+    MAF_TO_EXCEL( tabular_ch )
+    GENERATE_README()
 
 
 }
