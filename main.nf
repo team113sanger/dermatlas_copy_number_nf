@@ -91,8 +91,8 @@ workflow {
     // | concat(GISTIC2_ANALYSIS.out.cohort_summary)
     // | set { tabular_ch }
     
-    MAF_TO_EXCEL( tabular_ch )
-    GENERATE_README()
+    // MAF_TO_EXCEL( tabular_ch )
+    // GENERATE_README()
 
 
 }
