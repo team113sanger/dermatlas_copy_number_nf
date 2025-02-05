@@ -12,14 +12,14 @@
                         "sexchr": "XY"
                     },
                     [
-                        "After_correction_PD54403a.germline.png:md5,11c8e9eccace103e86e9873a4db150cb",
-                        "After_correction_PD54403a.tumour.png:md5,cf8afffe44869751d56393c8cb35e8ff",
-                        "Before_correction_PD54403a.germline.png:md5,11c8e9eccace103e86e9873a4db150cb",
-                        "Before_correction_PD54403a.tumour.png:md5,71999366be4297731643045aec0e9ddf",
-                        "PD54403a.ASCATprofile.png:md5,5fff35872c539abca86a9238dbfe0ec4",
-                        "PD54403a.ASPCF.png:md5,de445b23cdca6863832d736a2c5d8a0f",
-                        "PD54403a.rawprofile.png:md5,2dff0ec581a2444a49b55aacdd100217",
-                        "PD54403a.sunrise.png:md5,9928bd96851e932a4c0c5b9b3f909f47"
+                        "After_correction_PD54403a.germline.png:md5,b9bd73d4dfcfae13b82f3a695ae7b2ab",
+                        "After_correction_PD54403a.tumour.png:md5,88bd175f2b89067adb7d52c427a6cd4a",
+                        "Before_correction_PD54403a.germline.png:md5,b9bd73d4dfcfae13b82f3a695ae7b2ab",
+                        "Before_correction_PD54403a.tumour.png:md5,bfe08dd82541b359bfec15808179c4ac",
+                        "PD54403a.ASCATprofile.png:md5,bdfdfc41c5b5dae4449d54bcf83f39eb",
+                        "PD54403a.ASPCF.png:md5,cbc964d9ba1f8b113e276a36fe7f6122",
+                        "PD54403a.rawprofile.png:md5,7c3bbe2c4413d78fc2b2ce73757d443c",
+                        "PD54403a.sunrise.png:md5,907a20b5d20858ec3a0a2494f834533c"
                     ]
                 ]
             ],
@@ -88,6 +88,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-12-13T18:17:54.567772"
+        "timestamp": "2025-02-04T21:20:46.3787"
     }
 }
