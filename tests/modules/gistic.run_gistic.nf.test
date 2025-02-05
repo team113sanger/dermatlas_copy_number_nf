@@ -13,7 +13,7 @@ nextflow_process {
             process {
                 """
                 input[0] = tuple([analysis_type: "test", plot_dir: "test"], 
-                                file("$baseDir/tests/testdata/one_tumor_per_patient.tsv"))
+                                file("${baseDir}/tests/testdata/one_tumor_per_patient.tsv"))
                 input[1] = file("${params.gistic_refgene_file}")
                 """
             }
