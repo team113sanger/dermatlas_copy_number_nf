@@ -4,6 +4,7 @@ nextflow_process {
     name "Test Process CREATE_FREQUENCY_PLOTS"
     script "modules/ascat.nf"
     process "CREATE_FREQUENCY_PLOTS"
+    tag "ci"
 
     test("Should run without failures") {
 

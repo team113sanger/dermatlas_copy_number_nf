@@ -3,6 +3,7 @@ nextflow_process {
     name "Test Process RUN_GISTIC2"
     script "modules/gistic2.nf"
     process "RUN_GISTIC2"
+    tag "local"
 
     test("Should run without failures") {
 

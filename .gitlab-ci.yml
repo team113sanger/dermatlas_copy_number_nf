@@ -69,4 +69,4 @@ secure-lustre-test:
     #
     # MAIN
     #
-    - nf-test test --verbose --profile cicd
+    - nf-test test --tag "ci" --verbose --profile cicd

@@ -3,7 +3,7 @@ nextflow_process {
     name "Test Process FILTER_BROAD_GISTIC2_CALLS"
     script "modules/gistic2.nf"
     process "FILTER_BROAD_GISTIC2_CALLS"
-
+    tag "ci"
     test("Should run without failures") {
 
         when {

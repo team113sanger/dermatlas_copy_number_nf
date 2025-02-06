@@ -3,6 +3,7 @@ nextflow_process {
     name "Test Process SUMMARISE_ASCAT_ESTIMATES"
     script "modules/ascat.nf"
     process "SUMMARISE_ASCAT_ESTIMATES"
+    tag "ci"
 
     test("Should run without failures") {
 

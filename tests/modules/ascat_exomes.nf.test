@@ -3,6 +3,7 @@ nextflow_process {
     name "Test Process RUN_ASCAT_EXOMES"
     script "modules/ascat.nf"
     process "RUN_ASCAT_EXOMES"
+    tag "ci"
 
     test("Should run without failures") {
         when {
