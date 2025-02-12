@@ -23,7 +23,7 @@ In brief, the pipeline takes a set samples that have been pre-processed by the D
 ### Cohort-dependent variables
 - `bam_files`: a path to a set of `.bam` files in a project directory. Note: the pipeline assumes that corresponding `.bam.bai` index files have been pre-generated and are co-located with bams and you should use a `**` glob match to recursively collect all bamfiles in the directory.
 - `metadata_manifest`: path to a tab-delimited manifest containing sample PD IDs and information about sample phenotype/preparation.
-- `tumor_normal_pairs`: path to a file containing a tab-delimited list of all matched tumour-normal pairs in a cohort.
+- `all_samples`: path to a file containing a tab-delimited list of all matched tumour-normal pairs in a cohort.
 
 **Optional** 
 - `one_per_patient`: path to a file containing a tab-delimited list of matched tumour-normal pairs with one patient selected per-tumor.

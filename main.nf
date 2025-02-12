@@ -15,7 +15,7 @@ workflow {
 
     // Cohort files 
     bamfiles           = Channel.fromPath(params.bam_files, checkIfExists: true)
-    all_pairs          = Channel.fromPath(params.tumor_normal_pairs, checkIfExists: true)
+    all_pairs          = Channel.fromPath(params.all_samples, checkIfExists: true)
     patient_md         = Channel.fromPath(params.metadata_manifest, checkIfExists: true)
     
     // Reference files 

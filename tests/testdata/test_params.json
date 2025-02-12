@@ -2,7 +2,7 @@
     "outdir": "results",
     "cohort_prefix": "6509_2707_Leiomyoma",
     "bam_files": "/lustre/scratch124/jb63/ascat/bams/**.bam",
-    "tumor_normal_pairs": "${baseDir}/tests/testdata/pair_ids.tsv",
+    "all_samples": "${baseDir}/tests/testdata/pair_ids.tsv",
     "metadata_manifest": "${baseDir}/tests/testdata/metadata_tab.tsv",
     "chrom_arms_file":  "${baseDir}/tests/testdata/pair_ids.tsv",
     "release_version": "release_v1", 
