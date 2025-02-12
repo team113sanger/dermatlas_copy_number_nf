@@ -52,29 +52,29 @@ workflow ANALYSE_SUBCOHORT {
     
   
     ascat_subset_segments.collectFile(keepHeader: true,
-                 storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}", 
+                 storeDir: "${params.outdir}/ASCAT/${params.release_version}", 
                  skip: 1){
                  meta, segments, gistic -> 
-                 new File("${params.OUTDIR}/ASCAT/${params.release_version}/${meta.analysis_type}").mkdirs()
-                 def filename = "${params.OUTDIR}/ASCAT/${params.release_version}/${meta.analysis_type}/combined_segment_file.txt"
+                 new File("${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}").mkdirs()
+                 def filename = "${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}/combined_segment_file.txt"
                  return [filename, segments]
                  }
     | map{ file_list -> tuple([analysis_type: analysis_type, plot_dir:plot_dir], file_list)}
     | set { segment_summary }
 
     ascat_subset_segments.collectFile(
-       storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}"){
+       storeDir: "${params.outdir}/ASCAT/${params.release_version}"){
        meta, segments, gistic ->
-        def filename = "${params.OUTDIR}/ASCAT/${params.release_version}/${meta.analysis_type}/${meta.analysis_type}_segments.txt"
+        def filename = "${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}/${meta.analysis_type}_segments.txt"
         return [filename, gistic]}
     | map{ file_list -> tuple([analysis_type: analysis_type, plot_dir:plot_dir], file_list)}
     | set { gistic_ch }
 
 
     ascat_subset_segments.collectFile(
-      storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}"){
+      storeDir: "${params.outdir}/ASCAT/${params.release_version}"){
            meta, segments, gistic ->
-        def filename = "${params.OUTDIR}/ASCAT/${params.release_version}/${meta.analysis_type}/samples2sex.txt"
+        def filename = "${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}/samples2sex.txt"
         [filename, "${meta["tumor"]}\t${meta["sexchr"]}\n"]
     }
     | set { sex2chr_ch }

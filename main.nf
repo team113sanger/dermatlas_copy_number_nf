@@ -39,7 +39,7 @@ workflow {
     
     // Perform ASCAT analysis on the entire cohort
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
-                   params.OUTDIR,  
+                   params.outdir,  
                    reference_genome,
                    bait_set,
                    per_chrom_files,
@@ -57,7 +57,7 @@ workflow {
                           ASCAT_ANALYSIS.out.estimates,
                           'one_tumor_per_patient',
                           "PLOTS_ONE_PER_PATIENT",
-                           params.OUTDIR,
+                           params.outdir,
                            params.cohort_prefix,
                            params.gistic_refgene_file,
                            giab_regions,
@@ -74,7 +74,7 @@ workflow {
                           ASCAT_ANALYSIS.out.estimates,
                           'independent_tumors',
                           "PLOTS_INDEPENDENT",
-                           params.OUTDIR,
+                           params.outdir,
                            params.cohort_prefix,
                            params.gistic_refgene_file,
                            giab_regions,

@@ -1,6 +1,6 @@
 process TSV_TO_EXCEL {
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/maf:0.6.1"
-    publishDir "${params.OUTDIR}/${params.release_version}", mode: params.publish_dir_mode
+    publishDir "${params.outdir}/${params.release_version}", mode: params.publish_dir_mode
     
     input: 
     tuple path(file)
@@ -16,7 +16,7 @@ process TSV_TO_EXCEL {
 }
 
 process GENERATE_README {
-    publishDir "${params.OUTDIR}/${params.release_version}", mode: params.publish_dir_mode
+    publishDir "${params.outdir}/${params.release_version}", mode: params.publish_dir_mode
 
     output: 
     path("README_ASCAT_FILES.txt")

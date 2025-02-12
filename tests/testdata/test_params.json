@@ -1,5 +1,5 @@
 {   
-    "OUTDIR": "results",
+    "outdir": "results",
     "cohort_prefix": "6509_2707_Leiomyoma",
     "bam_files": "/lustre/scratch124/jb63/ascat/bams/**.bam",
     "tumor_normal_pairs": "${baseDir}/tests/testdata/pair_ids.tsv",

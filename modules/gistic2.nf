@@ -1,6 +1,6 @@
 process RUN_GISTIC2 {
     label 'process_high'
-    publishDir "${params.OUTDIR}/gistic2/${params.release_version}/${meta.analysis_type}", mode: params.publish_dir_mode
+    publishDir "${params.outdir}/gistic2/${params.release_version}/${meta.analysis_type}", mode: params.publish_dir_mode
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic2:0.5.0"
     
     input: 
@@ -53,7 +53,7 @@ process RUN_GISTIC2 {
 
 process FILTER_GISTIC2_CALLS{
     label 'process_medium'
-    publishDir "${params.OUTDIR}/gistic2/${params.release_version}/${meta.analysis_type}/MIN_0", mode: params.publish_dir_mode
+    publishDir "${params.outdir}/gistic2/${params.release_version}/${meta.analysis_type}/MIN_0", mode: params.publish_dir_mode
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.5.2"
     
     input:
@@ -89,7 +89,7 @@ process FILTER_BROAD_GISTIC2_CALLS {
     label 'process_medium'
     errorStrategy 'ignore'
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.5.2"
-    publishDir "${params.OUTDIR}/gistic2/${params.release_version}/${meta.analysis_type}/MIN_0", mode: params.publish_dir_mode
+    publishDir "${params.outdir}/gistic2/${params.release_version}/${meta.analysis_type}/MIN_0", mode: params.publish_dir_mode
     
     input:
     tuple val(meta), path(segments)

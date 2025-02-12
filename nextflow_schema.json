@@ -14,7 +14,7 @@
                 "input"
             ],
     "properties": {
-        "OUTDIR": {
+        "outdir": {
             "type": "string"
         },
         "cohort_prefix": {
