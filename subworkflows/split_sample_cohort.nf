@@ -13,14 +13,14 @@ workflow SPLIT_COHORT_SEXES {
     
         sex_split.male
         | collectFile(name: "ascat_pairs_male.tsv", 
-        storeDir: "${params.OUTDIR}/ASCAT"){
+        storeDir: "${params.outdir}/ASCAT"){
             meta ->
             ["ascat_pairs_male.tsv", "${meta["tumor"]}\t${meta["normal"]}\n"]
         }
 
     sex_split.female
         | collectFile(name: "ascat_pairs_female.tsv", 
-        storeDir: "${params.OUTDIR}/ASCAT"){
+        storeDir: "${params.outdir}/ASCAT"){
             meta ->
             ["ascat_pairs_female.tsv", "${meta["tumor"]}\t${meta["normal"]}\n"]
         }

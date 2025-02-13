@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Handling of different Dermatlas manifest generations, fixing container version for broad step
 
-
 ## [0.4.0] - 2024-07-27
 ### Added
 - Made independent/one patient per tumor cohort analyses optional

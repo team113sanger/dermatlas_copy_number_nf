@@ -9,13 +9,13 @@ include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
 include { ANALYSE_SUBCOHORT as ONE_TUMOR_PER_PATIENT } from './subworkflows/analyse_subcohort.nf'
 include { ANALYSE_SUBCOHORT as INDEPENDENT_TUMORS } from './subworkflows/analyse_subcohort.nf'
 
-include { REFORMAT_TSV } from './modules/publish.nf'
+include { TSV_TO_EXCEL; GENERATE_README } from './modules/publish.nf'
 
 workflow {
 
     // Cohort files 
     bamfiles           = Channel.fromPath(params.bam_files, checkIfExists: true)
-    all_pairs          = Channel.fromPath(params.tumor_normal_pairs, checkIfExists: true)
+    all_pairs          = Channel.fromPath(params.all_samples, checkIfExists: true)
     patient_md         = Channel.fromPath(params.metadata_manifest, checkIfExists: true)
     
     // Reference files 
@@ -39,7 +39,7 @@ workflow {
     
     // Perform ASCAT analysis on the entire cohort
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
-                   params.OUTDIR,  
+                   params.outdir,  
                    reference_genome,
                    bait_set,
                    per_chrom_files,
@@ -57,7 +57,7 @@ workflow {
                           ASCAT_ANALYSIS.out.estimates,
                           'one_tumor_per_patient',
                           "PLOTS_ONE_PER_PATIENT",
-                           params.OUTDIR,
+                           params.outdir,
                            params.cohort_prefix,
                            params.gistic_refgene_file,
                            giab_regions,
@@ -74,7 +74,7 @@ workflow {
                           ASCAT_ANALYSIS.out.estimates,
                           'independent_tumors',
                           "PLOTS_INDEPENDENT",
-                           params.OUTDIR,
+                           params.outdir,
                            params.cohort_prefix,
                            params.gistic_refgene_file,
                            giab_regions,
@@ -91,7 +91,8 @@ workflow {
     // | concat(GISTIC2_ANALYSIS.out.cohort_summary)
     // | set { tabular_ch }
     
-    // REFORMAT_TSV( tabular_ch )
+    // TSV_TO_EXCEL( tabular_ch )
+    GENERATE_ASCAT_README()
 
 
 }

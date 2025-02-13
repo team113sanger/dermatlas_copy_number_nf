@@ -1,9 +1,9 @@
 process RUN_ASCAT_EXOMES {
-    publishDir "${params.OUTDIR}/ASCAT/${meta.tumor}-${meta.normal}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
+    publishDir "${params.outdir}/ASCAT/${meta.tumor}-${meta.normal}", mode: params.publish_dir_mode
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat:0.5.0'
     input: 
     tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
-    path(outdir)
+    val(outdir)
     path(genome)
     path(baits) 
     path(per_chrom_dir)
@@ -28,7 +28,7 @@ process RUN_ASCAT_EXOMES {
     def sexchr = "$meta.sexchr"
 
     """
-    /opt/repo/run_ascat_exome.R \
+    /opt/repo/run_ascat_exome_nf.R \
     --tum_bam $tumbam \
     --norm_bam $normbam \
     --norm_name $norm \
@@ -74,8 +74,8 @@ process RUN_ASCAT_EXOMES {
 
 process SUMMARISE_ASCAT_ESTIMATES {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${meta.analysis_type}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
+    publishDir "${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}", mode: params.publish_dir_mode
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat:0.5.0'
     
     input: 
     tuple val(meta), path(collected_files)
@@ -104,8 +104,8 @@ process SUMMARISE_ASCAT_ESTIMATES {
 
 process CREATE_FREQUENCY_PLOTS {
     label 'process_medium'
-    publishDir "${params.OUTDIR}/ASCAT/${params.release_version}/${meta.analysis_type}/${meta.plot_dir}", mode: 'copy'
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat/feature/nf_image:96b7864e'
+    publishDir "${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}/${meta.plot_dir}", mode: params.publish_dir_mode
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat:0.5.0'
 
     input:
     tuple val(meta), path(segfiles_list)
