@@ -15,8 +15,8 @@ process TSV_TO_EXCEL {
 
 }
 
-process GENERATE_README {
-    publishDir "${params.outdir}/${params.release_version}", mode: params.publish_dir_mode
+process GENERATE_ASCAT_README {
+    publishDir "${params.outdir}/ASCAT/${params.release_version}", mode: params.publish_dir_mode
 
     output: 
     path("README_ASCAT_FILES.txt")

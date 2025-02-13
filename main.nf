@@ -92,7 +92,7 @@ workflow {
     // | set { tabular_ch }
     
     // TSV_TO_EXCEL( tabular_ch )
-    GENERATE_README()
+    GENERATE_ASCAT_README()
 
 
 }
