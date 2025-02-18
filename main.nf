@@ -9,7 +9,7 @@ include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
 include { ANALYSE_SUBCOHORT as ONE_TUMOR_PER_PATIENT } from './subworkflows/analyse_subcohort.nf'
 include { ANALYSE_SUBCOHORT as INDEPENDENT_TUMORS } from './subworkflows/analyse_subcohort.nf'
 
-include { TSV_TO_EXCEL; GENERATE_README } from './modules/publish.nf'
+include { TSV_TO_EXCEL; GENERATE_ASCAT_README } from './modules/publish.nf'
 
 workflow {
 

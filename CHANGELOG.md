@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [0.5.0] - 2024-02-12
+### Added
+- CI testing of some steps
+- Moved over to an ASCAT container update that allows on and off pipe running 
+### Changed
+- Publication directories, parameter names to better match other pipelines 
+
+
 ## [0.4.1] - 2024-09-05
 ### Added
 - Handling of different Dermatlas manifest generations, fixing container version for broad step
