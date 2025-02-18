@@ -16,11 +16,11 @@ services:
         source: ./
         target: /opt/repo/
       - type: bind
+        source: /lustre/scratch124/nf-test
+        target: /lustre/scratch124/nf-test
+      - type: bind
         source: /lustre/scratch124/resources
         target: /lustre/scratch124/resources
-      - type: bind
-        source: /lustre/scratch124/jb63
-        target: /lustre/scratch124/jb63
     networks:
       - local-default
 

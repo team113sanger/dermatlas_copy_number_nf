@@ -1,375 +1,93 @@
 {
     "Should run without failures": {
         "content": [
-            {
-                "0": [
+            [
+                [
+                    {
+                        "pair_id": "PD54403a_PD54403b",
+                        "normal": "PD54403b",
+                        "tumor": "PD54403a",
+                        "Sex": "M",
+                        "Phenotype": "N",
+                        "sexchr": "XY"
+                    },
                     [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        "QC_PD54403a_PD54403b.tsv:md5,0aebc173b7428cb48123bc62b63cc291"
-                    ]
-                ],
-                "1": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        "ASCAT_estimates_PD54403a_PD54403b.tsv:md5,9a8b0a0df1739f4f13488d6bd1bd49be"
-                    ]
-                ],
-                "2": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        "gistic2_segs_PD54403a_PD54403b.tsv:md5,6f96da6ef460cb28c4ee842aa02c899f"
-                    ]
-                ],
-                "3": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        [
-                            "After_correction_PD54403a.germline.png:md5,11c8e9eccace103e86e9873a4db150cb",
-                            "After_correction_PD54403a.tumour.png:md5,cf8afffe44869751d56393c8cb35e8ff",
-                            "Before_correction_PD54403a.germline.png:md5,11c8e9eccace103e86e9873a4db150cb",
-                            "Before_correction_PD54403a.tumour.png:md5,71999366be4297731643045aec0e9ddf",
-                            "PD54403a.ASCATprofile.png:md5,5fff35872c539abca86a9238dbfe0ec4",
-                            "PD54403a.ASPCF.png:md5,de445b23cdca6863832d736a2c5d8a0f",
-                            "PD54403a.rawprofile.png:md5,2dff0ec581a2444a49b55aacdd100217",
-                            "PD54403a.sunrise.png:md5,9928bd96851e932a4c0c5b9b3f909f47"
-                        ]
-                    ]
-                ],
-                "4": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        "ASCAT_objects.Rdata:md5,fb2303acd99c521678b4d550500fc145"
-                    ]
-                ],
-                "5": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        [
-                            "PD54403a_alleleFrequencies_chr1.txt:md5,8ea5e50bceb965239f21ddf66b5f5420",
-                            "PD54403a_alleleFrequencies_chr10.txt:md5,488bdf098dda334e8ad57cf5aecae8a5",
-                            "PD54403a_alleleFrequencies_chr11.txt:md5,3747e72b39f6bd30955ad6d609c8a105",
-                            "PD54403a_alleleFrequencies_chr12.txt:md5,272d0f23b303071c649673426c243510",
-                            "PD54403a_alleleFrequencies_chr13.txt:md5,32bc3ca544624814d65249b2edd99e2d",
-                            "PD54403a_alleleFrequencies_chr14.txt:md5,5b3426a331c72b6c3fb26a112d0788a9",
-                            "PD54403a_alleleFrequencies_chr15.txt:md5,0dde47a6acfeb77964a98b7c067b2d41",
-                            "PD54403a_alleleFrequencies_chr16.txt:md5,0537cc135862087c0c686cc0b5ec6bf4",
-                            "PD54403a_alleleFrequencies_chr17.txt:md5,6a32fb2ee28e56fc1c2ddca94dc3f58a",
-                            "PD54403a_alleleFrequencies_chr18.txt:md5,15f9a40775184a994a754aeecdfaaa50",
-                            "PD54403a_alleleFrequencies_chr19.txt:md5,2c6decebc066ae079e4a06977cfc9a1b",
-                            "PD54403a_alleleFrequencies_chr2.txt:md5,797cb03d98b190c72b3ec95f9ccba0ff",
-                            "PD54403a_alleleFrequencies_chr20.txt:md5,94fbd14930403c52fda97987f973644c",
-                            "PD54403a_alleleFrequencies_chr21.txt:md5,1ead93e6da158fd535cdb537545a47d2",
-                            "PD54403a_alleleFrequencies_chr22.txt:md5,114793e7c52c9cb9c3c36408a59eadf2",
-                            "PD54403a_alleleFrequencies_chr3.txt:md5,85d70edbde4a913cce3ff6d4ec2994c4",
-                            "PD54403a_alleleFrequencies_chr4.txt:md5,17a6eaca6559c9e4f05900b3eff1e2c8",
-                            "PD54403a_alleleFrequencies_chr5.txt:md5,8c33442080cc06b8bff22d254233b527",
-                            "PD54403a_alleleFrequencies_chr6.txt:md5,d7d40158755e735e62eb6b16be8fef7d",
-                            "PD54403a_alleleFrequencies_chr7.txt:md5,46157f7ec93acb06ef2f49a96c76da56",
-                            "PD54403a_alleleFrequencies_chr8.txt:md5,0dcb11dac2a045cf172ad2c70ab70289",
-                            "PD54403a_alleleFrequencies_chr9.txt:md5,9d7fa9e1a10a08053aea1c870c8a54bd",
-                            "PD54403a_alleleFrequencies_chrX.txt:md5,0b6867e5a16781c21a777294b82cb419",
-                            "PD54403b_alleleFrequencies_chr1.txt:md5,c4051fd53fe61223b28a9fbcabc7489a",
-                            "PD54403b_alleleFrequencies_chr10.txt:md5,d0da8ca115bcf8c36977a383a5c84a16",
-                            "PD54403b_alleleFrequencies_chr11.txt:md5,1626a12ba856ed5a4f2dfd7777ac7356",
-                            "PD54403b_alleleFrequencies_chr12.txt:md5,91b19fa50309a7e9a655bf08821b1a5a",
-                            "PD54403b_alleleFrequencies_chr13.txt:md5,b1d0812583adc1e9fce21751ceda02fb",
-                            "PD54403b_alleleFrequencies_chr14.txt:md5,9479d94f17ed057dddc1c4363f742f59",
-                            "PD54403b_alleleFrequencies_chr15.txt:md5,9372bb73d68fc4f59caee9669ccf17c7",
-                            "PD54403b_alleleFrequencies_chr16.txt:md5,637a590fe9181e685c9945150c063657",
-                            "PD54403b_alleleFrequencies_chr17.txt:md5,848ea59e046de84ddc359f8b215c0b35",
-                            "PD54403b_alleleFrequencies_chr18.txt:md5,4681cde9bae8e61b5d3a45b26395fd50",
-                            "PD54403b_alleleFrequencies_chr19.txt:md5,ddf82a47d3795acc928d1834c45bde1d",
-                            "PD54403b_alleleFrequencies_chr2.txt:md5,f42390229bc41d9637ed0a789ed5ca87",
-                            "PD54403b_alleleFrequencies_chr20.txt:md5,e47ac4ca15f5958058242672e8dbaae4",
-                            "PD54403b_alleleFrequencies_chr21.txt:md5,0ea7df58ba490732bde4b17906435ce3",
-                            "PD54403b_alleleFrequencies_chr22.txt:md5,7604c2d97125ddef26e347c0749d1b9d",
-                            "PD54403b_alleleFrequencies_chr3.txt:md5,f73ae83bce2d2b560f8d6ac7e52f0b2e",
-                            "PD54403b_alleleFrequencies_chr4.txt:md5,b53e8c10981c048c40f88a6d75773ab6",
-                            "PD54403b_alleleFrequencies_chr5.txt:md5,cc0ec3ce7d695cc3382f86b67877bd64",
-                            "PD54403b_alleleFrequencies_chr6.txt:md5,4c64eeb8ff1d163a3aa9b80e09d87bb7",
-                            "PD54403b_alleleFrequencies_chr7.txt:md5,5bda5b98a005e2ef88d71452bac27ec1",
-                            "PD54403b_alleleFrequencies_chr8.txt:md5,4b85defc99e91c6c10967ec7b2c55eb2",
-                            "PD54403b_alleleFrequencies_chr9.txt:md5,c74dc2c450022849d1d8b6592ac10fd7",
-                            "PD54403b_alleleFrequencies_chrX.txt:md5,d464307b327e0c5f0774bd3541782eea"
-                        ]
-                    ]
-                ],
-                "6": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        [
-                            "PD54403a_normalBAF.txt:md5,3f220f36b79eb9aecb034154700b9478",
-                            "PD54403a_normalBAF_rawBAF.txt:md5,4a2cd525ea168ee159d86130d5e8f6e7",
-                            "PD54403a_tumourBAF.txt:md5,2b2920b02da3ece0eff652a069326fc9",
-                            "PD54403a_tumourBAF_rawBAF.txt:md5,379c7919384d982613ae24996e68e80f"
-                        ]
-                    ]
-                ],
-                "7": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        [
-                            "PD54403a_normalLogR.txt:md5,a78f0c72e88d03684afaf8933f2082bc",
-                            "PD54403a_tumourLogR.txt:md5,d230b221294eeb27dd0c480a9440406c"
-                        ]
-                    ]
-                ],
-                "8": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        "PD54403a.segments.txt:md5,1546efce0b3709f3a600d6fdd0a58d03"
-                    ]
-                ],
-                "allelefreqs": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        [
-                            "PD54403a_alleleFrequencies_chr1.txt:md5,8ea5e50bceb965239f21ddf66b5f5420",
-                            "PD54403a_alleleFrequencies_chr10.txt:md5,488bdf098dda334e8ad57cf5aecae8a5",
-                            "PD54403a_alleleFrequencies_chr11.txt:md5,3747e72b39f6bd30955ad6d609c8a105",
-                            "PD54403a_alleleFrequencies_chr12.txt:md5,272d0f23b303071c649673426c243510",
-                            "PD54403a_alleleFrequencies_chr13.txt:md5,32bc3ca544624814d65249b2edd99e2d",
-                            "PD54403a_alleleFrequencies_chr14.txt:md5,5b3426a331c72b6c3fb26a112d0788a9",
-                            "PD54403a_alleleFrequencies_chr15.txt:md5,0dde47a6acfeb77964a98b7c067b2d41",
-                            "PD54403a_alleleFrequencies_chr16.txt:md5,0537cc135862087c0c686cc0b5ec6bf4",
-                            "PD54403a_alleleFrequencies_chr17.txt:md5,6a32fb2ee28e56fc1c2ddca94dc3f58a",
-                            "PD54403a_alleleFrequencies_chr18.txt:md5,15f9a40775184a994a754aeecdfaaa50",
-                            "PD54403a_alleleFrequencies_chr19.txt:md5,2c6decebc066ae079e4a06977cfc9a1b",
-                            "PD54403a_alleleFrequencies_chr2.txt:md5,797cb03d98b190c72b3ec95f9ccba0ff",
-                            "PD54403a_alleleFrequencies_chr20.txt:md5,94fbd14930403c52fda97987f973644c",
-                            "PD54403a_alleleFrequencies_chr21.txt:md5,1ead93e6da158fd535cdb537545a47d2",
-                            "PD54403a_alleleFrequencies_chr22.txt:md5,114793e7c52c9cb9c3c36408a59eadf2",
-                            "PD54403a_alleleFrequencies_chr3.txt:md5,85d70edbde4a913cce3ff6d4ec2994c4",
-                            "PD54403a_alleleFrequencies_chr4.txt:md5,17a6eaca6559c9e4f05900b3eff1e2c8",
-                            "PD54403a_alleleFrequencies_chr5.txt:md5,8c33442080cc06b8bff22d254233b527",
-                            "PD54403a_alleleFrequencies_chr6.txt:md5,d7d40158755e735e62eb6b16be8fef7d",
-                            "PD54403a_alleleFrequencies_chr7.txt:md5,46157f7ec93acb06ef2f49a96c76da56",
-                            "PD54403a_alleleFrequencies_chr8.txt:md5,0dcb11dac2a045cf172ad2c70ab70289",
-                            "PD54403a_alleleFrequencies_chr9.txt:md5,9d7fa9e1a10a08053aea1c870c8a54bd",
-                            "PD54403a_alleleFrequencies_chrX.txt:md5,0b6867e5a16781c21a777294b82cb419",
-                            "PD54403b_alleleFrequencies_chr1.txt:md5,c4051fd53fe61223b28a9fbcabc7489a",
-                            "PD54403b_alleleFrequencies_chr10.txt:md5,d0da8ca115bcf8c36977a383a5c84a16",
-                            "PD54403b_alleleFrequencies_chr11.txt:md5,1626a12ba856ed5a4f2dfd7777ac7356",
-                            "PD54403b_alleleFrequencies_chr12.txt:md5,91b19fa50309a7e9a655bf08821b1a5a",
-                            "PD54403b_alleleFrequencies_chr13.txt:md5,b1d0812583adc1e9fce21751ceda02fb",
-                            "PD54403b_alleleFrequencies_chr14.txt:md5,9479d94f17ed057dddc1c4363f742f59",
-                            "PD54403b_alleleFrequencies_chr15.txt:md5,9372bb73d68fc4f59caee9669ccf17c7",
-                            "PD54403b_alleleFrequencies_chr16.txt:md5,637a590fe9181e685c9945150c063657",
-                            "PD54403b_alleleFrequencies_chr17.txt:md5,848ea59e046de84ddc359f8b215c0b35",
-                            "PD54403b_alleleFrequencies_chr18.txt:md5,4681cde9bae8e61b5d3a45b26395fd50",
-                            "PD54403b_alleleFrequencies_chr19.txt:md5,ddf82a47d3795acc928d1834c45bde1d",
-                            "PD54403b_alleleFrequencies_chr2.txt:md5,f42390229bc41d9637ed0a789ed5ca87",
-                            "PD54403b_alleleFrequencies_chr20.txt:md5,e47ac4ca15f5958058242672e8dbaae4",
-                            "PD54403b_alleleFrequencies_chr21.txt:md5,0ea7df58ba490732bde4b17906435ce3",
-                            "PD54403b_alleleFrequencies_chr22.txt:md5,7604c2d97125ddef26e347c0749d1b9d",
-                            "PD54403b_alleleFrequencies_chr3.txt:md5,f73ae83bce2d2b560f8d6ac7e52f0b2e",
-                            "PD54403b_alleleFrequencies_chr4.txt:md5,b53e8c10981c048c40f88a6d75773ab6",
-                            "PD54403b_alleleFrequencies_chr5.txt:md5,cc0ec3ce7d695cc3382f86b67877bd64",
-                            "PD54403b_alleleFrequencies_chr6.txt:md5,4c64eeb8ff1d163a3aa9b80e09d87bb7",
-                            "PD54403b_alleleFrequencies_chr7.txt:md5,5bda5b98a005e2ef88d71452bac27ec1",
-                            "PD54403b_alleleFrequencies_chr8.txt:md5,4b85defc99e91c6c10967ec7b2c55eb2",
-                            "PD54403b_alleleFrequencies_chr9.txt:md5,c74dc2c450022849d1d8b6592ac10fd7",
-                            "PD54403b_alleleFrequencies_chrX.txt:md5,d464307b327e0c5f0774bd3541782eea"
-                        ]
-                    ]
-                ],
-                "bafs": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        [
-                            "PD54403a_normalBAF.txt:md5,3f220f36b79eb9aecb034154700b9478",
-                            "PD54403a_normalBAF_rawBAF.txt:md5,4a2cd525ea168ee159d86130d5e8f6e7",
-                            "PD54403a_tumourBAF.txt:md5,2b2920b02da3ece0eff652a069326fc9",
-                            "PD54403a_tumourBAF_rawBAF.txt:md5,379c7919384d982613ae24996e68e80f"
-                        ]
-                    ]
-                ],
-                "estimates": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        "ASCAT_estimates_PD54403a_PD54403b.tsv:md5,9a8b0a0df1739f4f13488d6bd1bd49be"
-                    ]
-                ],
-                "gistic_inputs": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        "gistic2_segs_PD54403a_PD54403b.tsv:md5,6f96da6ef460cb28c4ee842aa02c899f"
-                    ]
-                ],
-                "logrs": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        [
-                            "PD54403a_normalLogR.txt:md5,a78f0c72e88d03684afaf8933f2082bc",
-                            "PD54403a_tumourLogR.txt:md5,d230b221294eeb27dd0c480a9440406c"
-                        ]
-                    ]
-                ],
-                "plots": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        [
-                            "After_correction_PD54403a.germline.png:md5,11c8e9eccace103e86e9873a4db150cb",
-                            "After_correction_PD54403a.tumour.png:md5,cf8afffe44869751d56393c8cb35e8ff",
-                            "Before_correction_PD54403a.germline.png:md5,11c8e9eccace103e86e9873a4db150cb",
-                            "Before_correction_PD54403a.tumour.png:md5,71999366be4297731643045aec0e9ddf",
-                            "PD54403a.ASCATprofile.png:md5,5fff35872c539abca86a9238dbfe0ec4",
-                            "PD54403a.ASPCF.png:md5,de445b23cdca6863832d736a2c5d8a0f",
-                            "PD54403a.rawprofile.png:md5,2dff0ec581a2444a49b55aacdd100217",
-                            "PD54403a.sunrise.png:md5,9928bd96851e932a4c0c5b9b3f909f47"
-                        ]
-                    ]
-                ],
-                "qc_metrics": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        "QC_PD54403a_PD54403b.tsv:md5,0aebc173b7428cb48123bc62b63cc291"
-                    ]
-                ],
-                "rdata": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        "ASCAT_objects.Rdata:md5,fb2303acd99c521678b4d550500fc145"
-                    ]
-                ],
-                "segments": [
-                    [
-                        {
-                            "pair_id": "PD54403a_PD54403b",
-                            "normal": "PD54403b",
-                            "tumor": "PD54403a",
-                            "Sex": "M",
-                            "Phenotype": "N",
-                            "sexchr": "XY"
-                        },
-                        "PD54403a.segments.txt:md5,1546efce0b3709f3a600d6fdd0a58d03"
+                        "After_correction_PD54403a.germline.png:md5,b9bd73d4dfcfae13b82f3a695ae7b2ab",
+                        "After_correction_PD54403a.tumour.png:md5,88bd175f2b89067adb7d52c427a6cd4a",
+                        "Before_correction_PD54403a.germline.png:md5,b9bd73d4dfcfae13b82f3a695ae7b2ab",
+                        "Before_correction_PD54403a.tumour.png:md5,bfe08dd82541b359bfec15808179c4ac",
+                        "PD54403a.ASCATprofile.png:md5,bdfdfc41c5b5dae4449d54bcf83f39eb",
+                        "PD54403a.ASPCF.png:md5,cbc964d9ba1f8b113e276a36fe7f6122",
+                        "PD54403a.rawprofile.png:md5,7c3bbe2c4413d78fc2b2ce73757d443c",
+                        "PD54403a.sunrise.png:md5,907a20b5d20858ec3a0a2494f834533c"
                     ]
                 ]
-            }
+            ],
+            [
+                [
+                    {
+                        "pair_id": "PD54403a_PD54403b",
+                        "normal": "PD54403b",
+                        "tumor": "PD54403a",
+                        "Sex": "M",
+                        "Phenotype": "N",
+                        "sexchr": "XY"
+                    },
+                    [
+                        "PD54403a_alleleFrequencies_chr1.txt:md5,8ea5e50bceb965239f21ddf66b5f5420",
+                        "PD54403a_alleleFrequencies_chr10.txt:md5,488bdf098dda334e8ad57cf5aecae8a5",
+                        "PD54403a_alleleFrequencies_chr11.txt:md5,3747e72b39f6bd30955ad6d609c8a105",
+                        "PD54403a_alleleFrequencies_chr12.txt:md5,272d0f23b303071c649673426c243510",
+                        "PD54403a_alleleFrequencies_chr13.txt:md5,32bc3ca544624814d65249b2edd99e2d",
+                        "PD54403a_alleleFrequencies_chr14.txt:md5,5b3426a331c72b6c3fb26a112d0788a9",
+                        "PD54403a_alleleFrequencies_chr15.txt:md5,0dde47a6acfeb77964a98b7c067b2d41",
+                        "PD54403a_alleleFrequencies_chr16.txt:md5,0537cc135862087c0c686cc0b5ec6bf4",
+                        "PD54403a_alleleFrequencies_chr17.txt:md5,6a32fb2ee28e56fc1c2ddca94dc3f58a",
+                        "PD54403a_alleleFrequencies_chr18.txt:md5,15f9a40775184a994a754aeecdfaaa50",
+                        "PD54403a_alleleFrequencies_chr19.txt:md5,2c6decebc066ae079e4a06977cfc9a1b",
+                        "PD54403a_alleleFrequencies_chr2.txt:md5,797cb03d98b190c72b3ec95f9ccba0ff",
+                        "PD54403a_alleleFrequencies_chr20.txt:md5,94fbd14930403c52fda97987f973644c",
+                        "PD54403a_alleleFrequencies_chr21.txt:md5,1ead93e6da158fd535cdb537545a47d2",
+                        "PD54403a_alleleFrequencies_chr22.txt:md5,114793e7c52c9cb9c3c36408a59eadf2",
+                        "PD54403a_alleleFrequencies_chr3.txt:md5,85d70edbde4a913cce3ff6d4ec2994c4",
+                        "PD54403a_alleleFrequencies_chr4.txt:md5,17a6eaca6559c9e4f05900b3eff1e2c8",
+                        "PD54403a_alleleFrequencies_chr5.txt:md5,8c33442080cc06b8bff22d254233b527",
+                        "PD54403a_alleleFrequencies_chr6.txt:md5,d7d40158755e735e62eb6b16be8fef7d",
+                        "PD54403a_alleleFrequencies_chr7.txt:md5,46157f7ec93acb06ef2f49a96c76da56",
+                        "PD54403a_alleleFrequencies_chr8.txt:md5,0dcb11dac2a045cf172ad2c70ab70289",
+                        "PD54403a_alleleFrequencies_chr9.txt:md5,9d7fa9e1a10a08053aea1c870c8a54bd",
+                        "PD54403a_alleleFrequencies_chrX.txt:md5,0b6867e5a16781c21a777294b82cb419",
+                        "PD54403b_alleleFrequencies_chr1.txt:md5,c4051fd53fe61223b28a9fbcabc7489a",
+                        "PD54403b_alleleFrequencies_chr10.txt:md5,d0da8ca115bcf8c36977a383a5c84a16",
+                        "PD54403b_alleleFrequencies_chr11.txt:md5,1626a12ba856ed5a4f2dfd7777ac7356",
+                        "PD54403b_alleleFrequencies_chr12.txt:md5,91b19fa50309a7e9a655bf08821b1a5a",
+                        "PD54403b_alleleFrequencies_chr13.txt:md5,b1d0812583adc1e9fce21751ceda02fb",
+                        "PD54403b_alleleFrequencies_chr14.txt:md5,9479d94f17ed057dddc1c4363f742f59",
+                        "PD54403b_alleleFrequencies_chr15.txt:md5,9372bb73d68fc4f59caee9669ccf17c7",
+                        "PD54403b_alleleFrequencies_chr16.txt:md5,637a590fe9181e685c9945150c063657",
+                        "PD54403b_alleleFrequencies_chr17.txt:md5,848ea59e046de84ddc359f8b215c0b35",
+                        "PD54403b_alleleFrequencies_chr18.txt:md5,4681cde9bae8e61b5d3a45b26395fd50",
+                        "PD54403b_alleleFrequencies_chr19.txt:md5,ddf82a47d3795acc928d1834c45bde1d",
+                        "PD54403b_alleleFrequencies_chr2.txt:md5,f42390229bc41d9637ed0a789ed5ca87",
+                        "PD54403b_alleleFrequencies_chr20.txt:md5,e47ac4ca15f5958058242672e8dbaae4",
+                        "PD54403b_alleleFrequencies_chr21.txt:md5,0ea7df58ba490732bde4b17906435ce3",
+                        "PD54403b_alleleFrequencies_chr22.txt:md5,7604c2d97125ddef26e347c0749d1b9d",
+                        "PD54403b_alleleFrequencies_chr3.txt:md5,f73ae83bce2d2b560f8d6ac7e52f0b2e",
+                        "PD54403b_alleleFrequencies_chr4.txt:md5,b53e8c10981c048c40f88a6d75773ab6",
+                        "PD54403b_alleleFrequencies_chr5.txt:md5,cc0ec3ce7d695cc3382f86b67877bd64",
+                        "PD54403b_alleleFrequencies_chr6.txt:md5,4c64eeb8ff1d163a3aa9b80e09d87bb7",
+                        "PD54403b_alleleFrequencies_chr7.txt:md5,5bda5b98a005e2ef88d71452bac27ec1",
+                        "PD54403b_alleleFrequencies_chr8.txt:md5,4b85defc99e91c6c10967ec7b2c55eb2",
+                        "PD54403b_alleleFrequencies_chr9.txt:md5,c74dc2c450022849d1d8b6592ac10fd7",
+                        "PD54403b_alleleFrequencies_chrX.txt:md5,d464307b327e0c5f0774bd3541782eea"
+                    ]
+                ]
+            ]
         ],
         "meta": {
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-06-19T09:24:00.308156"
+        "timestamp": "2025-02-04T21:20:46.3787"
     }
 }

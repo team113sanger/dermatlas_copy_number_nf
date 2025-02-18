@@ -37,7 +37,7 @@ workflow DERMATLAS_METADATA {
     patient_metadata_ch
     | filter { id, meta -> id =~ "PD"}
     | collectFile(name: "allsamples2sex.txt", 
-      storeDir: "${params.OUTDIR}/ASCAT/${params.release_version}"){
+      storeDir: "${params.outdir}/ASCAT/${params.release_version}"){
         id, meta ->
         ["allsamples2sex.txt", "${id}\t${meta["sexchr"][0]}\n"]
     }

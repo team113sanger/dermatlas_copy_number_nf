@@ -4,6 +4,7 @@ nextflow_process {
     name "Test Process CREATE_FREQUENCY_PLOTS"
     script "modules/ascat.nf"
     process "CREATE_FREQUENCY_PLOTS"
+    tag "ci"
 
     test("Should run without failures") {
 
@@ -13,7 +14,7 @@ nextflow_process {
         }
             process {
                 """
-                input[0] = file('$baseDir/tests/testdata/one_tumor_per_patient.tsv')
+                input[0] = tuple([analysis_type: "one_tumor_per_patient", plot_dir: "one_per_patient"], file('$baseDir/tests/testdata/one_tumor_per_patient.tsv'))
                 input[1] = file('$baseDir/tests/testdata/sample_purity_ploidy.tsv')
                 input[2] = file('$baseDir/tests/testdata/samples2sex.txt')
                 input[3] = "test"
@@ -23,7 +24,7 @@ nextflow_process {
 
         then {
             assert process.success
-            assert snapshot(process.out).match()
+            assert snapshot(process.out.table,process.out.cn_freqs,process.out.loh_segs,process.out.processed_segments).match()
         }
 
     }
