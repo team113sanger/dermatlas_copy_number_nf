@@ -39,7 +39,7 @@ workflow DERMATLAS_METADATA {
     | collectFile(name: "allsamples2sex.txt", 
       storeDir: "${params.outdir}/ASCAT/${params.release_version}"){
         id, meta ->
-        ["allsamples2sex.txt", "${id}\t${meta["sexchr"][0]}\n"]
+        ["allsamples2sex.txt", "${id}\t${meta["Sex"][0]}\n"]
     }
 
     indexed_bams
