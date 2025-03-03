@@ -75,7 +75,7 @@ workflow ANALYSE_SUBCOHORT {
       storeDir: "${params.outdir}/ASCAT/${params.release_version}"){
            meta, segments, gistic ->
         def filename = "${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}/samples2sex.txt"
-        [filename, "${meta["tumor"]}\t${meta["sexchr"]}\n"]
+        [filename, "${meta["tumor"]}\t${meta["Sex"]}\n"]
     }
     | set { sex2chr_ch }
   
