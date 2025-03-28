@@ -21,6 +21,8 @@ process RUN_ASCAT_EXOMES {
     tuple val(meta), path("*BAF.txt"),                     emit: bafs
     tuple val(meta), path("*LogR.txt"),                    emit: logrs
     tuple val(meta), path("*segments.txt"),                emit: segments
+    tuple val(meta), path("*segments_raw.txt"),            emit: raw_segs
+
 
     script:
     def norm = "$meta.normal"
