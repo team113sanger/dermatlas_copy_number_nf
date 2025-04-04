@@ -24,6 +24,7 @@ workflow DERMATLAS_METADATA {
     }
     | set { pair_id_ch }
     
+    log.info("Processing patient metadata and linking with BAM files...")
     // Process patient metadata
     patient_metadata
     | splitCsv(sep:"\t", header: true)
