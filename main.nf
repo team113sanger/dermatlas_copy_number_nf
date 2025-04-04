@@ -17,7 +17,6 @@ workflow {
     bamfiles           = Channel.fromPath(params.bam_files, checkIfExists: true)
     all_pairs          = Channel.fromPath(params.all_samples, checkIfExists: true)
     patient_md         = Channel.fromPath(params.metadata_manifest, checkIfExists: true)
-    
     // Reference files 
     reference_genome   = file(params.reference_genome, checkIfExists: true)
     bait_set           = file(params.bait_set, checkIfExists: true)
@@ -36,7 +35,7 @@ workflow {
     
     // Output the Male and female datasets as sepeate files
     SPLIT_COHORT_SEXES(DERMATLAS_METADATA.out.combined_metadata)
-    
+    DERMATLAS_METADATA.out.combined_metadata.view()
     // Perform ASCAT analysis on the entire cohort
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
                    params.outdir,  
