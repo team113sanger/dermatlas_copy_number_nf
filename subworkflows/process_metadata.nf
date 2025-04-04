@@ -43,14 +43,13 @@ workflow DERMATLAS_METADATA {
         id, meta ->
         ["allsamples2sex.txt", "${id}\t${meta["Sex"][0]}\n"]
     }
-    patient_metadata_ch.view()
 
 
     pair_id_ch
     | join(patient_metadata_ch)
     | cross(indexed_bams)
     | map{
-         id, meta, patients, file, index,  -> 
+         id, meta, patients, file, index  -> 
          def combinedMap = meta[0] + [file: file, index: index] + patients[0]
         // Check if the 'Sanger DNA ID' matches the 'normal',rename 'file' key accordingly
         if (combinedMap["Sanger_DNA_ID"] == combinedMap.normal) {
