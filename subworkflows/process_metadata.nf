@@ -30,7 +30,7 @@ workflow DERMATLAS_METADATA {
 
     patient_metadata
     | splitCsv(sep:"\t",header : true)
-    | map {meta -> meta.subMap("Sex", "Sanger_DNA_ID", "OK_to_analyse_DNA?", "Phenotype")} 
+    | map {meta -> meta.subMap("Sex", "Sanger_DNA_ID", "OK_to_analyse_DNA?", "Phenotype")}
     | map {meta -> 
             tuple(meta["Sanger_DNA_ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])}
     | set{ patient_metadata_ch }
@@ -43,9 +43,12 @@ workflow DERMATLAS_METADATA {
         id, meta ->
         ["allsamples2sex.txt", "${id}\t${meta["Sex"][0]}\n"]
     }
+    | filter{ meta.Phenotype == "T"} 
+    patient_metadata_ch.view()
+
 
     indexed_bams
-    | join(pair_id_ch)
+    | cross(pair_id_ch)
     | join(patient_metadata_ch)
     | map{
          id, file, index, meta, patients -> 
