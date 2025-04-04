@@ -35,7 +35,6 @@ workflow DERMATLAS_METADATA {
             tuple(meta["Sanger_DNA_ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])}
     | set{ patient_metadata_ch }
 
-    patient_metadata_ch.view()
 
     patient_metadata_ch
     | filter { id, meta -> id =~ "PD"}

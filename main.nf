@@ -17,7 +17,6 @@ workflow {
     bamfiles           = Channel.fromPath(params.bam_files, checkIfExists: true)
     all_pairs          = Channel.fromPath(params.all_samples, checkIfExists: true)
     patient_md         = Channel.fromPath(params.metadata_manifest, checkIfExists: true)
-    bamfiles.view()
     // Reference files 
     reference_genome   = file(params.reference_genome, checkIfExists: true)
     bait_set           = file(params.bait_set, checkIfExists: true)
