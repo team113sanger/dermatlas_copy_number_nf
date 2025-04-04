@@ -26,6 +26,7 @@ workflow DERMATLAS_METADATA {
     ]}
     | set { pair_id_ch }
     
+    pair_id_ch.view()
 
     patient_metadata
     | splitCsv(sep:"\t",header : true)
@@ -33,6 +34,8 @@ workflow DERMATLAS_METADATA {
     | map {meta -> 
             tuple(meta["Sanger_DNA_ID"], [meta + [sexchr: meta.Sex == "F" ? "XX" : "XY"]])}
     | set{ patient_metadata_ch }
+
+    patient_metadata_ch.view()
 
     patient_metadata_ch
     | filter { id, meta -> id =~ "PD"}
