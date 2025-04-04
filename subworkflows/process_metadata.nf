@@ -47,7 +47,7 @@ workflow DERMATLAS_METADATA {
 
 
     indexed_bams
-    | cross(pair_id_ch)
+    | join(pair_id_ch)
     | join(patient_metadata_ch)
     | map{
          id, file, index, meta, patients -> 
