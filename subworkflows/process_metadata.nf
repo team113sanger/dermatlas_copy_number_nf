@@ -47,7 +47,7 @@ workflow DERMATLAS_METADATA {
 
     pair_id_ch
     | join(patient_metadata_ch)
-    | cross(indexed_bams)
+    | join(indexed_bams)
     | map{
          id, meta, patients, file, index  -> 
          def combinedMap = meta[0] + [file: file, index: index] + patients[0]
