@@ -43,7 +43,7 @@ workflow DERMATLAS_METADATA {
         id, meta ->
         ["allsamples2sex.txt", "${id}\t${meta["Sex"][0]}\n"]
     }
-    | filter{ id, meta -> meta.Phenotype == "T"} 
+    | filter{ id, meta -> meta["Phenotype"] == "T"} 
     patient_metadata_ch.view()
 
 
