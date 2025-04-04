@@ -60,7 +60,6 @@ workflow DERMATLAS_METADATA {
         return bam_map
     }
     | set { bam_map_ch }
-    bam_map_ch.view()
     
     // Create a map of patient metadata by sample ID
     patient_metadata_ch
