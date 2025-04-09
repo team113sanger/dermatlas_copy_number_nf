@@ -4,13 +4,22 @@
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
 
+|                         Main                         |                         Develop                          |
+| :----------------------------------------------------: | :------------------------------------------------------: |
+| [![pipeline status][master-pipe-badge]][master-branch] | [![pipeline status][develop-pipe-badge]][develop-branch] |
+
+[master-pipe-badge]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/badges/main/pipeline.svg
+[main-branch]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/-/commits/main
+[develop-pipe-badge]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/badges/develop/pipeline.svg
+[develop-branch]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/fur/fur_hotspot_mutations](https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf)/-/commits/develop
+
 ## Introduction
 
-dermatlas_copy_number_nf is a bioinformatics pipeline written in [Nextflow](http://www.nextflow.io) for performing copy number alteration (CNA) analysis on cohorts of tumors within the Dermatlas project. 
+dermatlas_copy_number_nf is a bioinformatics pipeline written in [Nextflow](http://www.nextflow.io) for performing copy number alteration (CNA) analysis on cohorts of tumors within the [Dermatlas project](https://www.dermatlasproject.org). 
 
 ## Pipeline summary
 
-In brief, the pipeline takes a set matched tumor-normal samples that have been pre-processed by the Dermatlas ingestion pipeline and then:
+In brief, this pipeline takes sets matched tumor-normal samples that have been pre-processed by the Dermatlas ingestion pipeline and then:
 - Links each sample bamfile to it's associated metadata.
 - Links tumor-normal pairs.
 - Runs ASCAT on each tumor-normal pair, outputting segment calls and diagnostic plots. 
@@ -22,7 +31,7 @@ In brief, the pipeline takes a set matched tumor-normal samples that have been p
 ## Inputs 
 
 ### Cohort-dependent variables
-- `bam_files`: a path to a set of `.bam` files in a project directory. Note: the pipeline assumes that corresponding `.bam.bai` index files have been pre-generated and are co-located with bams and you should use a `**` glob match to recursively collect all bamfiles in the directory.
+- `bam_files`: path to the top-level directory for a `.bam` files. **Note:** *pipeline assumes that corresponding `.bam.bai` index files have been pre-generated and are co-located with bams and you should use a `**` glob match to recursively collect all bamfiles in the directory.*
 - `metadata_manifest`: path to a tab-delimited manifest containing information about sample phenotype and preparation. Required columns and allowed values are: 
     - `Sex`: M or F
     - `Sanger_DNA_ID`: PDID of the sample (e.g. PD001234)
