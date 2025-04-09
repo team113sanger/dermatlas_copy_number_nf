@@ -25,18 +25,22 @@ workflow {
     rt_file            = file(params.rt_file, checkIfExists: true)
     giab_regions       = file(params.difficult_regions_file, checkIfExists: true)
     chrom_arms         = file(params.chrom_arms_file, checkIfExists: true)
+    
+    // Thresholds
     broad_cutoff       = Channel.of(params.gistic_broad_peak_q_cutoff)
 
     // Combine and pivot the metadata so that T/N pair 
     // bams and metadata are a single channel
+    log.info("Processing patient metadata and linking with BAM files...")
     DERMATLAS_METADATA(bamfiles, 
                        all_pairs,
                        patient_md)
     
-    // Output the Male and female datasets as sepeate files
+    // Output the Male and Female datasets as seperate files
+    
     SPLIT_COHORT_SEXES(DERMATLAS_METADATA.out.combined_metadata)
-    DERMATLAS_METADATA.out.combined_metadata.view()
     // Perform ASCAT analysis on the entire cohort
+    log.info("Running ASCAT analysis...")
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
                    params.outdir,  
                    reference_genome,
@@ -48,6 +52,7 @@ workflow {
     
 
     if (params.one_per_patient) {
+    log.info("Running ASCAT post-processing for one tumor per patient...")
     one_tumor_per_patient = Channel.fromPath(params.one_per_patient, checkIfExists: true)
     ONE_TUMOR_PER_PATIENT(
                           DERMATLAS_METADATA.out.combined_metadata,
@@ -65,6 +70,7 @@ workflow {
     }
 
     if (params.independent) {
+    log.info("Running ASCAT post-processing for independent cohort...")
     independent_tumors = Channel.fromPath(params.independent, checkIfExists: true)
     INDEPENDENT_TUMORS(
                           DERMATLAS_METADATA.out.combined_metadata,
@@ -91,7 +97,7 @@ workflow {
     // | set { tabular_ch }
     
     // TSV_TO_EXCEL( tabular_ch )
-    GENERATE_ASCAT_README()
+    // GENERATE_ASCAT_README()
 
 
 }
