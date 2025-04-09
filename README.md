@@ -6,38 +6,42 @@
 
 ## Introduction
 
-dermatlas_copy_number_nf is a bioinfromatics pipeline written in [Nextflow](http://www.nextflow.io) for performing copy number alteration (CNA) analysis on cohorts of tumors within the Dermatlas project. 
+dermatlas_copy_number_nf is a bioinformatics pipeline written in [Nextflow](http://www.nextflow.io) for performing copy number alteration (CNA) analysis on cohorts of tumors within the Dermatlas project. 
 
 ## Pipeline summary
 
-In brief, the pipeline takes a set samples that have been pre-processed by the Dermatlas ingestion pipeline and then:
-- Links each sample bamfile to it's assocaited metadata and then links tumor-normal pairs.
+In brief, the pipeline takes a set matched tumor-normal samples that have been pre-processed by the Dermatlas ingestion pipeline and then:
+- Links each sample bamfile to it's associated metadata.
+- Links tumor-normal pairs.
 - Runs ASCAT on each tumor-normal pair, outputting segment calls and diagnostic plots. 
 - Collates summary statistics for all ASCAT runs and filters out samples that fall below a threshold Goodness-of-Fit level (GOF <95%).
 - Merges the segment calls from ASCAT that pass filtering.
-- Runs GISTIC2 to identify regions with significant copy-number alterations in the cohort (CNAs).
-- Filters those GISTIC2 calls to identify those that overlap with ASCAT.
+- Runs GISTIC2 on the merged segment calls to identify regions with significant copy-number alterations in the cohort (CNAs).
+- Filters GISTIC2 calls to identify those that overlap with ASCAT and which pass a Q-value threshold.
 
 ## Inputs 
 
 ### Cohort-dependent variables
 - `bam_files`: a path to a set of `.bam` files in a project directory. Note: the pipeline assumes that corresponding `.bam.bai` index files have been pre-generated and are co-located with bams and you should use a `**` glob match to recursively collect all bamfiles in the directory.
-- `metadata_manifest`: path to a tab-delimited manifest containing sample PD IDs and information about sample phenotype/preparation.
+- `metadata_manifest`: path to a tab-delimited manifest containing information about sample phenotype and preparation. Required columns and allowed values are: 
+    - `Sex`: M or F
+    - `Sanger_DNA_ID`: PDID of the sample (e.g. PD001234)
+    - `OK_to_analyse_DNA?`: Y or N 
+    - `Phenotype`: T or N
 - `all_samples`: path to a file containing a tab-delimited list of all matched tumour-normal pairs in a cohort.
 
 **Optional** 
-- `one_per_patient`: path to a file containing a tab-delimited list of matched tumour-normal pairs with one patient selected per-tumor.
+- `one_per_patient`: path to a file containing a tab-delimited list of matched tumour-normal pairs with one tumor selected per patient.
 - `independent`: path to a file containing a tab-delimited list of matched tumour-normal pairs with all independent comparisons to perform.
 
 ### Cohort-independent variables
-Reference files that are reused across pipeline executions have been placed within the pipeline's default `nextflow.config` file to simplify configuration and can be ommited from setup. Behind the scences though, the following reference files are required for a run: 
-- `reference_genome`: path to a reference genome file (ASCAT).
-- `bait_set`: path to a `.bed` file describing the analysed genomic regions  (ASCAT).
+Reference files that are reused across pipeline executions have been placed within the pipeline's default `nextflow.config` file to simplify user configuration and can be ommited from setup. Behind the scences the following reference files are required for a run: 
+- `reference_genome`: path to a reference genome fasta file.
+- `bait_set`: path to a `.bed` file describing the analysed genomic regions.
 - `resource_files`: path to a directory containing ASCAT loci and allele files.
 - `gc_file`: path to the ASCAT GC correction file.
 - `rt_file`: path to the ASCAT replication timing correction file.
-- `difficult_regions_file`: genomic regions considered to be 
-problematic for analyses such as variant calling by Genome In A Bottle (GIAB), used by GISTIC2 for masking regions.
+- `difficult_regions_file`: path to a file containing genomic regions considered to be problematic for analyses such as variant calling by Genome In A Bottle (GIAB); used by GISTIC2 for masking regions.
 - `chrom_arms_file`: path to the file containing chromosome arm lengths.
 - `gistic_broad_peak_q_cutoff`: a Q-value cutoff to be used when fitlering Gistic broad peak outputs (default 0.1).
 

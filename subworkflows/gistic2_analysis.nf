@@ -30,7 +30,5 @@ workflow GISTIC2_ANALYSIS {
     gistic_tabs    = RUN_GISTIC2.out.tables
     sample_summary = FILTER_GISTIC2_CALLS.out.ss
     cohort_summary = FILTER_GISTIC2_CALLS.out.cs
-    // x_summary = FILTER_BROAD_CALLS.out.ss
-    // x_summary = FILTER_BROAD_CALLS.out.y
 
 }
