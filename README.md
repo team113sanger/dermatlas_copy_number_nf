@@ -6,7 +6,7 @@
 
 |                         Main                         |                         Develop                          |
 | :----------------------------------------------------: | :------------------------------------------------------: |
-| [![pipeline status][master-pipe-badge]][master-branch] | [![pipeline status][develop-pipe-badge]][develop-branch] |
+| [![pipeline status][master-pipe-badge]][main-branch] | [![pipeline status][develop-pipe-badge]][develop-branch] |
 
 [master-pipe-badge]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/badges/main/pipeline.svg
 [main-branch]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/-/commits/main
