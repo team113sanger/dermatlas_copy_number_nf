@@ -57,6 +57,13 @@
         "difficult_regions_file": {
             "type": "string",
             "format": "file-path"
+        },
+        "chrom_arms_file": {
+            "type": "string",
+            "format": "file-path"
+        },
+        "release_version": {
+            "type": "string"
         }
     }}
 
