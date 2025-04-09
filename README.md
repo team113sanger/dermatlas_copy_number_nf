@@ -15,11 +15,11 @@
 
 ## Introduction
 
-dermatlas_copy_number_nf is a bioinformatics pipeline written in [Nextflow](http://www.nextflow.io) for performing copy number alteration (CNA) analysis on cohorts of tumors within the [Dermatlas project](https://www.dermatlasproject.org). 
+`dermatlas_copy_number_nf` is a bioinformatics pipeline written in [Nextflow](http://www.nextflow.io) for performing copy number alteration (CNA) analysis on cohorts of tumors within the [Dermatlas project](https://www.dermatlasproject.org). 
 
 ## Pipeline summary
 
-In brief, this pipeline takes sets matched tumor-normal samples that have been pre-processed by the Dermatlas ingestion pipeline and then:
+In brief, this pipeline takes sets matched tumor-normal samples that have been pre-processed by the Dermatlas ingestion process and then:
 - Links each sample bamfile to it's associated metadata.
 - Links tumor-normal pairs.
 - Runs ASCAT on each tumor-normal pair, outputting segment calls and diagnostic plots. 
@@ -31,7 +31,7 @@ In brief, this pipeline takes sets matched tumor-normal samples that have been p
 ## Inputs 
 
 ### Cohort-dependent variables
-- `bam_files`: path to the top-level directory for a `.bam` files. **Note:** *pipeline assumes that corresponding `.bam.bai` index files have been pre-generated and are co-located with bams and you should use a `**` glob match to recursively collect all bamfiles in the directory.*
+- `bam_files`: path to the top-level directory for a set of `.bam` files. **Note:** *pipeline assumes that corresponding `.bam.bai` index files have been pre-generated and are co-located with bams and you should use a `**` glob match to recursively collect all bamfiles in the directory.*
 - `metadata_manifest`: path to a tab-delimited manifest containing information about sample phenotype and preparation. Required columns and allowed values are: 
     - `Sex`: M or F
     - `Sanger_DNA_ID`: PDID of the sample (e.g. PD001234)
