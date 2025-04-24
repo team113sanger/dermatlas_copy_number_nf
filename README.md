@@ -6,7 +6,7 @@
 
 |                         Main                         |                         Develop                          |
 | :----------------------------------------------------: | :------------------------------------------------------: |
-| [![pipeline status][master-pipe-badge]][master-branch] | [![pipeline status][develop-pipe-badge]][develop-branch] |
+| [![pipeline status][master-pipe-badge]][main-branch] | [![pipeline status][develop-pipe-badge]][develop-branch] |
 
 [master-pipe-badge]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/badges/main/pipeline.svg
 [main-branch]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/-/commits/main
@@ -67,10 +67,14 @@ An example wrapper script:
 #BSUB -G team113-grp
 #BSUB -R "select[mem>8000] rusage[mem=8000] span[hosts=1]"
 #BSUB -M 8000
-#BSUB -oo logs/copy_number_variants_pipeline_%J.o
-#BSUB -eo logs/copy_number_variants_pipeline_%J.e
+#BSUB -oo analysis/logs/copy_number_variants_pipeline_%J.o
+#BSUB -eo analysis/logs/copy_number_variants_pipeline_%J.e
 
-PARAMS_FILE="/lustre/scratch125/casm/team113da/users/jb63/nf_cna_testing/params.json"
+
+export PROJECT_DIR="TBC"
+export STUDY=TBC
+export PROJECT=TBC
+export COHORT="TBC"
 
 # Load module dependencies
 module load nextflow-23.10.0
@@ -78,10 +82,11 @@ module load /software/modules/ISG/singularity/3.11.4
 
 # Create a nextflow job that will spawn other jobs
 
-nextflow run 'https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf' \
--r 0.7.0 \
--params-file $PARAMS_FILE \
--profile farm22 
+nextflow run "https://github.com/team113sanger/dermatlas_copy_number_nf" \
+-r 0.7.1 \
+-c commands/copy_number.config \
+-profile farm22 \
+-resume 
 ```
 
 When running the pipeline for the first time on the farm you will need to provide credentials to pull singularity containers from the team113 sanger gitlab. You should be able to do this by running
