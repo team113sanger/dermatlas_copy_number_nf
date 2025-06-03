@@ -23,7 +23,7 @@ In brief, this pipeline takes sets matched tumor-normal samples that have been p
 - Links each sample bamfile to it's associated metadata.
 - Links tumor-normal pairs.
 - Runs ASCAT on each tumor-normal pair, outputting segment calls and diagnostic plots. 
-- Collates summary statistics for all ASCAT runs and filters out samples that fall below a threshold Goodness-of-Fit level (GOF <95%).
+- Collates summary statistics for all ASCAT runs and filters out samples that fall below a threshold Goodness-of-Fit level (GOF <90%).
 - Merges the segment calls from ASCAT that pass filtering.
 - Runs GISTIC2 on the merged segment calls to identify regions with significant copy-number alterations in the cohort (CNAs).
 - Filters GISTIC2 calls to identify those that overlap with ASCAT and which pass a Q-value threshold.

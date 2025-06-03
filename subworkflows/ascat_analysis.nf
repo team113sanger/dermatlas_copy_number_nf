@@ -28,7 +28,7 @@ workflow ASCAT_ANALYSIS {
     RUN_ASCAT_EXOMES.out.segments
     | join(RUN_ASCAT_EXOMES.out.gistic_inputs)
     | join(quality_ch)
-    | filter { meta, segement, gistic, gof -> gof.toDouble() > 95}
+    | filter { meta, segement, gistic, gof -> gof.toDouble() > 90}
     | map { meta, segement, gistic, gof -> [meta, segement, gistic ] }
     | collect(flat: false)
     | set { filtered_outs }
