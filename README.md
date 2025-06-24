@@ -83,7 +83,7 @@ module load /software/modules/ISG/singularity/3.11.4
 # Create a nextflow job that will spawn other jobs
 
 nextflow run "https://github.com/team113sanger/dermatlas_copy_number_nf" \
--r 0.7.1 \
+-r 0.7.3 \
 -c commands/copy_number.config \
 -profile farm22 \
 -resume 
