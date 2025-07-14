@@ -1,6 +1,6 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.outdir}/ASCAT/${meta.tumor}-${meta.normal}", mode: params.publish_dir_mode
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat:0.5.0'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat:0.9.0'
     input: 
     tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
     val(outdir)
@@ -77,7 +77,7 @@ process RUN_ASCAT_EXOMES {
 process SUMMARISE_ASCAT_ESTIMATES {
     label 'process_medium'
     publishDir "${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}", mode: params.publish_dir_mode
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat:0.5.0'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat:0.9.0'
     
     input: 
     tuple val(meta), path(collected_files)
@@ -107,7 +107,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
 process CREATE_FREQUENCY_PLOTS {
     label 'process_medium'
     publishDir "${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}/${meta.plot_dir}", mode: params.publish_dir_mode
-    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat:0.5.0'
+    container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat:0.9.0'
 
     input:
     tuple val(meta), path(segfiles_list)
