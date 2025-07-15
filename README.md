@@ -11,7 +11,7 @@
 [master-pipe-badge]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/badges/main/pipeline.svg
 [main-branch]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/-/commits/main
 [develop-pipe-badge]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/badges/develop/pipeline.svg
-[develop-branch]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/fur/fur_hotspot_mutations](https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf)/-/commits/develop
+[develop-branch]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf](https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf)/-/commits/develop
 
 ## Introduction
 
@@ -83,7 +83,7 @@ module load /software/modules/ISG/singularity/3.11.4
 # Create a nextflow job that will spawn other jobs
 
 nextflow run "https://github.com/team113sanger/dermatlas_copy_number_nf" \
--r 0.7.4 \
+-r 0.7.5 \
 -c commands/copy_number.config \
 -profile farm22 \
 -resume 
