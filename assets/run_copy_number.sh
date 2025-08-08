@@ -7,7 +7,7 @@
 set -euo pipefail
  
 export REVISION="0.7.5"
-export CONFIG="${PROJECT_DIR}/commands/dermatlas_copy_number.config"
+export CONFIG="${PROJECT_DIR}/commands/copy_number.config"
  
 # Load module dependencies
 module load nextflow-23.10.0
