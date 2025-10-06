@@ -16,6 +16,7 @@ process RUN_GISTIC2 {
     tuple val(meta), path("*.mat"), emit: mats
     tuple val(meta), path("*.txt"), emit: tables
     tuple val(meta), path(segment_file), emit: segment_file
+    tuple val(meta), path("*.gistic"), emit: scores
 
     
     script:
