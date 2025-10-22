@@ -60,7 +60,7 @@ workflow {
                           one_tumor_per_patient,
                           ASCAT_ANALYSIS.out.filtered_outs,
                           ASCAT_ANALYSIS.out.estimates,
-                          'one_tumor_per_patient',
+                          'one_tumour_per_patient',
                           "PLOTS_ONE_PER_PATIENT",
                            params.outdir,
                            params.cohort_prefix,
