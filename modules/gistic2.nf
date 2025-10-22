@@ -56,11 +56,12 @@ process FILTER_GISTIC2_CALLS{
     label 'process_medium'
     publishDir "${params.outdir}/gistic2/${params.release_version}/${meta.analysis_type}/MIN_0", mode: params.publish_dir_mode
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.5.3"
-    
+
     input:
     tuple val(meta), path(segments)
     tuple val(meta), path(lesions)
     path(difficult_regions)
+    val(gistic_cutoff)
     val(prefix)
 
     output:
@@ -73,7 +74,7 @@ process FILTER_GISTIC2_CALLS{
     --prefix $prefix \
     --gistic-all-lesions-file $lesions \
     --ascat-segments-file $segments \
-    --residual-q-value-cutoff 0.1 \
+    --residual-q-value-cutoff $gistic_cutoff \
     --output-dir . \
     -d $difficult_regions
 

@@ -28,6 +28,7 @@ workflow {
     
     // Thresholds
     broad_cutoff       = Channel.of(params.gistic_broad_peak_q_cutoff)
+    focal_cutoff       = Channel.of(params.gistic_focal_q_value_cutoff)
 
     // Combine and pivot the metadata so that T/N pair 
     // bams and metadata are a single channel
@@ -57,7 +58,7 @@ workflow {
     ONE_TUMOR_PER_PATIENT(
                           DERMATLAS_METADATA.out.combined_metadata,
                           one_tumor_per_patient,
-                          ASCAT_ANALYSIS.out.filtered_outs, 
+                          ASCAT_ANALYSIS.out.filtered_outs,
                           ASCAT_ANALYSIS.out.estimates,
                           'one_tumor_per_patient',
                           "PLOTS_ONE_PER_PATIENT",
@@ -66,6 +67,7 @@ workflow {
                            params.gistic_refgene_file,
                            giab_regions,
                            broad_cutoff,
+                           focal_cutoff,
                            chrom_arms)
     }
 
@@ -75,7 +77,7 @@ workflow {
     INDEPENDENT_TUMORS(
                           DERMATLAS_METADATA.out.combined_metadata,
                           independent_tumors,
-                          ASCAT_ANALYSIS.out.filtered_outs, 
+                          ASCAT_ANALYSIS.out.filtered_outs,
                           ASCAT_ANALYSIS.out.estimates,
                           'independent_tumors',
                           "PLOTS_INDEPENDENT",
@@ -84,6 +86,7 @@ workflow {
                            params.gistic_refgene_file,
                            giab_regions,
                            broad_cutoff,
+                           focal_cutoff,
                            chrom_arms)
     }
 

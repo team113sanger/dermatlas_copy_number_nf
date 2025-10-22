@@ -13,15 +13,16 @@ workflow ANALYSE_SUBCOHORT {
     cohort_prefix
     gistic_refgene_file
     giab_regions
-    cutoff
+    broad_cutoff
+    focal_cutoff
     chrom_arms
     
     main: 
 
-    subset_patients 
-    | splitCsv(sep:"\t", header:['tumor', 'normal']) 
-    | map{ meta -> 
-        [pair_id: meta.normal+ "_" + meta.tumor]
+    subset_patients
+    | splitCsv(sep:"\t", header:['tumor', 'normal'])
+    | map{ meta ->
+        tuple([pair_id: meta.normal+ "_" + meta.tumor])
         }
     | set { subset_ids }
 
@@ -86,11 +87,12 @@ workflow ANALYSE_SUBCOHORT {
                            cohort_prefix)
 
     GISTIC2_ANALYSIS(gistic_ch,
-                    CREATE_FREQUENCY_PLOTS.out.processed_segments, 
-                    gistic_refgene_file, 
+                    CREATE_FREQUENCY_PLOTS.out.processed_segments,
+                    gistic_refgene_file,
                     giab_regions,
                     chrom_arms,
-                    cutoff,
+                    broad_cutoff,
+                    focal_cutoff,
                     cohort_prefix)
     
 
