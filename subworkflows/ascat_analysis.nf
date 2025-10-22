@@ -1,7 +1,7 @@
 include { RUN_ASCAT_EXOMES; SUMMARISE_ASCAT_ESTIMATES; CREATE_FREQUENCY_PLOTS; EXTRACT_GOODNESS_OF_FIT } from '../modules/ascat.nf'
 
 workflow ASCAT_ANALYSIS {
-    take: 
+    take:
     metadata
     output_dir
     genome
@@ -9,6 +9,7 @@ workflow ASCAT_ANALYSIS {
     per_chrom_dir
     gc_file
     rt_file
+    gof_threshold
     cohort_prefix
 
     main:
@@ -28,8 +29,9 @@ workflow ASCAT_ANALYSIS {
     RUN_ASCAT_EXOMES.out.segments
     | join(RUN_ASCAT_EXOMES.out.gistic_inputs)
     | join(quality_ch)
-    | filter { meta, segement, gistic, gof -> gof.toDouble() > 90}
-    | map { meta, segement, gistic, gof -> [meta, segement, gistic ] }
+    | combine(gof_threshold)
+    | filter { meta, segement, gistic, gof, threshold -> gof.toDouble() > threshold}
+    | map { meta, segement, gistic, gof, threshold -> [meta, segement, gistic ] }
     | collect(flat: false)
     | set { filtered_outs }
 

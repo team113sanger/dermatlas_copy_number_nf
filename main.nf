@@ -29,6 +29,7 @@ workflow {
     // Thresholds
     broad_cutoff       = Channel.of(params.gistic_broad_peak_q_cutoff)
     focal_cutoff       = Channel.of(params.gistic_focal_q_value_cutoff)
+    gof_threshold      = Channel.of(params.ascat_goodness_of_fit_threshold)
 
     // Combine and pivot the metadata so that T/N pair 
     // bams and metadata are a single channel
@@ -43,12 +44,13 @@ workflow {
     // Perform ASCAT analysis on the entire cohort
     log.info("Running ASCAT analysis...")
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
-                   params.outdir,  
+                   params.outdir,
                    reference_genome,
                    bait_set,
                    per_chrom_files,
                    gc_file,
                    rt_file,
+                   gof_threshold,
                    params.cohort_prefix)
     
 
