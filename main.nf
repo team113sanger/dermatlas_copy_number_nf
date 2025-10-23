@@ -81,7 +81,7 @@ workflow {
                           independent_tumors,
                           ASCAT_ANALYSIS.out.filtered_outs,
                           ASCAT_ANALYSIS.out.estimates,
-                          'independent_tumors',
+                          'independent_tumours',
                           "PLOTS_INDEPENDENT",
                            params.outdir,
                            params.cohort_prefix,
