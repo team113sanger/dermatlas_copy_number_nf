@@ -40,9 +40,23 @@ In brief, this pipeline takes sets matched tumor-normal samples that have been p
     - `col_TN` (Default: `Phenotype`) - **T or N**
 
 
-**Optional** 
-- `one_per_patient`: path to a file containing a tab-delimited list of matched tumour-normal pairs with one tumor selected per patient.
-- `independent`: path to a file containing a tab-delimited list of matched tumour-normal pairs with all independent comparisons to perform.
+**Optional**
+- `subcohorts`: a map defining subcohort analyses to run after ASCAT completes. Each entry maps a subcohort name to its configuration with `sample_list` and `plot_dir`:
+
+  ```groovy
+  subcohorts = [
+      "independent_tumours": [
+          sample_list: "/path/to/independent_tumours_matched.tsv",
+          plot_dir: "PLOTS_INDEPENDENT"
+      ],
+      "one_tumour_per_patient": [
+          sample_list: "/path/to/one_tumour_per_patient_matched.tsv",
+          plot_dir: "PLOTS_ONE_PER_PATIENT"
+      ]
+  ]
+  ```
+
+  Each sample list file should be tab-delimited with `tumor` and `normal` columns specifying the matched pairs for that subcohort.
 
 ### Cohort-independent variables
 Reference files that are reused across pipeline executions have been placed within the pipeline's default `nextflow.config` file to simplify user configuration and can be ommited from setup. Behind the scences the following reference files are required for a run: 
