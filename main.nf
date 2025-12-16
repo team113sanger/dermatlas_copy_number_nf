@@ -86,17 +86,5 @@ workflow {
                            chrom_arms)
     }
 
-    // Convert all tab files to tsv. TODO 
-    // ASCAT_ANALYSIS.out.freq_tab
-    // | concat(ASCAT_ANALYSIS.out.purity)
-    // | concat(ASCAT_ANALYSIS.out.summary_stats) 
-    // | concat(GISTIC2_ANALYSIS.out.gistic_tabs)
-    // | concat(GISTIC2_ANALYSIS.out.sample_summary)
-    // | concat(GISTIC2_ANALYSIS.out.cohort_summary)
-    // | set { tabular_ch }
-    
-    // TSV_TO_EXCEL( tabular_ch )
-    // GENERATE_ASCAT_README()
-
 
 }
