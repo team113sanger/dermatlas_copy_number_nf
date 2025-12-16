@@ -27,10 +27,10 @@ workflow {
     giab_regions       = file(params.difficult_regions_file, checkIfExists: true)
     chrom_arms         = file(params.chrom_arms_file, checkIfExists: true)
     
-    // Thresholds
-    broad_cutoff       = channel.of(params.gistic_broad_peak_q_cutoff)
-    focal_cutoff       = channel.of(params.gistic_focal_q_value_cutoff)
-    gof_threshold      = channel.of(params.ascat_goodness_of_fit_threshold)
+    // Thresholds (value channels so they can be reused)
+    broad_cutoff       = Channel.value(params.gistic_broad_peak_q_cutoff)
+    focal_cutoff       = Channel.value(params.gistic_focal_q_value_cutoff)
+    gof_threshold      = Channel.value(params.ascat_goodness_of_fit_threshold)
 
     // Combine and pivot the metadata so that T/N pair 
     // bams and metadata are a single channel
@@ -64,10 +64,14 @@ workflow {
             }
         )
 
+        // Convert to value channels so they can be reused across multiple subcohorts
+        ascat_filtered = ASCAT_ANALYSIS.out.filtered_outs.first()
+        ascat_estimates = ASCAT_ANALYSIS.out.estimates.first()
+
         ANALYSE_SUBCOHORT(
             cohort_sample_sets,
-            ASCAT_ANALYSIS.out.filtered_outs,
-            ASCAT_ANALYSIS.out.estimates,
+            ascat_filtered,
+            ascat_estimates,
             params.cohort_prefix,
             params.gistic_refgene_file,
             giab_regions,
