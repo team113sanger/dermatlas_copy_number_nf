@@ -3,20 +3,18 @@ include { GISTIC2_ANALYSIS } from '../subworkflows/gistic2_analysis.nf'
 
 workflow ANALYSE_SUBCOHORT {
     take:
-    cohort_metadata
     subset_patients
     ascat_outputs
     ascat_estimates
     analysis_type
     plot_dir
-    output_dir
     cohort_prefix
     gistic_refgene_file
     giab_regions
     broad_cutoff
     focal_cutoff
     chrom_arms
-    
+
     main: 
 
     subset_patients
@@ -32,7 +30,7 @@ workflow ANALYSE_SUBCOHORT {
     | groupTuple()
     | join(subset_ids)
     | transpose()
-    | map { pair_id, meta, segments, gistic -> [meta + [analysis_type: analysis_type, plot_dir: plot_dir], segments, gistic] }
+    | map { _pair_id, meta, segments, gistic -> [meta + [analysis_type: analysis_type, plot_dir: plot_dir], segments, gistic] }
     | set { ascat_subset_segments }
 
     ascat_estimates
@@ -41,7 +39,7 @@ workflow ANALYSE_SUBCOHORT {
     | groupTuple()
     | join(subset_ids)
     | transpose()
-    | map { pair_id, meta, estimate_file -> estimate_file }
+    | map { _pair_id, _meta, estimate_file -> estimate_file }
     | set { ascat_subset_estimates }
 
 
@@ -53,9 +51,9 @@ workflow ANALYSE_SUBCOHORT {
     
   
     ascat_subset_segments.collectFile(keepHeader: true,
-                 storeDir: "${params.outdir}/ASCAT/${params.release_version}", 
+                 storeDir: "${params.outdir}/ASCAT/${params.release_version}",
                  skip: 1){
-                 meta, segments, gistic -> 
+                 meta, segments, _gistic ->
                  new File("${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}").mkdirs()
                  def filename = "${meta.analysis_type}/combined_segment_file.txt"
                  return [filename, segments]
@@ -65,7 +63,7 @@ workflow ANALYSE_SUBCOHORT {
 
     ascat_subset_segments.collectFile(
        storeDir: "${params.outdir}/ASCAT/${params.release_version}"){
-       meta, segments, gistic ->
+       meta, _segments, gistic ->
         def filename = "${meta.analysis_type}/${meta.analysis_type}_segments.txt"
         return [filename, gistic]}
     | map{ file_list -> tuple([analysis_type: analysis_type, plot_dir:plot_dir], file_list)}
@@ -74,7 +72,7 @@ workflow ANALYSE_SUBCOHORT {
 
     ascat_subset_segments.collectFile(
       storeDir: "${params.outdir}/ASCAT/${params.release_version}"){
-           meta, segments, gistic ->
+           meta, _segments, _gistic ->
         def filename = "${meta.analysis_type}/samples2sex.txt"
         [filename, "${meta["tumor"]}\t${meta["Sex"]}\n"]
     }

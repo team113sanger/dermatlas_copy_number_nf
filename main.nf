@@ -44,27 +44,23 @@ workflow {
     // Perform ASCAT analysis on the entire cohort
     log.info("Running ASCAT analysis...")
     ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
-                   params.outdir,
                    reference_genome,
                    bait_set,
                    per_chrom_files,
                    gc_file,
                    rt_file,
-                   gof_threshold,
-                   params.cohort_prefix)
+                   gof_threshold)
     
 
     if (params.one_per_patient) {
     log.info("Running ASCAT post-processing for one tumor per patient...")
     one_tumor_per_patient = channel.fromPath(params.one_per_patient, checkIfExists: true)
     ONE_TUMOR_PER_PATIENT(
-                          DERMATLAS_METADATA.out.combined_metadata,
                           one_tumor_per_patient,
                           ASCAT_ANALYSIS.out.filtered_outs,
                           ASCAT_ANALYSIS.out.estimates,
                           'one_tumour_per_patient',
                           "PLOTS_ONE_PER_PATIENT",
-                           params.outdir,
                            params.cohort_prefix,
                            params.gistic_refgene_file,
                            giab_regions,
@@ -77,13 +73,11 @@ workflow {
     log.info("Running ASCAT post-processing for independent cohort...")
     independent_tumors = channel.fromPath(params.independent, checkIfExists: true)
     INDEPENDENT_TUMORS(
-                          DERMATLAS_METADATA.out.combined_metadata,
                           independent_tumors,
                           ASCAT_ANALYSIS.out.filtered_outs,
                           ASCAT_ANALYSIS.out.estimates,
                           'independent_tumours',
                           "PLOTS_INDEPENDENT",
-                           params.outdir,
                            params.cohort_prefix,
                            params.gistic_refgene_file,
                            giab_regions,

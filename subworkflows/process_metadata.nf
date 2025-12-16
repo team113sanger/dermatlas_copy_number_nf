@@ -41,12 +41,12 @@ workflow DERMATLAS_METADATA {
         ]
         tuple(sample_id, patient_info)
     }
-    | filter { sample_id, meta -> sample_id != null && sample_id != "" && sample_id != "-" }
+    | filter { sample_id, _meta -> sample_id != null && sample_id != "" && sample_id != "-" }
     | set { patient_metadata_ch }
     
     // Create sex info file for ASCAT
     patient_metadata_ch
-    | filter { id, meta -> id =~ "PD" }
+    | filter { id, _meta -> id =~ "PD" }
     | collectFile(name: "allsamples2sex.txt",
         storeDir: "${params.outdir}/ASCAT/${params.release_version}") { id, meta ->
         ["allsamples2sex.txt", "${id}\t${meta['Sex']}\n"]
@@ -122,7 +122,7 @@ workflow DERMATLAS_METADATA {
             combined.tumor_index
         )
     }
-    | filter { it != null }
+    | filter { result -> result != null }
     | set { combined_metadata }
     
     emit:
