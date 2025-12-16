@@ -11,20 +11,28 @@ workflow GISTIC2_ANALYSIS {
     cohort_prefix
 
     main:
-    RUN_GISTIC2(gistic_inputs, 
+    RUN_GISTIC2(gistic_inputs,
                 gistic_refgene)
 
+    // Join ascat_segments with lesions for FILTER_GISTIC2_CALLS
+    ascat_segments
+    | join(RUN_GISTIC2.out.lesions)
+    | set { segments_with_lesions }
+
     FILTER_GISTIC2_CALLS(
-                        ascat_segments,
-                        RUN_GISTIC2.out.lesions,
+                        segments_with_lesions,
                         difficult_regions_file,
                         focal_cutoff,
                         cohort_prefix)
-                        
+
+    // Join ascat_segments with broad and arms for FILTER_BROAD_GISTIC2_CALLS
+    ascat_segments
+    | join(RUN_GISTIC2.out.broad)
+    | join(RUN_GISTIC2.out.arms)
+    | set { segments_with_broad }
+
     FILTER_BROAD_GISTIC2_CALLS(
-                       ascat_segments,
-                       RUN_GISTIC2.out.broad,
-                       RUN_GISTIC2.out.arms,
+                       segments_with_broad,
                        chrom_arms,
                        broad_cutoff,
                        cohort_prefix)

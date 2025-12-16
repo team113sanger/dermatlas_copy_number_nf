@@ -6,8 +6,8 @@ workflow DERMATLAS_METADATA {
     main:
     // Process BAM files
     bamfile_ch
-    | map { file -> 
-        index = file + ".bai"
+    | map { file ->
+        def index = file + ".bai"
         tuple(file, index)
     }
     | map { file, index ->

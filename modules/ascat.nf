@@ -164,7 +164,8 @@ process EXTRACT_GOODNESS_OF_FIT {
     """
     stub:
     """
-    goodnessOfFit=97
+    #!/bin/bash
+    export goodnessOfFit=97
     echo "\$goodnessOfFit"
     """
 }

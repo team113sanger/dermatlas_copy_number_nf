@@ -58,8 +58,7 @@ process FILTER_GISTIC2_CALLS{
     container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.5.3"
 
     input:
-    tuple val(meta), path(segments)
-    tuple val(meta), path(lesions)
+    tuple val(meta), path(segments), path(lesions)
     path(difficult_regions)
     val(gistic_cutoff)
     val(prefix)
@@ -94,9 +93,7 @@ process FILTER_BROAD_GISTIC2_CALLS {
     publishDir "${params.outdir}/gistic2/${params.release_version}/${meta.analysis_type}/MIN_0", mode: params.publish_dir_mode
     
     input:
-    tuple val(meta), path(segments)
-    tuple val(meta), path(broad_sig)
-    tuple val(meta), path(by_arms)
+    tuple val(meta), path(segments), path(broad_sig), path(by_arms)
     path(arms_file)
     val(cutoff)
     val(cohort_prefix)
