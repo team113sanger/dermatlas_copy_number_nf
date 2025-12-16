@@ -8,9 +8,19 @@ include { SPLIT_COHORT_SEXES } from './subworkflows/local/split_sample_cohort.nf
 include { ASCAT_ANALYSIS } from './subworkflows/local/ascat_analysis.nf'
 include { ANALYSE_SUBCOHORT } from './subworkflows/local/analyse_subcohort.nf'
 
+include { UTILS_NEXTFLOW_PIPELINE } from './subworkflows/nf-core/utils_nextflow_pipeline/main.nf'
+
 include { TSV_TO_EXCEL; GENERATE_ASCAT_README } from './modules/publish.nf'
 
 workflow {
+
+    // Run nf-core utility checks
+    UTILS_NEXTFLOW_PIPELINE(
+        params.print_version,
+        params.dump_parameters,
+        params.outdir,
+        params.check_conda_channels
+    )
 
     // Cohort files
     bamfiles           = channel.fromPath(params.bam_files, checkIfExists: true)
