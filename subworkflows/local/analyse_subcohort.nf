@@ -15,53 +15,37 @@ workflow ANALYSE_SUBCOHORT {
 
     main:
 
-    // Parse sample lists and add cohort metadata
+    // Build a set of (pair_id, cohort_name, plot_dir) for filtering
     cohort_sample_sets
     | flatMap { cohort_name, sample_list, plot_dir ->
         sample_list.splitCsv(sep: "\t", header: ['tumor', 'normal'])
             .collect { row ->
-                tuple(
-                    [pair_id: row.normal + "_" + row.tumor],
-                    cohort_name,
-                    plot_dir
-                )
+                tuple(row.normal + "_" + row.tumor, cohort_name, plot_dir)
             }
     }
-    | set { subset_ids_with_cohort }
+    | set { sample_to_cohort }
 
-    // Extract just the pair_ids for joining
-    subset_ids_with_cohort
-    | map { pair_id_map, _cohort, _plot_dir -> pair_id_map }
-    | set { subset_ids }
-
-    // Create a lookup channel for cohort info by pair_id
-    subset_ids_with_cohort
-    | map { pair_id_map, cohort_name, plot_dir ->
-        tuple(pair_id_map, [analysis_type: cohort_name, plot_dir: plot_dir])
-    }
-    | set { cohort_lookup }
-
+    // Combine ASCAT outputs with cohort membership, filter matches
     ascat_outputs
-    | flatMap{ n -> n}
-    | map{ meta, segments, gistic -> [ meta.subMap('pair_id'), meta, segments, gistic]}
-    | groupTuple()
-    | join(subset_ids)
-    | transpose()
-    | join(cohort_lookup)
-    | map { _pair_id, meta, segments, gistic, cohort_info ->
-        [meta + cohort_info, segments, gistic]
+    | flatMap { n -> n }
+    | combine(sample_to_cohort)
+    | filter { meta, segments, gistic, pair_id, cohort_name, plot_dir ->
+        meta.pair_id == pair_id
+    }
+    | map { meta, segments, gistic, _pair_id, cohort_name, plot_dir ->
+        [meta + [analysis_type: cohort_name, plot_dir: plot_dir], segments, gistic]
     }
     | set { ascat_subset_segments }
 
+    // Combine ASCAT estimates with cohort membership, filter matches
     ascat_estimates
-    | flatMap{ n -> n}
-    | map{ meta, estimate_file -> [ meta.subMap('pair_id'), meta, estimate_file]}
-    | groupTuple()
-    | join(subset_ids)
-    | transpose()
-    | join(cohort_lookup)
-    | map { _pair_id, _meta, estimate_file, cohort_info ->
-        tuple(cohort_info, estimate_file)
+    | flatMap { n -> n }
+    | combine(sample_to_cohort)
+    | filter { meta, estimate_file, pair_id, cohort_name, plot_dir ->
+        meta.pair_id == pair_id
+    }
+    | map { meta, estimate_file, _pair_id, cohort_name, plot_dir ->
+        tuple([analysis_type: cohort_name, plot_dir: plot_dir], estimate_file)
     }
     | set { ascat_subset_estimates }
 
