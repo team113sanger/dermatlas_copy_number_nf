@@ -27,7 +27,7 @@ process RUN_ASCAT_EXOMES {
     script:
     def norm = "$meta.normal"
     def tum = "$meta.tumor"
-    def sexchr = "$meta.sexchr"
+    def sexchr = "$meta.Karyotype"
 
     """
     /opt/repo/run_ascat_exome_nf.R \

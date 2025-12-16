@@ -32,12 +32,13 @@ In brief, this pipeline takes sets matched tumor-normal samples that have been p
 
 ### Cohort-dependent variables
 - `bam_files`: path to the top-level directory for a set of `.bam` files. **Note:** *pipeline assumes that corresponding `.bam.bai` index files have been pre-generated and are co-located with bams and you should use a `**` glob match to recursively collect all bamfiles in the directory.*
-- `metadata_manifest`: path to a tab-delimited manifest containing information about sample phenotype and preparation. Required columns and allowed values are: 
-    - `Sex`: M or F
-    - `Sanger_DNA_ID`: PDID of the sample (e.g. PD001234)
-    - `OK_to_analyse_DNA?`: Y or N 
-    - `Phenotype`: T or N
 - `all_samples`: path to a file containing a tab-delimited list of all matched tumour-normal pairs in a cohort.
+- `metadata_manifest`: path to a tab-delimited manifest containing information about sample phenotype and preparation. Columns can be specified using the following variables. Defaults columns and allowed values are:
+    - `col_sex` (Default: `Sex`) - **M or F**
+    - `col_sample_id` (Default: `Sanger_DNA_ID`) - **ID of the sample (e.g. PD001234)**
+    - `col_include` (Default: `OK_to_analyse_DNA?`) - **Y or N**
+    - `col_TN` (Default: `Phenotype`) - **T or N**
+
 
 **Optional** 
 - `one_per_patient`: path to a file containing a tab-delimited list of matched tumour-normal pairs with one tumor selected per patient.

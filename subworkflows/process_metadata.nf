@@ -29,13 +29,15 @@ workflow DERMATLAS_METADATA {
     patient_metadata
     | splitCsv(sep:"\t", header: true)
     | map { meta ->
-        def sample_id = meta["Sanger_DNA_ID"]
+        def sample_id = meta[params.col_sample_id]
+        def sex_value = meta[params.col_sex]
+        def sexchr = [F: "XX", M: "XY"].get(sex_value, "Unknown")
         def patient_info = [
-            "Sex": meta.Sex,
-            "Sanger_DNA_ID": sample_id,
-            "OK_to_analyse_DNA?": meta["OK_to_analyse_DNA?"],
-            "Phenotype": meta.Phenotype,
-            "sexchr": meta.Sex == "F" ? "XX" : "XY"
+            "Sex": sex_value,
+            "Sample": sample_id,
+            "Include?": meta[params.col_include],
+            "Phenotype": meta[params.col_TN],
+            "Karyotype": sexchr
         ]
         tuple(sample_id, patient_info)
     }
