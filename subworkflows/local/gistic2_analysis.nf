@@ -1,4 +1,4 @@
-include { RUN_GISTIC2; FILTER_GISTIC2_CALLS; FILTER_BROAD_GISTIC2_CALLS } from "../modules/gistic2.nf"
+include { RUN_GISTIC2; FILTER_GISTIC2_CALLS; FILTER_BROAD_GISTIC2_CALLS } from "../../modules/gistic2.nf"
 workflow GISTIC2_ANALYSIS {
     take:
     gistic_inputs

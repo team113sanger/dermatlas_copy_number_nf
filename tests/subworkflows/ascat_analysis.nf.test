@@ -1,7 +1,7 @@
 nextflow_workflow {
 
     name "Test Workflow ASCAT_ANALYSIS"
-    script "subworkflows/ascat_analysis.nf"
+    script "subworkflows/local/ascat_analysis.nf"
     workflow "ASCAT_ANALYSIS"
 
     test("Should run without failures") {

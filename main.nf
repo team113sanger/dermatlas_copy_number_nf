@@ -2,11 +2,11 @@
 nextflow.enable.dsl = 2
 // Repeated data ingestion for whole and subgroups of samples
 
-include { DERMATLAS_METADATA } from './subworkflows/process_metadata.nf'
-include { SPLIT_COHORT_SEXES } from './subworkflows/split_sample_cohort.nf'
+include { DERMATLAS_METADATA } from './subworkflows/local/process_metadata.nf'
+include { SPLIT_COHORT_SEXES } from './subworkflows/local/split_sample_cohort.nf'
 
-include { ASCAT_ANALYSIS } from './subworkflows/ascat_analysis.nf'
-include { ANALYSE_SUBCOHORT } from './subworkflows/analyse_subcohort.nf'
+include { ASCAT_ANALYSIS } from './subworkflows/local/ascat_analysis.nf'
+include { ANALYSE_SUBCOHORT } from './subworkflows/local/analyse_subcohort.nf'
 
 include { TSV_TO_EXCEL; GENERATE_ASCAT_README } from './modules/publish.nf'
 
