@@ -64,14 +64,10 @@ workflow {
             }
         )
 
-        // Convert to value channels so they can be reused across multiple subcohorts
-        ascat_filtered = ASCAT_ANALYSIS.out.filtered_outs.first()
-        ascat_estimates = ASCAT_ANALYSIS.out.estimates.first()
-
         ANALYSE_SUBCOHORT(
             cohort_sample_sets,
-            ascat_filtered,
-            ascat_estimates,
+            ASCAT_ANALYSIS.out.filtered_outs,
+            ASCAT_ANALYSIS.out.estimates,
             params.cohort_prefix,
             params.gistic_refgene_file,
             giab_regions,
