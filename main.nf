@@ -13,10 +13,10 @@ include { TSV_TO_EXCEL; GENERATE_ASCAT_README } from './modules/publish.nf'
 
 workflow {
 
-    // Cohort files 
-    bamfiles           = Channel.fromPath(params.bam_files, checkIfExists: true)
-    all_pairs          = Channel.fromPath(params.all_samples, checkIfExists: true)
-    patient_md         = Channel.fromPath(params.metadata_manifest, checkIfExists: true)
+    // Cohort files
+    bamfiles           = channel.fromPath(params.bam_files, checkIfExists: true)
+    all_pairs          = channel.fromPath(params.all_samples, checkIfExists: true)
+    patient_md         = channel.fromPath(params.metadata_manifest, checkIfExists: true)
     // Reference files 
     reference_genome   = file(params.reference_genome, checkIfExists: true)
     bait_set           = file(params.bait_set, checkIfExists: true)
@@ -27,9 +27,9 @@ workflow {
     chrom_arms         = file(params.chrom_arms_file, checkIfExists: true)
     
     // Thresholds
-    broad_cutoff       = Channel.of(params.gistic_broad_peak_q_cutoff)
-    focal_cutoff       = Channel.of(params.gistic_focal_q_value_cutoff)
-    gof_threshold      = Channel.of(params.ascat_goodness_of_fit_threshold)
+    broad_cutoff       = channel.of(params.gistic_broad_peak_q_cutoff)
+    focal_cutoff       = channel.of(params.gistic_focal_q_value_cutoff)
+    gof_threshold      = channel.of(params.ascat_goodness_of_fit_threshold)
 
     // Combine and pivot the metadata so that T/N pair 
     // bams and metadata are a single channel
@@ -56,7 +56,7 @@ workflow {
 
     if (params.one_per_patient) {
     log.info("Running ASCAT post-processing for one tumor per patient...")
-    one_tumor_per_patient = Channel.fromPath(params.one_per_patient, checkIfExists: true)
+    one_tumor_per_patient = channel.fromPath(params.one_per_patient, checkIfExists: true)
     ONE_TUMOR_PER_PATIENT(
                           DERMATLAS_METADATA.out.combined_metadata,
                           one_tumor_per_patient,
@@ -75,7 +75,7 @@ workflow {
 
     if (params.independent) {
     log.info("Running ASCAT post-processing for independent cohort...")
-    independent_tumors = Channel.fromPath(params.independent, checkIfExists: true)
+    independent_tumors = channel.fromPath(params.independent, checkIfExists: true)
     INDEPENDENT_TUMORS(
                           DERMATLAS_METADATA.out.combined_metadata,
                           independent_tumors,

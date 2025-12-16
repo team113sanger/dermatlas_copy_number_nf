@@ -105,9 +105,9 @@ Created using nextflow's in-built visualitation features.
 ```mermaid
 flowchart TB
     subgraph " "
-    v0["Channel.fromPath"]
-    v1["Channel.fromPath"]
-    v2["Channel.fromPath"]
+    v0["channel.fromPath"]
+    v1["channel.fromPath"]
+    v2["channel.fromPath"]
     v18["outdir"]
     v19["genome"]
     v20["baits"]

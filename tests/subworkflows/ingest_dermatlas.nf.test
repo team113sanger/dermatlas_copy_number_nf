@@ -12,9 +12,9 @@ nextflow_workflow {
         }
             workflow {
                 """
-                input[0] = Channel.fromPath("$baseDir/tests/testdata/PD57536a.sample.dupmarked.bam")
-                input[1] = Channel.fromPath("$baseDir/tests/testdata/pair_ids.tsv")
-                input[2] = Channel.fromPath("/lustre/scratch124/nf-test/copy_number/metadata_tab.tsv")
+                input[0] = channel.fromPath("$baseDir/tests/testdata/PD57536a.sample.dupmarked.bam")
+                input[1] = channel.fromPath("$baseDir/tests/testdata/pair_ids.tsv")
+                input[2] = channel.fromPath("/lustre/scratch124/nf-test/copy_number/metadata_tab.tsv")
                 """
             }
         }
@@ -32,9 +32,9 @@ nextflow_workflow {
         }
             workflow {
                 """
-                input[0] = Channel.fromPath("$baseDir/tests/testdata/PD57536a.sample.dupmarked.bam")
-                input[1] = Channel.fromPath("$baseDir/tests/testdata/pair_ids.tsv")
-                input[2] = Channel.fromPath("/lustre/scratch124/nf-test/copy_number/metadata_underscore.tsv")
+                input[0] = channel.fromPath("$baseDir/tests/testdata/PD57536a.sample.dupmarked.bam")
+                input[1] = channel.fromPath("$baseDir/tests/testdata/pair_ids.tsv")
+                input[2] = channel.fromPath("/lustre/scratch124/nf-test/copy_number/metadata_underscore.tsv")
                 """
             }
         }
