@@ -15,12 +15,7 @@ include { TSV_TO_EXCEL; GENERATE_ASCAT_README } from './modules/publish.nf'
 workflow {
 
     // Run nf-core utility checks
-    UTILS_NEXTFLOW_PIPELINE(
-        params.print_version,
-        params.dump_parameters,
-        params.outdir,
-        params.check_conda_channels
-    )
+
 
     // Cohort files
     bamfiles           = channel.fromPath(params.bam_files, checkIfExists: true)
@@ -83,6 +78,12 @@ workflow {
             focal_cutoff,
             chrom_arms
         )
+        UTILS_NEXTFLOW_PIPELINE(
+        params.print_version,
+        params.dump_parameters,
+        params.outdir,
+        params.check_conda_channels
+    )
     }
 
 }
