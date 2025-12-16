@@ -18,11 +18,10 @@ workflow UTILS_NEXTFLOW_PIPELINE {
     main:
 
     //
-    // Print workflow version and exit on --version
+    // Print workflow version
     //
     if (print_version) {
         log.info("${workflow.manifest.name} ${getWorkflowVersion()}")
-        System.exit(0)
     }
 
     //
