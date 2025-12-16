@@ -46,7 +46,6 @@ workflow DERMATLAS_METADATA {
     
     // Create sex info file for ASCAT
     patient_metadata_ch
-    | filter { id, _meta -> id =~ "PD" }
     | collectFile(name: "allsamples2sex.txt",
         storeDir: "${params.outdir}/ASCAT/${params.release_version}") { id, meta ->
         ["allsamples2sex.txt", "${id}\t${meta['Sex']}\n"]
