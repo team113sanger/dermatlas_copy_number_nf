@@ -42,7 +42,6 @@ workflow DERMATLAS_METADATA {
         tuple(sample_id, patient_info)
     }
     | filter { sample_id, _meta -> sample_id != null && sample_id != "" && sample_id != "-" }
-    | view()
     | set { patient_metadata_ch }
     
     // Create sex info file for ASCAT
