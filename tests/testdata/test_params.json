@@ -1,7 +1,7 @@
 {
     "outdir": "results",
     "cohort_prefix": "6509_2707_Leiomyoma",
-    "bam_files": "s3://t113-test-artefacts/nf-test/dermatlas_copynumber_nf/bams/**.bam",
+    "bam_files": "/lustre/scratch125/casm/teams/team113/secure-lustre/team113/nf-test/bams/**.bam",
     "all_samples": "${baseDir}/tests/testdata/pair_ids.tsv",
     "metadata_manifest": "s3://t113-test-artefacts/nf-test/dermatlas_copynumber_nf/metadata/6509_6510_Leiomyoma.tsv",
     "chrom_arms_file": "s3://t113-test-artefacts/nf-test/dermatlas_copynumber_nf/ucsc/grch38_chr_arms.bed",
