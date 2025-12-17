@@ -14,10 +14,10 @@ nextflow_process {
         """
         input[0] = tuple(
             [pair_id: "PD54403a_PD54403b", normal: "PD54403b", tumor: "PD54403a", Sex: "M", Phenotype: "N", Karyotype: "XY"],
-            file("/lustre/scratch125/casm/teams/team113/secure-lustre/team113/nf-test/bams/PD54403b/PD54403b.sample.dupmarked.bam"),
-            file("/lustre/scratch125/casm/teams/team113/secure-lustre/team113/nf-test/bams/PD54403b/PD54403b.sample.dupmarked.bam.bai"),
-            file("/lustre/scratch125/casm/teams/team113/secure-lustre/team113/nf-test/bams/PD54403a/PD54403a.sample.dupmarked.bam"),
-            file("/lustre/scratch125/casm/teams/team113/secure-lustre/team113/nf-test/bams/PD54403a/PD54403a.sample.dupmarked.bam.bai")
+            file("s3://t113-test-artefacts/nf-test/dermatlas_copynumber_nf/bams/PD54403b/PD54403b.sample.dupmarked.bam"),
+            file("s3://t113-test-artefacts/nf-test/dermatlas_copynumber_nf/bams/PD54403b/PD54403b.sample.dupmarked.bam.bai"),
+            file("s3://t113-test-artefacts/nf-test/dermatlas_copynumber_nf/bams/PD54403a/PD54403a.sample.dupmarked.bam"),
+            file("s3://t113-test-artefacts/nf-test/dermatlas_copynumber_nf/bams/PD54403a/PD54403a.sample.dupmarked.bam.bai")
             )
         input[1] = file("${params.reference_genome}")
         input[2] = file("${params.bait_set}")
