@@ -15,22 +15,5 @@
             "nextflow": "23.10.1"
         },
         "timestamp": "2024-09-02T13:42:32.786712"
-    },
-    "Should run without failures - underscores in manifest": {
-        "content": [
-            {
-                "0": [
-                    
-                ],
-                "combined_metadata": [
-                    
-                ]
-            }
-        ],
-        "meta": {
-            "nf-test": "0.8.4",
-            "nextflow": "23.10.1"
-        },
-        "timestamp": "2024-09-02T13:42:38.056489"
     }
 }
