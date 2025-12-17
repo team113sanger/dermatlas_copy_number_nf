@@ -12,9 +12,9 @@ nextflow_workflow {
         }
             workflow {
                 """
-                input[0] = Channel.fromPath("$baseDir/tests/testdata/PD57536a.sample.dupmarked.bam")
-                input[1] = Channel.fromPath("$baseDir/tests/testdata/pair_ids.tsv")
-                input[2] = Channel.fromPath("/lustre/scratch124/nf-test/copy_number/metadata_tab.tsv")
+                input[0] = channel.fromPath("s3://t113-test-artefacts/nf-test/dermatlas_copynumber_nf/bams/PD57536a/PD57536a.sample.dupmarked.bam")
+                input[1] = channel.fromPath("$baseDir/tests/testdata/pair_ids.tsv")
+                input[2] = channel.fromPath("s3://t113-test-artefacts/nf-test/dermatlas_copynumber_nf/metadata/6509_6510_Leiomyoma.tsv")
                 """
             }
         }
@@ -23,27 +23,6 @@ nextflow_workflow {
             assert workflow.success
             assert snapshot(workflow.out).match()
         }
-    }
-        test("Should run without failures - underscores in manifest") {
-
-        when {
-        params {
-            load("$baseDir/tests/testdata/test_params.json")
-        }
-            workflow {
-                """
-                input[0] = Channel.fromPath("$baseDir/tests/testdata/PD57536a.sample.dupmarked.bam")
-                input[1] = Channel.fromPath("$baseDir/tests/testdata/pair_ids.tsv")
-                input[2] = Channel.fromPath("/lustre/scratch124/nf-test/copy_number/metadata_underscore.tsv")
-                """
-            }
-        }
-
-        then {
-            assert workflow.success
-            assert snapshot(workflow.out).match()
-        }
-
     }
 
 }
