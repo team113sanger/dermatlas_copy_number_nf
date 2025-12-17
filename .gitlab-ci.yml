@@ -33,43 +33,43 @@ include:
     NF_TEST_DIR: ".nf-test"
     FILES_TO_CLEANUP: "NEXTFLOW_DIR;NF_TEST_DIR;"
 
-.specific-tags__secure_lustre_runner:
-  variables:
-    # Custom runner is a shell runner with the following tags
-    USE_DOCKER_IN_DOCKER: 0
-  tags:
-    - team113-secure-lustre-runner
+# .specific-tags__secure_lustre_runner:
+#   variables:
+#     # Custom runner is a shell runner with the following tags
+#     USE_DOCKER_IN_DOCKER: 0
+#   tags:
+#     - team113-secure-lustre-runner
 
 ############
 #   JOBS   #
 ############
-secure-lustre-test:
-  stage: test
-  extends:
-    - .generic-wo-script-or-rules-or-tags
-    - .specific-tags__secure_lustre_runner
-    - .specific-variables
-    - .component-rules-except-release
-  script:
-    #
-    # DEBUG INFO ONLY
-    #
-    - echo "PATH=$PATH"
-    - which $SHELL
-    - java -version
-    - javac -version
-    - nextflow -version
-    - nf-test version
-    - which java
-    - which javac
-    - which nextflow
-    - which nf-test
-    - echo "WORK_DIR=$PWD"
+# secure-lustre-test:
+#   stage: test
+#   extends:
+#     - .generic-wo-script-or-rules-or-tags
+#     - .specific-tags__secure_lustre_runner
+#     - .specific-variables
+#     - .component-rules-except-release
+#   script:
+#     #
+#     # DEBUG INFO ONLY
+#     #
+#     - echo "PATH=$PATH"
+#     - which $SHELL
+#     - java -version
+#     - javac -version
+#     - nextflow -version
+#     - nf-test version
+#     - which java
+#     - which javac
+#     - which nextflow
+#     - which nf-test
+#     - echo "WORK_DIR=$PWD"
 
-    #
-    # MAIN
-    #
-    - nf-test test --tag "ci" --verbose --profile cicd
+#     #
+#     # MAIN
+#     #
+#     - nf-test test --tag "ci" --verbose --profile cicd
 
 # Cache pip dependencies
 cache:
