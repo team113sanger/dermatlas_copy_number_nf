@@ -6,8 +6,8 @@ workflow DERMATLAS_METADATA {
     main:
     // Process BAM files
     bamfile_ch
-    | map { file -> 
-        index = file + ".bai"
+    | map { file ->
+        def index = file + ".bai"
         tuple(file, index)
     }
     | map { file, index ->
@@ -29,22 +29,23 @@ workflow DERMATLAS_METADATA {
     patient_metadata
     | splitCsv(sep:"\t", header: true)
     | map { meta ->
-        def sample_id = meta["Sanger_DNA_ID"]
+        def sample_id = meta[params.col_sample_id]
+        def sex_value = meta[params.col_sex]
+        def sexchr = [F: "XX", M: "XY"].get(sex_value, "Unknown")
         def patient_info = [
-            "Sex": meta.Sex,
-            "Sanger_DNA_ID": sample_id,
-            "OK_to_analyse_DNA?": meta["OK_to_analyse_DNA?"],
-            "Phenotype": meta.Phenotype,
-            "sexchr": meta.Sex == "F" ? "XX" : "XY"
+            "Sex": sex_value,
+            "Sample": sample_id,
+            "Include?": meta[params.col_include],
+            "Phenotype": meta[params.col_TN],
+            "Karyotype": sexchr
         ]
         tuple(sample_id, patient_info)
     }
-    | filter { sample_id, meta -> sample_id != null && sample_id != "" && sample_id != "-" }
+    | filter { sample_id, _meta -> sample_id != null && sample_id != "" && sample_id != "-" }
     | set { patient_metadata_ch }
     
     // Create sex info file for ASCAT
     patient_metadata_ch
-    | filter { id, meta -> id =~ "PD" }
     | collectFile(name: "allsamples2sex.txt",
         storeDir: "${params.outdir}/ASCAT/${params.release_version}") { id, meta ->
         ["allsamples2sex.txt", "${id}\t${meta['Sex']}\n"]
@@ -120,7 +121,7 @@ workflow DERMATLAS_METADATA {
             combined.tumor_index
         )
     }
-    | filter { it != null }
+    | filter { result -> result != null }
     | set { combined_metadata }
     
     emit:

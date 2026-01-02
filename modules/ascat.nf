@@ -1,11 +1,10 @@
 process RUN_ASCAT_EXOMES {
     publishDir "${params.outdir}/ASCAT/${meta.tumor}-${meta.normal}", mode: params.publish_dir_mode
     container 'gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/ascat:0.9.0'
-    input: 
+    input:
     tuple val(meta), path(normbam), path(normindex), path(tumbam), path(tumindex)
-    val(outdir)
     path(genome)
-    path(baits) 
+    path(baits)
     path(per_chrom_dir)
     path(gc_file)
     path(rt_file)
@@ -27,7 +26,7 @@ process RUN_ASCAT_EXOMES {
     script:
     def norm = "$meta.normal"
     def tum = "$meta.tumor"
-    def sexchr = "$meta.sexchr"
+    def sexchr = "$meta.Karyotype"
 
     """
     /opt/repo/run_ascat_exome_nf.R \
@@ -159,12 +158,13 @@ process EXTRACT_GOODNESS_OF_FIT {
     script:
     // Extract the "Goodness-of-fit" value using grep and cut
     """
-    goodnessOfFit=\$(grep 'Goodness-of-fit' ${txtFile} | cut -f2)
+    export goodnessOfFit=\$(grep 'Goodness-of-fit' ${txtFile} | cut -f2)
     echo "\$goodnessOfFit"
     """
     stub:
     """
-    goodnessOfFit=97
+    #!/bin/bash
+    export goodnessOfFit=97
     echo "\$goodnessOfFit"
     """
 }

@@ -4,10 +4,18 @@ workflow SPLIT_COHORT_SEXES {
 
     main:
         metadata_ch
-        | map { meta, nf, ni, tf, ti -> meta }
-        | branch { 
-                female: it["Sex"] == "F"
-                male: true }
+        | map { meta, _nf, _ni, _tf, _ti -> meta }
+        | filter { meta ->
+            if (meta["Sex"] != "F" && meta["Sex"] != "M") {
+                log.warn "Skipping sample ${meta["tumor"]} with invalid Sex value: '${meta["Sex"]}'"
+                return false
+            }
+            return true
+        }
+        | branch { meta ->
+            female: meta["Sex"] == "F"
+            male: meta["Sex"] == "M"
+        }
         | set { sex_split }
         
     
