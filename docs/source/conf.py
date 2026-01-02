@@ -8,8 +8,8 @@
 
 project = 'dermatlas_copy_number_nf'
 copyright = '2025, Jamie Billington'
-author = 'Jamie Billington'
-release = '0.7.6'
+author = 'Kim Wong, Jamie Billington'
+release = '1.0.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

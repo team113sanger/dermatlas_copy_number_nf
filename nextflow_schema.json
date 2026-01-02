@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "https://raw.githubusercontent.com/YOUR_PIPELINE/devlop/nextflow_schema.json",
+    "$id": "https://raw.githubusercontent.com/team113sanger/dermatlas_copy_number_nf/main/nextflow_schema.json",
     "title": "Dermatlas copy number calling pipeline parameters",
-    "description": "This pipeline uses Nextflow to generate CNA calls for dermatlas. The JSON Schema was built using the nf-core pipeline schema builder.",
+    "description": "This pipeline uses Nextflow to generate CNA calls for Dermatlas. The JSON Schema was built using the nf-core pipeline schema builder.",
     "type": "object",
     "definitions": {
         "input_output_options": {
@@ -10,61 +10,228 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": [
-                "input"
-            ],
-    "properties": {
-        "outdir": {
-            "type": "string"
+            "properties": {
+                "outdir": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "The output directory where results will be saved.",
+                    "default": "./results"
+                },
+                "tracedir": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "Directory for pipeline trace files.",
+                    "default": "${params.outdir}/pipeline_info"
+                },
+                "publish_dir_mode": {
+                    "type": "string",
+                    "description": "Method used to save pipeline results to output directory.",
+                    "enum": ["copy", "symlink", "link", "copyNoFollow", "move"],
+                    "default": "copy"
+                },
+                "cohort_prefix": {
+                    "type": "string",
+                    "description": "Prefix for cohort-level output files."
+                }
+            }
         },
-        "cohort_prefix": {
-            "type": "string"
+        "sample_input_options": {
+            "title": "Sample input options",
+            "type": "object",
+            "fa_icon": "fas fa-dna",
+            "description": "Paths to sample data and metadata files.",
+            "properties": {
+                "bam_files": {
+                    "type": "string",
+                    "format": "path",
+                    "description": "Path to the top-level directory for BAM files. Use ** glob to recursively collect all BAM files."
+                },
+                "all_samples": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to a tab-delimited file containing all matched tumour-normal pairs."
+                },
+                "metadata_manifest": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to a tab-delimited manifest containing sample phenotype and preparation information."
+                },
+                "subcohorts": {
+                    "type": ["object", "boolean"],
+                    "description": "A map defining subcohort analyses to run after ASCAT completes. Set to false to disable.",
+                    "default": false
+                }
+            }
         },
-        "bam_files": {
-            "type": "string", 
-            "format": "file-path"
+        "manifest_column_options": {
+            "title": "Manifest column configuration",
+            "type": "object",
+            "fa_icon": "fas fa-columns",
+            "description": "Configure column names from input metadata manifest.",
+            "properties": {
+                "col_sample_id": {
+                    "type": "string",
+                    "description": "Column name for sample ID in metadata manifest.",
+                    "default": "Sanger_DNA_ID"
+                },
+                "col_sex": {
+                    "type": "string",
+                    "description": "Column name for sex (M or F) in metadata manifest.",
+                    "default": "Sex"
+                },
+                "col_include": {
+                    "type": "string",
+                    "description": "Column name for inclusion flag (Y or N) in metadata manifest.",
+                    "default": "OK_to_analyse_DNA?"
+                },
+                "col_TN": {
+                    "type": "string",
+                    "description": "Column name for tumour/normal phenotype (T or N) in metadata manifest.",
+                    "default": "Phenotype"
+                }
+            }
         },
-        "all_samples": {
-            "type": "string"
+        "reference_files": {
+            "title": "Reference files",
+            "type": "object",
+            "fa_icon": "fas fa-database",
+            "description": "Paths to reference files required for analysis.",
+            "properties": {
+                "reference_genome": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to the reference genome FASTA file."
+                },
+                "bait_set": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to a BED file describing the analysed genomic regions."
+                },
+                "resource_files": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "Path to a directory containing ASCAT loci and allele files."
+                },
+                "gc_file": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to the ASCAT GC correction file."
+                },
+                "rt_file": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to the ASCAT replication timing correction file."
+                },
+                "gistic_refgene_file": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to the GISTIC2 reference gene file."
+                },
+                "difficult_regions_file": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to a BED file containing problematic genomic regions (GIAB) for GISTIC2 masking."
+                },
+                "chrom_arms_file": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to a file containing chromosome arm lengths."
+                }
+            }
         },
-        "metadata_manifest": {
-            "type": "string"
+        "ascat_options": {
+            "title": "ASCAT options",
+            "type": "object",
+            "fa_icon": "fas fa-sliders-h",
+            "description": "Parameters for ASCAT analysis.",
+            "properties": {
+                "ascat_goodness_of_fit_threshold": {
+                    "type": "number",
+                    "description": "Goodness-of-fit threshold (percentage) for filtering ASCAT results.",
+                    "default": 90,
+                    "minimum": 0,
+                    "maximum": 100
+                }
+            }
         },
-        "reference_genome": {
-            "type": "string",
-            "format": "file-path"
-        }, 
-        "bait_set": {
-            "type": "string",
-            "format": "file-path"
+        "gistic_options": {
+            "title": "GISTIC2 options",
+            "type": "object",
+            "fa_icon": "fas fa-chart-bar",
+            "description": "Parameters for GISTIC2 analysis.",
+            "properties": {
+                "gistic_broad_peak_q_cutoff": {
+                    "type": "number",
+                    "description": "Q-value cutoff for filtering GISTIC2 broad peak outputs.",
+                    "default": 0.1
+                },
+                "gistic_focal_q_value_cutoff": {
+                    "type": "number",
+                    "description": "Q-value cutoff for filtering GISTIC2 focal peak outputs.",
+                    "default": 0.1
+                }
+            }
         },
-        "resource_files": {
-            "type": "string",
-            "format": "file-path"
+        "pipeline_options": {
+            "title": "Pipeline options",
+            "type": "object",
+            "fa_icon": "fas fa-cog",
+            "description": "General pipeline configuration options.",
+            "properties": {
+                "print_version": {
+                    "type": "boolean",
+                    "description": "Print the pipeline version on startup.",
+                    "default": true
+                },
+                "dump_parameters": {
+                    "type": "boolean",
+                    "description": "Dump pipeline parameters to a file.",
+                    "default": true
+                },
+                "check_conda_channels": {
+                    "type": "boolean",
+                    "description": "Check conda channels for updates.",
+                    "default": false
+                }
+            }
         },
-        "gc_file": {
-            "type": "string",
-            "format": "file-path"
-        },
-        "rt_file": {
-            "type": "string",
-            "format": "file-path"
-        },
-        "gistic_refgene_file": {
-            "type": "string",
-            "format": "file-path"
-        },
-        "difficult_regions_file": {
-            "type": "string",
-            "format": "file-path"
-        },
-        "chrom_arms_file": {
-            "type": "string",
-            "format": "file-path"
-        },
-        "release_version": {
-            "type": "string"
+        "max_job_request_options": {
+            "title": "Max job request options",
+            "type": "object",
+            "fa_icon": "fas fa-server",
+            "description": "Set the top limit for requested resources for any single job.",
+            "properties": {
+                "max_cpus": {
+                    "type": "integer",
+                    "description": "Maximum number of CPUs that can be requested for any single job.",
+                    "default": 16,
+                    "hidden": true
+                },
+                "max_memory": {
+                    "type": "string",
+                    "description": "Maximum amount of memory that can be requested for any single job.",
+                    "default": "128.GB",
+                    "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
+                    "hidden": true
+                },
+                "max_time": {
+                    "type": "string",
+                    "description": "Maximum amount of time that can be requested for any single job.",
+                    "default": "240.h",
+                    "pattern": "^(\\d+\\.?\\s*(s|m|h|d)\\s*)+$",
+                    "hidden": true
+                }
+            }
         }
-    }}
-
-}}
+    },
+    "allOf": [
+        { "$ref": "#/definitions/input_output_options" },
+        { "$ref": "#/definitions/sample_input_options" },
+        { "$ref": "#/definitions/manifest_column_options" },
+        { "$ref": "#/definitions/reference_files" },
+        { "$ref": "#/definitions/ascat_options" },
+        { "$ref": "#/definitions/gistic_options" },
+        { "$ref": "#/definitions/pipeline_options" },
+        { "$ref": "#/definitions/max_job_request_options" }
+    ]
+}
