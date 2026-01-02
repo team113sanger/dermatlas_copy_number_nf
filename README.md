@@ -11,7 +11,7 @@
 [master-pipe-badge]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/badges/main/pipeline.svg
 [main-branch]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/-/commits/main
 [develop-pipe-badge]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/badges/develop/pipeline.svg
-[develop-branch]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf](https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf)/-/commits/develop
+[develop-branch]: https://gitlab.internal.sanger.ac.uk/DERMATLAS/analysis-methods/dermatlas_copy_number_nf/-/commits/develop
 
 ## Introduction
 
@@ -98,7 +98,7 @@ module load /software/modules/ISG/singularity/3.11.4
 # Create a nextflow job that will spawn other jobs
 
 nextflow run "https://github.com/team113sanger/dermatlas_copy_number_nf" \
--r 0.7.5 \
+-r 1.0.0 \
 -c commands/copy_number.config \
 -profile farm22 \
 -resume 
@@ -113,96 +113,134 @@ singularity remote login --username $(whoami) docker://gitlab-registry.internal.
 The pipeline can configured to run on either Sanger OpenStack secure-lustre instances or farm22 by changing the profile speicified:
 `-profile secure_lustre` or `-profile farm22`. 
 
-## Pipeline visualisation 
-Created using nextflow's in-built visualitation features.
+## Pipeline visualisation
+Created using nextflow's in-built visualisation features.
 
 ```mermaid
 flowchart TB
     subgraph " "
-    v0["channel.fromPath"]
-    v1["channel.fromPath"]
-    v2["channel.fromPath"]
-    v18["outdir"]
-    v19["genome"]
-    v20["baits"]
-    v21["per_chrom_dir"]
-    v22["gc_file"]
-    v23["rt_file"]
-    v43["cohort_prefix"]
-    v46["refgenefile"]
-    v52["difficult_regions"]
-    v53["prefix"]
-    end
-    subgraph ASCAT_ANALYSIS
-    v24([RUN_ASCAT_EXOMES])
-    v32([EXTRACT_GOODNESS_OF_FIT])
-    v34([SUMMARISE_ASCAT_ESTIMATES])
-    v44([CREATE_FREQUENCY_PLOTS])
-    v3(( ))
-    v33(( ))
-    v37(( ))
+    v0["Channel.fromPath"]
+    v1["Channel.fromPath"]
+    v2["Channel.fromPath"]
+    v27["genome"]
+    v28["baits"]
+    v29["per_chrom_dir"]
+    v30["gc_file"]
+    v31["rt_file"]
+    v43["gof_threshold"]
+    v49["Channel.fromList"]
+    v74["cohort_prefix"]
+    v81["refgenefile"]
+    v90["difficult_regions"]
+    v91["focal_cutoff"]
+    v92["prefix"]
+    v98["arms_file"]
+    v99["broad_cutoff"]
+    v100["cohort_prefix"]
     end
     subgraph " "
-    v25[" "]
+    v11[" "]
+    v24[" "]
     v26[" "]
-    v27[" "]
-    v28[" "]
-    v29[" "]
-    v30[" "]
-    v31[" "]
+    v33[" "]
+    v34[" "]
     v35[" "]
     v36[" "]
-    v42[" "]
-    v45[" "]
-    v48[" "]
-    v49[" "]
-    v50[" "]
-    v51[" "]
-    v55[" "]
+    v37[" "]
+    v38[" "]
+    v39[" "]
+    v61[" "]
+    v62[" "]
+    v76[" "]
+    v77[" "]
+    v78[" "]
+    v79[" "]
+    v80[" "]
+    v83[" "]
+    v84[" "]
+    v85["gistic_tabs"]
+    v86[" "]
+    v87[" "]
+    v88[" "]
+    v94["sample_summary"]
+    v95["cohort_summary"]
+    v102[" "]
     end
+    subgraph ASCAT_ANALYSIS
+    v32([RUN_ASCAT_EXOMES])
+    v40([EXTRACT_GOODNESS_OF_FIT])
+    v3(( ))
+    v41(( ))
+    end
+    subgraph ANALYSE_SUBCOHORT
+    v60([SUMMARISE_ASCAT_ESTIMATES])
+    v75([CREATE_FREQUENCY_PLOTS])
     subgraph GISTIC2_ANALYSIS
-    v47([RUN_GISTIC2])
-    v54([FILTER_GISTIC2_CALLS])
+    v82([RUN_GISTIC2])
+    v93([FILTER_GISTIC2_CALLS])
+    v101([FILTER_BROAD_GISTIC2_CALLS])
+    v89(( ))
+    v96(( ))
+    end
     end
     v0 --> v3
     v1 --> v3
     v2 --> v3
-    v18 --> v24
-    v19 --> v24
-    v20 --> v24
-    v21 --> v24
-    v22 --> v24
-    v23 --> v24
+    v3 --> v11
     v3 --> v24
-    v24 --> v31
-    v24 --> v32
-    v24 --> v30
-    v24 --> v29
-    v24 --> v28
-    v24 --> v27
-    v24 --> v26
-    v24 --> v25
-    v24 --> v33
-    v24 --> v37
+    v3 --> v26
+    v27 --> v32
+    v28 --> v32
+    v29 --> v32
+    v30 --> v32
+    v31 --> v32
+    v3 --> v32
+    v32 --> v39
+    v32 --> v40
+    v32 --> v38
     v32 --> v37
-    v33 --> v34
-    v34 --> v36
-    v34 --> v35
-    v34 --> v44
-    v37 --> v42
-    v43 --> v44
-    v37 --> v44
-    v44 --> v45
-    v46 --> v47
-    v37 --> v47
-    v47 --> v54
-    v47 --> v51
-    v47 --> v50
-    v47 --> v49
-    v47 --> v48
-    v52 --> v54
-    v53 --> v54
-    v54 --> v55
+    v32 --> v36
+    v32 --> v35
+    v32 --> v34
+    v32 --> v33
+    v32 --> v41
+    v40 --> v41
+    v43 --> v41
+    v49 --> v41
+    v41 --> v60
+    v60 --> v62
+    v60 --> v61
+    v60 --> v75
+    v74 --> v75
+    v41 --> v75
+    v75 --> v80
+    v75 --> v79
+    v75 --> v78
+    v75 --> v77
+    v75 --> v76
+    v75 --> v89
+    v75 --> v96
+    v81 --> v82
+    v41 --> v82
+    v82 --> v88
+    v82 --> v87
+    v82 --> v86
+    v82 --> v85
+    v82 --> v84
+    v82 --> v83
+    v82 --> v89
+    v82 --> v96
+    v90 --> v93
+    v91 --> v93
+    v92 --> v93
+    v89 --> v93
+    v93 --> v95
+    v93 --> v94
+    v98 --> v101
+    v99 --> v101
+    v100 --> v101
+    v96 --> v101
+    v101 --> v102
 ```
 
 ## Testing
