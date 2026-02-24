@@ -120,11 +120,11 @@ process CREATE_FREQUENCY_PLOTS {
     tuple val(meta), path("*_CNfreq.tsv"), emit: cn_freqs
     tuple val(meta), path("*_CNfreq.pdf"), emit: cn_pdf
     tuple val(meta), path("*cn-loh_segments.tsv"), emit: loh_segs
-    tuple val(meta), path("${cohort_prefix}{,-indep}_segments.tsv"), emit: processed_segments
+    tuple val(meta), path("*_segments.tsv"), emit: processed_segments
 
 
     script:
-    def append_prefix = "$meta.analysis_type" == "one_tumor_per_patient" ? cohort_prefix : cohort_prefix + "-indep"
+    def append_prefix = "${cohort_prefix}_${meta.analysis_type}"
     """
     /opt/repo/plot_ascat_cna_and_loh.R \
     $segfiles_list \
@@ -134,7 +134,7 @@ process CREATE_FREQUENCY_PLOTS {
     """
     
     stub:
-    def append_prefix = "$meta.analysis_type" == "one_tumour_per_patient" ? cohort_prefix : cohort_prefix + "-indep"
+    def append_prefix = "${cohort_prefix}_${meta.analysis_type}"
     """
     echo stub > x_cn-loh.pdf
     echo stub > x_cn-loh.tsv
