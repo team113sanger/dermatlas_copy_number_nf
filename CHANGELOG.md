@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix publishing path to be in project dir by default. 
 - Update GISTIC assess modules to use 0.9.0 container
 - Fix output path name for cohorts
-
+- Fixed minor trace  bug on `analyse_subcohort` that caused the pipeline to error out when trying to generate the `samples2sex` file for cohorts 
 
 ## [1.0.0] - 2026-01-02
 ### Improvements 

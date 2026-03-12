@@ -87,6 +87,7 @@ workflow ANALYSE_SUBCOHORT {
     ascat_subset_segments.collectFile(
        storeDir: "${params.outdir}/ASCAT/${params.release_version}"){
        meta, _segments, gistic ->
+        new File("${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}").mkdirs()  
         def filename = "${meta.analysis_type}/${meta.analysis_type}_segments.txt"
         return [filename, gistic]}
     | map{ gistic_file ->
@@ -103,6 +104,7 @@ workflow ANALYSE_SUBCOHORT {
     ascat_subset_segments.collectFile(
       storeDir: "${params.outdir}/ASCAT/${params.release_version}"){
            meta, _segments, _gistic ->
+        new File("${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}").mkdirs()  
         def filename = "${meta.analysis_type}/samples2sex.txt"
         [filename, "${meta["tumor"]}\t${meta["Sex"]}\n"]
     }
