@@ -46,9 +46,9 @@ workflow {
     // Output the Male and Female datasets as seperate files
     
     SPLIT_COHORT_SEXES(DERMATLAS_METADATA.out.combined_metadata)
-    // Perform ASCAT analysis on the entire cohort
+    // Perform ASCAT analysis on valid-sex samples only
     log.info("Running ASCAT analysis...")
-    ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
+    ASCAT_ANALYSIS(SPLIT_COHORT_SEXES.out.valid_metadata,
                    reference_genome,
                    bait_set,
                    per_chrom_files,
