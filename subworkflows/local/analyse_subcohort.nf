@@ -12,6 +12,10 @@ workflow ANALYSE_SUBCOHORT {
     broad_cutoff
     focal_cutoff
     chrom_arms
+    ensembl_transcript
+    cancer_gene_list
+    oncokb_file
+    log2thresholds
 
     main:
 
@@ -119,7 +123,11 @@ workflow ANALYSE_SUBCOHORT {
                     chrom_arms,
                     broad_cutoff,
                     focal_cutoff,
-                    cohort_prefix)
+                    cohort_prefix,
+                    ensembl_transcript,
+                    cancer_gene_list,
+                    oncokb_file,
+                    log2thresholds)
 
 
 

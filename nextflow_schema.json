@@ -136,6 +136,21 @@
                     "type": "string",
                     "format": "file-path",
                     "description": "Path to a file containing chromosome arm lengths."
+                },
+                "ensembl_transcript": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to the Ensembl transcript annotation file (GFF3) for GISTIC2 filtering."
+                },
+                "cancer_gene_list": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to a TSV file containing a cancer gene matrix for GISTIC2 filtering."
+                },
+                "oncokb_file": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to an OncoKB cancer gene list file for GISTIC2 filtering."
                 }
             }
         },
@@ -169,6 +184,11 @@
                     "type": "number",
                     "description": "Q-value cutoff for filtering GISTIC2 focal peak outputs.",
                     "default": 0.1
+                },
+                "gistic_log2_thresholds": {
+                    "type": "string",
+                    "description": "Comma-separated log2 ratio thresholds (deletion,amplification) for GISTIC2 filtering.",
+                    "default": "-0.2,0.2"
                 }
             }
         },
