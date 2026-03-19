@@ -84,7 +84,7 @@ process FILTER_GISTIC2_CALLS{
     -e $ensembl_transcript \
     -c $cancer_gene_list \
     --oncokb $oncokb_file \
-    --gistic-log2 $log2thresholds
+    --gistic-log2=$log2thresholds
 
     """
     stub: 
