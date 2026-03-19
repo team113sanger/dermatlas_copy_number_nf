@@ -4,9 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.1] - 2026-03-12
+
+
+## [1.1.0] - 2026-03-12
+### Improvements
+- Updated Gistic assess steps to use later versions with oncogene annotation
 ### Fixed
 - Fixed minor trace  bug on `analyse_subcohort` that caused the pipeline to error out when trying to generate the `samples2sex` file for cohorts 
+- Bugfix for skipping analysis of samples with unknown sex.
+- Fixing a regression in definition of segments files to use in Gistic
 
 ## [1.0.0] - 2026-01-02
 ### Improvements 
