@@ -7,6 +7,7 @@ process RUN_GISTIC2 {
     tuple val(meta), path(segment_file)
     path(refgenefile)
 
+
     output:
     tuple val(meta), path("all_lesions.conf_95.txt"), emit: lesions
     tuple val(meta), path("broad_significance_results.txt"), emit: broad
@@ -55,13 +56,17 @@ process RUN_GISTIC2 {
 process FILTER_GISTIC2_CALLS{
     label 'process_medium'
     publishDir "${params.outdir}/gistic2/${params.release_version}/${meta.analysis_type}/MIN_0", mode: params.publish_dir_mode
-    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.5.3"
+    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.9.1"
 
     input:
     tuple val(meta), path(segments), path(lesions)
     path(difficult_regions)
     val(gistic_cutoff)
     val(prefix)
+    path(ensembl_transcript)
+    path(cancer_gene_list)
+    path(oncokb_file)
+    val(log2thresholds)
 
     output:
     path("*_gistic_sample_summary.tsv"), emit: cs
@@ -75,7 +80,11 @@ process FILTER_GISTIC2_CALLS{
     --ascat-segments-file $segments \
     --residual-q-value-cutoff $gistic_cutoff \
     --output-dir . \
-    -d $difficult_regions
+    -d $difficult_regions \
+    -e $ensembl_transcript \
+    -c $cancer_gene_list \
+    --oncokb $oncokb_file \
+    --gistic-log2=$log2thresholds
 
     """
     stub: 
@@ -89,7 +98,7 @@ process FILTER_GISTIC2_CALLS{
 process FILTER_BROAD_GISTIC2_CALLS {
     label 'process_medium'
     errorStrategy 'ignore'
-    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.5.3"
+    container "gitlab-registry.internal.sanger.ac.uk/dermatlas/analysis-methods/gistic_assess:0.9.1"
     publishDir "${params.outdir}/gistic2/${params.release_version}/${meta.analysis_type}/MIN_0", mode: params.publish_dir_mode
     
     input:

@@ -9,6 +9,10 @@ workflow GISTIC2_ANALYSIS {
     broad_cutoff
     focal_cutoff
     cohort_prefix
+    ensembl_transcript
+    cancer_gene_list
+    oncokb_file
+    log2thresholds
 
     main:
     RUN_GISTIC2(gistic_inputs,
@@ -23,7 +27,11 @@ workflow GISTIC2_ANALYSIS {
                         segments_with_lesions,
                         difficult_regions_file,
                         focal_cutoff,
-                        cohort_prefix)
+                        cohort_prefix,
+                        ensembl_transcript,
+                        cancer_gene_list,
+                        oncokb_file,
+                        log2thresholds)
 
     // Join ascat_segments with broad and arms for FILTER_BROAD_GISTIC2_CALLS
     ascat_segments

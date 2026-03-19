@@ -12,6 +12,10 @@ workflow ANALYSE_SUBCOHORT {
     broad_cutoff
     focal_cutoff
     chrom_arms
+    ensembl_transcript
+    cancer_gene_list
+    oncokb_file
+    log2thresholds
 
     main:
 
@@ -83,6 +87,7 @@ workflow ANALYSE_SUBCOHORT {
     ascat_subset_segments.collectFile(
        storeDir: "${params.outdir}/ASCAT/${params.release_version}"){
        meta, _segments, gistic ->
+        new File("${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}").mkdirs()  
         def filename = "${meta.analysis_type}/${meta.analysis_type}_segments.txt"
         return [filename, gistic]}
     | map{ gistic_file ->
@@ -99,6 +104,7 @@ workflow ANALYSE_SUBCOHORT {
     ascat_subset_segments.collectFile(
       storeDir: "${params.outdir}/ASCAT/${params.release_version}"){
            meta, _segments, _gistic ->
+        new File("${params.outdir}/ASCAT/${params.release_version}/${meta.analysis_type}").mkdirs()  
         def filename = "${meta.analysis_type}/samples2sex.txt"
         [filename, "${meta["tumor"]}\t${meta["Sex"]}\n"]
     }
@@ -117,7 +123,11 @@ workflow ANALYSE_SUBCOHORT {
                     chrom_arms,
                     broad_cutoff,
                     focal_cutoff,
-                    cohort_prefix)
+                    cohort_prefix,
+                    ensembl_transcript,
+                    cancer_gene_list,
+                    oncokb_file,
+                    log2thresholds)
 
 
 

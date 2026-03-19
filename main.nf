@@ -26,11 +26,15 @@ workflow {
     rt_file            = file(params.rt_file, checkIfExists: true)
     giab_regions       = file(params.difficult_regions_file, checkIfExists: true)
     chrom_arms         = file(params.chrom_arms_file, checkIfExists: true)
+    ensembl_transcript = file(params.ensembl_transcript, checkIfExists: true)
+    cancer_gene_list   = file(params.cancer_gene_list, checkIfExists: true)
+    oncokb_file        = file(params.oncokb_file, checkIfExists: true)
     
     // Thresholds (value channels so they can be reused)
     broad_cutoff       = Channel.value(params.gistic_broad_peak_q_cutoff)
     focal_cutoff       = Channel.value(params.gistic_focal_q_value_cutoff)
     gof_threshold      = Channel.value(params.ascat_goodness_of_fit_threshold)
+    log2thresholds     = Channel.value(params.gistic_log2_thresholds)
 
     // Combine and pivot the metadata so that T/N pair 
     // bams and metadata are a single channel
@@ -42,9 +46,9 @@ workflow {
     // Output the Male and Female datasets as seperate files
     
     SPLIT_COHORT_SEXES(DERMATLAS_METADATA.out.combined_metadata)
-    // Perform ASCAT analysis on the entire cohort
+    // Perform ASCAT analysis on valid-sex samples only
     log.info("Running ASCAT analysis...")
-    ASCAT_ANALYSIS(DERMATLAS_METADATA.out.combined_metadata,
+    ASCAT_ANALYSIS(SPLIT_COHORT_SEXES.out.valid_metadata,
                    reference_genome,
                    bait_set,
                    per_chrom_files,
@@ -73,7 +77,11 @@ workflow {
             giab_regions,
             broad_cutoff,
             focal_cutoff,
-            chrom_arms
+            chrom_arms,
+            ensembl_transcript,
+            cancer_gene_list,
+            oncokb_file,
+            log2thresholds
         )
     }
 
