@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Improvements
 - Updated Gistic assess steps to use later versions with oncogene annotation
 ### Fixed
-- Fixed minor trace  bug on `analyse_subcohort` that caused the pipeline to error out when trying to generate the `samples2sex` file for cohorts 
+- Fixed minor trace bug on `analyse_subcohort` that caused the pipeline to error out when trying to generate the `samples2sex` file for cohorts 
 - Bugfix for skipping analysis of samples with unknown sex.
 - Fixing a regression in definition of segments files to use in Gistic
 
