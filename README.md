@@ -263,6 +263,16 @@ nextflow run main.nf \
 --stub-run
 ```
 
+## Cutting a release
+
+Create a new release with `git hf release start <version>`.
+
+Update the semantic version in these files and commit the changes:
+- `assets/run_copy_number.sh`
+- `nextflow.config`
+
+Then update the `CHANGELOG.md` and commit it. Finally `git hf release finish <version>`.
+
 ## Asset release bundles
 
 `assets/` is published to GitHub Releases as `projectify_asset_bundle.tar.gz` (plus a
