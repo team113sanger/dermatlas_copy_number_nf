@@ -6,7 +6,7 @@
 
 set -euo pipefail
 
-export REVISION="1.1.0"
+export REVISION="1.1.1"
 export CONFIG="${PROJECT_DIR}/commands/copy_number.config"
 
 # Create isolated pipeline directory

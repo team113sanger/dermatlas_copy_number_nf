@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [Unreleased]
+
+## [1.1.1] - 2026-08-27
+### Added
+- `.github/workflows/publish-assets.yml` publishes `assets/` to GitHub Releases as
+  `projectify_asset_bundle.tar.gz` (and a `.sha256` of it) on every push to `main` and
+  `develop` - as the rolling `main-latest` and `develop-latest` pre-releases - and on
+  every `X.Y.Z` tag. `dermanager projectify` fetches assets from those release URLs
+  instead of the GitHub API, which needs no token and is not rate limited. See
+  "Asset release bundles" in the README.
+
 ## [1.1.0] - 2026-03-12
 ### Improvements
 - Updated Gistic assess steps to use later versions with oncogene annotation
