@@ -61,6 +61,7 @@ process RUN_ASCAT_EXOMES {
     echo stub > ${prefix}.normal_alleleFrequencies_chr22.txt
     echo stub > ${prefix}.purityploidy.txt
     echo stub > ${prefix}.segments.txt
+    echo stub > ${prefix}.segments_raw.txt
     echo stub > ${prefix}.tumour.ASPCF.png
     echo stub > ${prefix}.tumour.sunrise.png
     echo stub > ${prefix}.tumour_alleleFrequencies_chr21.txt
@@ -84,7 +85,7 @@ process SUMMARISE_ASCAT_ESTIMATES {
     output:
     path("ascat_stats.tsv"),                        emit: ascat_sstats
     path("ascat_low_qual.list"),                    emit: low_quality
-    path("sample_purity_ploidy.tsv"),               emit: purity
+    tuple val(meta), path("sample_purity_ploidy.tsv"), emit: purity
 
     script:
     """

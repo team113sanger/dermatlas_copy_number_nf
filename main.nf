@@ -94,3 +94,5 @@ workflow {
     )
 
 }
+
+workflow.onComplete { Utils.reportRun(workflow, params) }
