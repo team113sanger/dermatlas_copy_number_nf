@@ -108,12 +108,26 @@ workflow ANALYSE_SUBCOHORT {
         def filename = "${meta.analysis_type}/samples2sex.txt"
         [filename, "${meta["tumor"]}\t${meta["Sex"]}\n"]
     }
+    | map { sex_file -> tuple(sex_file.parent.name, sex_file) }
     | set { sex2chr_ch }
 
+    // Key every input by analysis_type before CREATE_FREQUENCY_PLOTS: its three queue
+    // inputs are otherwise paired by arrival order, so with several subcohorts one
+    // subcohort's segments could be plotted against another's purity or sex file.
+    segment_summary
+    | map { meta, combined_file -> tuple(meta.analysis_type, meta, combined_file) }
+    | join(SUMMARISE_ASCAT_ESTIMATES.out.purity.map { meta, purity -> tuple(meta.analysis_type, purity) })
+    | join(sex2chr_ch)
+    | multiMap { _analysis_type, meta, combined_file, purity, sex_file ->
+        segments: tuple(meta, combined_file)
+        purity:   purity
+        sex:      sex_file
+    }
+    | set { freq_plot_inputs }
 
-    CREATE_FREQUENCY_PLOTS(segment_summary,
-                           SUMMARISE_ASCAT_ESTIMATES.out.purity,
-                           sex2chr_ch,
+    CREATE_FREQUENCY_PLOTS(freq_plot_inputs.segments,
+                           freq_plot_inputs.purity,
+                           freq_plot_inputs.sex,
                            cohort_prefix)
 
     GISTIC2_ANALYSIS(gistic_ch,

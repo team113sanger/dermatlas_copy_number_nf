@@ -48,6 +48,7 @@ process RUN_GISTIC2 {
     echo stub > test.pdf
     echo stub > test.mat
     echo stub > test.tsv
+    echo stub > scores.gistic
     """
 
     
