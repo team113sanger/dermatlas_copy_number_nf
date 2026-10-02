@@ -20,6 +20,15 @@ changelog entry to indicate the impact of the change:
 - **INTEGRATION** - a change to how the pipeline integrates with other systems
   or infrastructure, without changing its scientific processing or results.
 
+## [1.2.1] - 2026-10-02
+### Fixed
+- **ROBUSTNESS** - `FILTER_GISTIC2_CALLS` no longer fails when GISTIC2 finds no peaks
+  (an empty `all_lesions.conf_95.txt`, typical of a small subcohort such as
+  `related_tumours`). The `gistic_assess` container is bumped from 0.9.1 to 0.9.2 for
+  `FILTER_GISTIC2_CALLS` and `FILTER_BROAD_GISTIC2_CALLS`; with no peaks to filter it
+  writes header-only `*_gistic_cohort_summary.tsv` and `*_gistic_sample_summary.tsv`
+  files and exits cleanly. Results for cohorts where GISTIC2 does find peaks are unchanged.
+
 ## [1.2.0] - 2026-09-29
 ### Added
 - **INTEGRATION** - run reporting. `lib/Utils.groovy` (shared verbatim with the other
