@@ -18,6 +18,11 @@ workflow GISTIC2_ANALYSIS {
     RUN_GISTIC2(gistic_inputs,
                 gistic_refgene)
 
+    RUN_GISTIC2.out.skipped
+    | subscribe { meta, _skip_log ->
+        log.warn "GISTIC2 skipped for subcohort '${meta.analysis_type}': only one sample remains after noise filtering. Downstream GISTIC filtering not run for this subcohort."
+    }
+
     // Join ascat_segments with lesions for FILTER_GISTIC2_CALLS
     ascat_segments
     | join(RUN_GISTIC2.out.lesions)

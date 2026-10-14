@@ -8,20 +8,24 @@ process RUN_GISTIC2 {
     path(refgenefile)
 
 
+    // Outputs are optional so a subcohort GISTIC cannot analyse (see script) is
+    // skipped downstream rather than failing the pipeline
     output:
-    tuple val(meta), path("all_lesions.conf_95.txt"), emit: lesions
-    tuple val(meta), path("broad_significance_results.txt"), emit: broad
-    tuple val(meta), path("broad_values_by_arm.txt"), emit: arms
-    tuple val(meta), path("*.png"), emit: plots
-    tuple val(meta), path("*.pdf"), emit: pdfs
-    tuple val(meta), path("*.mat"), emit: mats
-    tuple val(meta), path("*.txt"), emit: tables
+    tuple val(meta), path("all_lesions.conf_95.txt"), emit: lesions, optional: true
+    tuple val(meta), path("broad_significance_results.txt"), emit: broad, optional: true
+    tuple val(meta), path("broad_values_by_arm.txt"), emit: arms, optional: true
+    tuple val(meta), path("*.png"), emit: plots, optional: true
+    tuple val(meta), path("*.pdf"), emit: pdfs, optional: true
+    tuple val(meta), path("*.mat"), emit: mats, optional: true
+    tuple val(meta), path("*.txt"), emit: tables, optional: true
     tuple val(meta), path(segment_file), emit: segment_file
-    tuple val(meta), path("*.gistic"), emit: scores
+    tuple val(meta), path("*.gistic"), emit: scores, optional: true
+    tuple val(meta), path("gistic2_skipped.log"), emit: skipped, optional: true
 
-    
+
     script:
     """
+    set +e
     /opt/repo/gp_gistic2_from_seg \
     -b . \
     -seg $segment_file \
@@ -36,7 +40,19 @@ process RUN_GISTIC2 {
     -gcm extreme \
     -v 20 \
     -ta 0.25 \
-    -td 0.25
+    -td 0.25 2>&1 | tee gistic2.log
+    gistic_status=\${PIPESTATUS[0]}
+    set -e
+
+    # GISTIC needs >1 sample with copy number signal; a subcohort where every
+    # sample but one is flat is not an error, just nothing to analyse
+    if grep -q "Only one sample remains after noise filtering" gistic2.log; then
+        msg="WARNING: GISTIC2 skipped for ${meta.analysis_type}: only one sample remains after noise filtering."
+        echo "\$msg" | tee gistic2_skipped.log >&2
+        exit 0
+    fi
+
+    exit \$gistic_status
     """
 
     stub: 
