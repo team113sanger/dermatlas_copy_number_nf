@@ -20,6 +20,16 @@ changelog entry to indicate the impact of the change:
 - **INTEGRATION** - a change to how the pipeline integrates with other systems
   or infrastructure, without changing its scientific processing or results.
 
+## [1.2.2] - 2026-10-14
+### Fixed
+- **ROBUSTNESS** - `RUN_GISTIC2` no longer fails the pipeline when GISTIC2 reports
+  `Only one sample remains after noise filtering.` (a subcohort where all but one sample
+  has no copy number signal above the noise threshold). The subcohort is skipped: a
+  `gistic2_skipped.log` note is published in its gistic2 output directory, a warning is
+  logged, and `FILTER_GISTIC2_CALLS` and `FILTER_BROAD_GISTIC2_CALLS` are not run for it.
+  Any other GISTIC2 error still fails the task. Results for subcohorts GISTIC2 can
+  analyse are unchanged.
+
 ## [1.2.1] - 2026-10-02
 ### Fixed
 - **ROBUSTNESS** - `FILTER_GISTIC2_CALLS` no longer fails when GISTIC2 finds no peaks
