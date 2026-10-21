@@ -20,6 +20,13 @@ changelog entry to indicate the impact of the change:
 - **INTEGRATION** - a change to how the pipeline integrates with other systems
   or infrastructure, without changing its scientific processing or results.
 
+## [Unreleased]
+
+## [1.2.3] - 2026-10-21
+### Changed
+- Removed hardcoded `LSB_DEFAULT_USERGROUP` from `assets/run_copy_number.sh`
+  letting user space instead set the value.
+
 ## [1.2.2] - 2026-10-14
 ### Fixed
 - **ROBUSTNESS** - `RUN_GISTIC2` no longer fails the pipeline when GISTIC2 reports
